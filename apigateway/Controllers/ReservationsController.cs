@@ -1,4 +1,5 @@
 ﻿using apigateway.Dtos.Reservations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apigateway.Controllers;
@@ -14,6 +15,7 @@ public class ReservationsController : ControllerBase
         _logger = logger;
     }
     
+    [Authorize]
     [HttpGet(Name = "GetReservations")]
     public IEnumerable<Reservation> Get()
     {
@@ -24,6 +26,7 @@ public class ReservationsController : ControllerBase
             .ToArray();
     }
     
+    [Authorize]
     [HttpPost(Name = "PostReservation")]
     public Reservation Post(ReservationCreate reservationCreate)
     {
@@ -33,6 +36,7 @@ public class ReservationsController : ControllerBase
         };
     }
     
+    [Authorize]
     [HttpGet("{id}", Name = "GetReservation")]
     public Reservation Get(Guid id)
     {
@@ -42,6 +46,7 @@ public class ReservationsController : ControllerBase
         };
     }
     
+    [Authorize]
     [HttpPost("{id}/Buy",Name = "BuyReservation")]
     public Boolean BuyReservation(Guid id, PaymentInfo paymentInfo)
     {

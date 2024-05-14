@@ -26,6 +26,7 @@ public class HotelsController : ControllerBase
             .ToArray();
     }
     
+    [Authorize("RequireAdmin")]
     [HttpPost(Name = "PostHotel")]
     public Hotel Post(HotelCreate hotelCreate)
     {
@@ -53,6 +54,7 @@ public class HotelsController : ControllerBase
         };
     }
     
+    [Authorize("RequireAdmin")]
     [HttpPost("{id}/Discount", Name = "PostHotelDiscount")]
     public void PostHotelDiscount(Guid id, HotelDiscount hotelDiscount)
     {

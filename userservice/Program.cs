@@ -1,5 +1,6 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using userservice.Handlers;
 using userservice.Persistence;
 using userservice.Services.User;
 
@@ -14,6 +15,7 @@ builder.ConfigureServices((hostContext, services) =>
             
         // Add consumers
         busConfigurator.AddConsumer<LoginRequestConsumer>();
+        busConfigurator.AddConsumer<GetUserRequestConsumer>();
         
         busConfigurator.UsingRabbitMq((context,cfg) =>
         {
@@ -25,7 +27,7 @@ builder.ConfigureServices((hostContext, services) =>
         });
     });
     
-    services.AddDbContext<UserDbContext>(options => options.UseInMemoryDatabase("db_mem"));
+    services.AddDbContext<UserDbContext>(options => options.UseNpgsql("Host=127.0.0.1:5432;Database=user;Username=user;Password=pass"));
     services.AddScoped<UserService>();
 });
 

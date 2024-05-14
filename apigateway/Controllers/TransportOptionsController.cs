@@ -1,4 +1,5 @@
 ﻿using apigateway.Dtos.TransportOptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apigateway.Controllers;
@@ -24,6 +25,7 @@ public class TransportOptionsController : ControllerBase
             .ToArray();
     }
     
+    [Authorize("RequireAdmin")]
     [HttpPost(Name = "PostTransportOption")]
     public TransportOption Post(TransportOptionCreate transportOptionCreate)
     {
@@ -42,6 +44,7 @@ public class TransportOptionsController : ControllerBase
         };
     }
     
+    [Authorize("RequireAdmin")]
     [HttpPost("{id}/Discount", Name = "PostTransportOptionDiscount")]
     public void PostTransportOptionDiscount(Guid id, TransportOptionDiscount transportOptionDiscount)
     {
