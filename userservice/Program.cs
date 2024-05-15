@@ -19,18 +19,24 @@ builder.ConfigureServices((hostContext, services) =>
         
         busConfigurator.UsingRabbitMq((context,cfg) =>
         {
-            cfg.Host("localhost", "/", h => {
-                h.Username("guest");
-                h.Password("guest");
+            cfg.Host("rabbitmq", "/", h => {
+                h.Username("user_rabbitmq");
+                h.Password("password_rabbitmq");
             });
             cfg.ConfigureEndpoints(context);
         });
     });
     
-    services.AddDbContext<UserDbContext>(options => options.UseNpgsql("Host=127.0.0.1:5432;Database=user;Username=user;Password=pass"));
+    services.AddDbContext<UserDbContext>(options => options.UseNpgsql("Host=postgres:5432;Database=userservice_db;Username=user_userservice_db;Password=password_userservice_db"));
     services.AddScoped<UserService>();
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<UserDbContext>();
+    context.Database.Migrate();
+}
 
 await app.RunAsync();

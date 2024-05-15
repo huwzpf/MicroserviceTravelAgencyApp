@@ -1,0 +1,52 @@
+version: "3.9"
+
+volumes:
+  postgres_data:
+
+name: hpds
+services:
+  apigateway:
+    build:
+      context: .
+      dockerfile: apigateway/Dockerfile
+    ports:
+    - 8000:80
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  userservice:
+    build:
+      context: .
+      dockerfile: userservice/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    build:
+      context: .
+      dockerfile: postgres/Dockerfile
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .envs/postgres/.env
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -d userservice_db']
+      interval: 2s
+      timeout: 10s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3.12
+    env_file:
+      - .envs/rabbitmq/.env
+    ports:
+    - 15672:15672
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 2s
+      timeout: 10s
+      retries: 5
