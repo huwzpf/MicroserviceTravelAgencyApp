@@ -7,8 +7,9 @@ set -u
 declare -A db_users
 db_users=( 
   ["userservice_db"]="user_userservice_db:password_userservice_db" 
-  ["db2"]="user2:password2" 
-  ["db3"]="user3:password3" 
+  ["reservationservice_db"]="user_reservationservice_db:password_reservationservice_db" 
+  ["transportservice_db"]="user_transportservice_db:password_transportservice_db" 
+  ["hotelservice_db"]="user_hotelservice_db:password_hotelservice_db" 
 )
 
 function create_database() {

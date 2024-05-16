@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transportservice", "transportservice\transportservice.csproj", "{3C6B6D65-583C-449F-B394-FD118A1EFDAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "contracts", "contracts\contracts.csproj", "{672CBE74-DC09-44D0-A3FE-A3828BF0FEDB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C6B6D65-583C-449F-B394-FD118A1EFDAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C6B6D65-583C-449F-B394-FD118A1EFDAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C6B6D65-583C-449F-B394-FD118A1EFDAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C6B6D65-583C-449F-B394-FD118A1EFDAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{672CBE74-DC09-44D0-A3FE-A3828BF0FEDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{672CBE74-DC09-44D0-A3FE-A3828BF0FEDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{672CBE74-DC09-44D0-A3FE-A3828BF0FEDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{672CBE74-DC09-44D0-A3FE-A3828BF0FEDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

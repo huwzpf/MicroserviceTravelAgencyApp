@@ -1,5 +1,5 @@
 version: "3.9"
-
+# TODO: Remove additional ports before deployment
 volumes:
   postgres_data:
 
@@ -25,6 +25,36 @@ services:
       postgres:
         condition: service_healthy
 
+  reservationservice:
+    build:
+      context: .
+      dockerfile: reservationservice/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  hotelservice:
+    build:
+      context: .
+      dockerfile: hotelservice/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  transportservice:
+    build:
+      context: .
+      dockerfile: transportservice/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
   postgres:
     build:
       context: .
@@ -33,6 +63,8 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - .envs/postgres/.env
+    ports:
+    - 5432:5432
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -d userservice_db']
       interval: 2s
@@ -44,6 +76,7 @@ services:
     env_file:
       - .envs/rabbitmq/.env
     ports:
+    - 5672:5672
     - 15672:15672
     healthcheck:
       test: rabbitmq-diagnostics check_port_connectivity
