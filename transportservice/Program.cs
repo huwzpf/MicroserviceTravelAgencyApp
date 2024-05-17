@@ -22,6 +22,7 @@ builder.ConfigureServices((hostContext, services) =>
         busConfigurator.AddConsumer<TransportOptionAddDiscountRequestConsumer>();
         busConfigurator.AddConsumer<TransportOptionSubtractSeatsRequestConsumer>();
         busConfigurator.AddConsumer<GetTransportOptionWhenRequestConsumer>();
+        busConfigurator.AddConsumer<GetPopularDestinationsRequestConsumer>();
 
         
         busConfigurator.UsingRabbitMq((context,cfg) =>
