@@ -18,6 +18,7 @@ public class TransportOptionAddDiscountRequestConsumer : IConsumer<TransportOpti
     public async Task Consume(ConsumeContext<TransportOptionAddDiscountRequest> context)
     {
         _logger.LogInformation("{Consumer}: {Message}", nameof(TransportOptionAddDiscountRequestConsumer), context.Message);
-        await context.RespondAsync(_transportService.AddDiscount(context.Message));
+        var response = await _transportService.AddDiscount(context.Message);
+        await context.RespondAsync(response);
     }
 }

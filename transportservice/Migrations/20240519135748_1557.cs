@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace hotelservice.Migrations
+namespace transportservice.Migrations
 {
-    public partial class _1931 : Migration
+    public partial class _1557 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

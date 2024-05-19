@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace hotelservice.Migrations
+namespace transportservice.Migrations
 {
-    public partial class _18052116 : Migration
+    public partial class dupa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

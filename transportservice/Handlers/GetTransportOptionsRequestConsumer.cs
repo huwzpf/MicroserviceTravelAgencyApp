@@ -18,6 +18,7 @@ public class GetTransportOptionsRequestConsumer : IConsumer<GetTransportOptionsR
     public async Task Consume(ConsumeContext<GetTransportOptionsRequest> context)
     {
         _logger.LogInformation("{Consumer}: {Message}", nameof(GetTransportOptionsRequestConsumer), context.Message);
-        await context.RespondAsync(_transportService.GetTransportOptions(context.Message));
+        var response = await _transportService.GetTransportOptions(context.Message);
+        await context.RespondAsync(response);
     }
 }

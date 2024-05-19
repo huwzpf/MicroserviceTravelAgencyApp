@@ -1,7 +1,7 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using transportservice.Handlers;
-using transportservice.Persistence;
+using transportservice.Models;
 using transportservice.Services.Transport;
 
 var builder = Host.CreateDefaultBuilder(args);
