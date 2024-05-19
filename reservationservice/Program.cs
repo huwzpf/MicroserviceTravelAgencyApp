@@ -37,7 +37,7 @@ builder.ConfigureServices((hostContext, services) =>
         });
     });
     
-    services.AddDbContext<ReservationDbContext>(options => options.UseNpgsql("Host=postgres:5432;Database=reservationservice_db;Username=user_reservationservice_db;Password=password_reservationservice_db"));
+    services.AddDbContextFactory<ReservationDbContext>(options => options.UseNpgsql("Host=postgres:5432;Database=reservationservice_db;Username=user_reservationservice_db;Password=password_reservationservice_db"));
     services.AddScoped<ReservationService>();
 });
 

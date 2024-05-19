@@ -9,9 +9,9 @@ public class CreateReservationDto
     public int NumUnder18 { get; set; }
     public Guid ToDestinationTransport { get; set; }
     public Guid Hotel { get; set; }
-    public Dictionary<int, int> Rooms { get; set; }
+    public Dictionary<int, int> Rooms { get; set; } // size : number
     public Guid FromDestinationTransport { get; set; }
     public bool WithFood { get; set; }
     public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
+    public int NumberOfNights { get; set; }
 }

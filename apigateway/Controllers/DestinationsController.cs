@@ -23,7 +23,7 @@ public class DestinationsController : ControllerBase
     }
 
     [HttpGet("AvailableDestinations", Name = "GetAvailableDestinations")]
-    public async Task<ActionResult<IEnumerable<string>>> GetAvailableDestinations()
+    public async Task<ActionResult<IEnumerable<Destination>>> GetAvailableDestinations()
     {
         var response = await _getDestinations.GetResponse<GetAvailableDestinationsResponse>(new GetAvailableDestinationsRequest());
         var destinations = new List<Destination>();
@@ -39,7 +39,7 @@ public class DestinationsController : ControllerBase
     }
     
     [HttpGet("PopularOffers", Name = "GetPopularOffers")]
-    public async Task<ActionResult<IEnumerable<Destination>>> GetPopularPlaces()
+    public async Task<ActionResult<IEnumerable<CountryOffer>>> GetPopularPlaces()
     {
         var response = await _getOffers.GetResponse<GetPopularOffersResponse>(new GetPopularOffersRequest());
         var popularOffers = new List<CountryOffer>();

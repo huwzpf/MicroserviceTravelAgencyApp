@@ -35,7 +35,7 @@ public class TransportOptionsController : ControllerBase
     }
     
     [HttpGet(Name = "GetTransportOptions")]
-    public async Task<ActionResult<IEnumerable<TransportOption>>> Get()
+    public async Task<ActionResult<IEnumerable<TransportOptionDto>>> Get()
     {
         var response = await _getTransportOptionsClient.GetResponse<ReservationGetTransportOptionsResponse>(new ReservationGetTransportOptionsRequest());
         return Ok(response.Message.TransportOptions);
@@ -43,25 +43,19 @@ public class TransportOptionsController : ControllerBase
     
     [Authorize("RequireAdmin")]
     [HttpPost(Name = "PostTransportOption")]
-    public async Task<ActionResult<TransportOption>> Post(TransportOptionCreate transportOptionCreate)
+    public async Task<ActionResult<TransportOptionDto>> Post(TransportOptionCreate transportOptionCreate)
     {
         var transportOptionDto = new TransportOptionDto
         {
             Id = Guid.NewGuid(),
-            From = new AddressDto
-            {
-                City = transportOptionCreate.FromCity,
-                Country = transportOptionCreate.FromCountry,
-                Street = transportOptionCreate.FromStreet,
-                ShowName = transportOptionCreate.FromShowName
-            },
-            To = new AddressDto
-            {
-                City = transportOptionCreate.ToCity,
-                Country = transportOptionCreate.ToCountry,
-                Street = transportOptionCreate.ToStreet,
-                ShowName = transportOptionCreate.ToShowName
-            },
+            FromCity = transportOptionCreate.FromCity,
+            FromCountry = transportOptionCreate.FromCountry,
+            FromStreet = transportOptionCreate.FromStreet,
+            FromShowName = transportOptionCreate.FromShowName,
+            ToCity = transportOptionCreate.ToCity,
+            ToCountry = transportOptionCreate.ToCountry,
+            ToStreet = transportOptionCreate.ToStreet,
+            ToShowName = transportOptionCreate.ToShowName,
             Start = transportOptionCreate.Start,
             End = transportOptionCreate.End,
             SeatsAvailable = transportOptionCreate.SeatsAvailable,
@@ -69,8 +63,7 @@ public class TransportOptionsController : ControllerBase
             PriceUnder3 = transportOptionCreate.PriceUnder3,
             PriceUnder10 = transportOptionCreate.PriceUnder10,
             PriceUnder18 = transportOptionCreate.PriceUnder18,
-            Type = transportOptionCreate.Type.ToString(),
-            Discounts = new List<DiscountDto>()
+            Type = transportOptionCreate.Type.ToString()
         };
 
         var response = await _addTransportOptionClient.GetResponse<AddTransportOptionResponse>(new AddTransportOptionRequest(transportOptionDto));
@@ -78,7 +71,7 @@ public class TransportOptionsController : ControllerBase
     }
     
     [HttpGet("{id}", Name = "GetTransportOption")]
-    public async Task<ActionResult<TransportOption>> Get(Guid id, DateTime? fromTimeStamp)
+    public async Task<ActionResult<TransportOptionDto>> Get(Guid id, DateTime? fromTimeStamp)
     {
         var response = await _getTransportOptionClient.GetResponse<ReservationGetTransportOptionResponse>(new ReservationGetTransportOptionRequest(id));
         return Ok(response.Message.TransportOption);

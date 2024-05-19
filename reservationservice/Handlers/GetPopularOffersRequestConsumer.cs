@@ -17,6 +17,7 @@ public class GetPopularOffersRequestConsumer : IConsumer<GetPopularOffersRequest
     public async Task Consume(ConsumeContext<GetPopularOffersRequest> context)
     {
         _logger.LogInformation("{Consumer}: {Message}", nameof(GetPopularOffersRequestConsumer), context.Message);
-        await context.RespondAsync(_reservationService.GetPopularOffers(context.Message));
+        var response = await _reservationService.GetPopularOffers();
+        await context.RespondAsync(response);
     }
 }

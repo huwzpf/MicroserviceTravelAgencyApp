@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using reservationservice.Persistence;
@@ -11,9 +12,10 @@ using reservationservice.Persistence;
 namespace reservationservice.Migrations
 {
     [DbContext(typeof(ReservationDbContext))]
-    partial class ReservationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240517000509_FullDatabaseImplementation")]
+    partial class FullDatabaseImplementation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,9 +55,6 @@ namespace reservationservice.Migrations
                     b.Property<Guid>("ReservationId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Size")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ReservationId");
@@ -69,13 +68,10 @@ namespace reservationservice.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("CancellationDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("Finalized")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("FoodIncluded")
                         .HasColumnType("boolean");
 
                     b.Property<string>("FromCity")
@@ -83,13 +79,6 @@ namespace reservationservice.Migrations
 
                     b.Property<Guid>("FromDestinationTransport")
                         .HasColumnType("uuid");
-
-                    b.Property<Guid>("HotelId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("HotelName")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<int>("NumAdults")
                         .HasColumnType("integer");
@@ -103,13 +92,10 @@ namespace reservationservice.Migrations
                     b.Property<int>("NumUnder3")
                         .HasColumnType("integer");
 
-                    b.Property<int>("NumberOfNights")
-                        .HasColumnType("integer");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<DateTime>("ReservedUntil")
+                    b.Property<DateTime?>("ReservedUntil")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("StartDate")
@@ -136,20 +122,24 @@ namespace reservationservice.Migrations
 
             modelBuilder.Entity("reservationservice.Models.BeingPaidFor", b =>
                 {
-                    b.HasOne("reservationservice.Models.Reservation", null)
+                    b.HasOne("reservationservice.Models.Reservation", "Reservation")
                         .WithMany("BeingPaidFors")
                         .HasForeignKey("ReservationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("reservationservice.Models.HotelRoomReservation", b =>
                 {
-                    b.HasOne("reservationservice.Models.Reservation", null)
+                    b.HasOne("reservationservice.Models.Reservation", "Reservation")
                         .WithMany("HotelRoomReservations")
                         .HasForeignKey("ReservationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("reservationservice.Models.Reservation", b =>

@@ -1,4 +1,4 @@
-
+using contracts.Dtos;
 namespace contracts;
 
-public record HotelGetAvailableRoomsResponse(Dictionary<int, int> Rooms);
+public record HotelGetAvailableRoomsResponse(RoomAvailabilityDto Rooms);

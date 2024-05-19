@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using apigateway.Dtos.Tours;
 using contracts;
 using contracts.Dtos;
 using MassTransit;
@@ -24,7 +23,7 @@ public class ToursController : ControllerBase
     }
     
     [HttpGet(Name = "GetTours")]
-    public async Task<ActionResult<IEnumerable<Tour>>> Get(int numberOfPeople, string? fromCity, string? fromCountry, string? toCity, string? toCountry, DateTime? minStart, DateTime? maxEnd, int? minDuration, int? maxDuration)
+    public async Task<ActionResult<IEnumerable<TourDto>>> Get(int numberOfPeople, string? fromCity, string? fromCountry, string? toCity, string? toCountry, DateTime? minStart, DateTime? maxEnd, int? minDuration, int? maxDuration)
     {
         var toursDto = new GetAvailableToursDto
         {

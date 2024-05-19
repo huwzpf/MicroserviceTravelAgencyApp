@@ -5,7 +5,7 @@ namespace apigateway.Dtos.TransportOptions;
 public class TransportOptionCreate
 {
     [Required]
-    public TypeOfTransport Type { get; set; }
+    public string Type { get; set; }
     
     [Required]
     public DateTime Start { get; set; }

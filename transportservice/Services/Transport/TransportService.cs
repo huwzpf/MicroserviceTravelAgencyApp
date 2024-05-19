@@ -20,8 +20,14 @@ public class TransportService
         return new AddTransportOptionResponse(new TransportOptionDto
         {
             Id = Guid.NewGuid(),
-            From = request.TransportOption.From,
-            To = request.TransportOption.To,
+            FromCity = request.TransportOption.FromCity,
+            FromCountry = request.TransportOption.FromCountry,
+            FromStreet = request.TransportOption.FromStreet,
+            FromShowName = request.TransportOption.FromShowName,
+            ToCity = request.TransportOption.ToCity,
+            ToCountry = request.TransportOption.ToCountry,
+            ToStreet = request.TransportOption.ToStreet,
+            ToShowName = request.TransportOption.ToShowName,
             Start = request.TransportOption.Start,
             End = request.TransportOption.End,
             SeatsAvailable = request.TransportOption.SeatsAvailable,
@@ -29,8 +35,6 @@ public class TransportService
             PriceUnder3 = request.TransportOption.PriceUnder3,
             PriceUnder10 = request.TransportOption.PriceUnder10,
             PriceUnder18 = request.TransportOption.PriceUnder18,
-            Type = request.TransportOption.Type,
-            Discounts = new List<DiscountDto>()
         });
     }
 
@@ -41,8 +45,14 @@ public class TransportService
             new TransportOptionDto
             {
                 Id = Guid.NewGuid(),
-                From = new AddressDto { City = "Sample City", Country = "Sample Country", Street = "Sample Street", ShowName = "Sample Show Name" },
-                To = new AddressDto { City = "Destination City", Country = "Destination Country", Street = "Destination Street", ShowName = "Destination Show Name" },
+                FromCity = "Warsaw",
+                FromCountry = "Poland",
+                FromStreet = "Sample Street",
+                FromShowName = "Sample Show Name",
+                ToCity = "Berlin",
+                ToCountry = "Germany",
+                ToStreet = "Destination Street",
+                ToShowName = "Destination Show Name",
                 Start = DateTime.Now.AddHours(1),
                 End = DateTime.Now.AddHours(5),
                 SeatsAvailable = 50,
@@ -50,9 +60,29 @@ public class TransportService
                 PriceUnder3 = 50,
                 PriceUnder10 = 70,
                 PriceUnder18 = 80,
-                Type = "Airplane",
-                Discounts = new List<DiscountDto>()
-            }
+                Type = "Plane",
+            },
+            
+            new TransportOptionDto
+            {
+                Id = Guid.NewGuid(),
+                FromCity = "Berlin",
+                FromCountry = "Germany",
+                FromStreet = "Sample Street",
+                FromShowName = "Sample Show Name",
+                ToCity = "Warsaw",
+                ToCountry = "Poland",
+                ToStreet = "Destination Street",
+                ToShowName = "Destination Show Name",
+                Start = DateTime.Now.AddHours(10),
+                End = DateTime.Now.AddHours(14),
+                SeatsAvailable = 50,
+                PriceAdult = 100,
+                PriceUnder3 = 50,
+                PriceUnder10 = 70,
+                PriceUnder18 = 80,
+                Type = "Plane",
+            },
         });
     }
 
@@ -63,8 +93,14 @@ public class TransportService
             new TransportOptionDto
             {
                 Id = Guid.NewGuid(),
-                From = new AddressDto { City = "Sample City", Country = "Sample Country", Street = "Sample Street", ShowName = "Sample Show Name" },
-                To = new AddressDto { City = "Berlin", Country = "Germany", Street = "Destination Street", ShowName = "Destination Show Name" },
+                FromCity = "Berlin",
+                FromCountry = "Germany",
+                FromStreet = "Sample Street",
+                FromShowName = "Sample Show Name",
+                ToCity = "Warsaw",
+                ToCountry = "Poland",
+                ToStreet = "Destination Street",
+                ToShowName = "Destination Show Name",
                 Start = DateTime.Now.AddHours(1),
                 End = DateTime.Now.AddHours(5),
                 SeatsAvailable = 50,
@@ -72,14 +108,19 @@ public class TransportService
                 PriceUnder3 = 50,
                 PriceUnder10 = 70,
                 PriceUnder18 = 80,
-                Type = "Airplane",
-                Discounts = new List<DiscountDto>()
+                Type = "Plane",
             },
             new TransportOptionDto
             {
                 Id = Guid.NewGuid(),
-                From = new AddressDto { City = "Sample City", Country = "Sample Country", Street = "Sample Street", ShowName = "Sample Show Name" },
-                To = new AddressDto { City = "Warsaw", Country = "Poland", Street = "Destination Street", ShowName = "Destination Show Name" },
+                FromCity = "Warsaw",
+                FromCountry = "Poland",
+                FromStreet = "Sample Street",
+                FromShowName = "Sample Show Name",
+                ToCity = "Berlin",
+                ToCountry = "Germany",
+                ToStreet = "Destination Street",
+                ToShowName = "Destination Show Name",
                 Start = DateTime.Now.AddHours(1),
                 End = DateTime.Now.AddHours(5),
                 SeatsAvailable = 50,
@@ -87,8 +128,7 @@ public class TransportService
                 PriceUnder3 = 50,
                 PriceUnder10 = 70,
                 PriceUnder18 = 80,
-                Type = "Airplane",
-                Discounts = new List<DiscountDto>()
+                Type = "Plane",
             }
         });
     }
@@ -98,8 +138,14 @@ public class TransportService
         return new GetTransportOptionResponse(new TransportOptionDto
         {
             Id = request.Id,
-            From = new AddressDto { City = "Sample City", Country = "Sample Country", Street = "Sample Street", ShowName = "Sample Show Name" },
-            To = new AddressDto { City = "Destination City", Country = "Destination Country", Street = "Destination Street", ShowName = "Destination Show Name" },
+            FromCity = "Berlin",
+            FromCountry = "Germany",
+            FromStreet = "Sample Street",
+            FromShowName = "Sample Show Name",
+            ToCity = "Warsaw",
+            ToCountry = "Poland",
+            ToStreet = "Destination Street",
+            ToShowName = "Destination Show Name",
             Start = DateTime.Now.AddHours(1),
             End = DateTime.Now.AddHours(5),
             SeatsAvailable = 50,
@@ -107,8 +153,7 @@ public class TransportService
             PriceUnder3 = 50,
             PriceUnder10 = 70,
             PriceUnder18 = 80,
-            Type = "Airplane",
-            Discounts = new List<DiscountDto>()
+            Type = "Plane",
         });
     }
 
@@ -132,8 +177,14 @@ public class TransportService
         return new GetTransportOptionWhenResponse(new TransportOptionDto
         {
             Id = Guid.NewGuid(),
-            From = new AddressDto { City = "Sample City", Country = "Sample Country", Street = "Sample Street", ShowName = "Sample Show Name" },
-            To = new AddressDto { City = "Destination City", Country = "Destination Country", Street = "Destination Street", ShowName = "Destination Show Name" },
+            FromCity = "Berlin",
+            FromCountry = "Germany",
+            FromStreet = "Sample Street",
+            FromShowName = "Sample Show Name",
+            ToCity = "Warsaw",
+            ToCountry = "Poland",
+            ToStreet = "Destination Street",
+            ToShowName = "Destination Show Name",
             Start = request.When,
             End = request.When.AddHours(4),
             SeatsAvailable = 50,
@@ -141,8 +192,7 @@ public class TransportService
             PriceUnder3 = 50,
             PriceUnder10 = 70,
             PriceUnder18 = 80,
-            Type = "Airplane",
-            Discounts = new List<DiscountDto>()
+            Type = "Plane",
         });
     }
 
@@ -153,8 +203,14 @@ public class TransportService
             new TransportOptionDto
             {
                 Id = Guid.NewGuid(),
-                From = new AddressDto { City = "Sample City", Country = "Sample Country", Street = "Sample Street", ShowName = "Sample Show Name" },
-                To = new AddressDto { City = "Berlin", Country = "Germany", Street = "Destination Street", ShowName = "Destination Show Name" },
+                FromCity = "Berlin",
+                FromCountry = "Germany",
+                FromStreet = "Sample Street",
+                FromShowName = "Sample Show Name",
+                ToCity = "Warsaw",
+                ToCountry = "Poland",
+                ToStreet = "Destination Street",
+                ToShowName = "Destination Show Name",
                 Start = DateTime.Now.AddHours(1),
                 End = DateTime.Now.AddHours(5),
                 SeatsAvailable = 50,
@@ -162,14 +218,19 @@ public class TransportService
                 PriceUnder3 = 50,
                 PriceUnder10 = 70,
                 PriceUnder18 = 80,
-                Type = "Airplane",
-                Discounts = new List<DiscountDto>()
+                Type = "Plane",
             },
             new TransportOptionDto
             {
                 Id = Guid.NewGuid(),
-                From = new AddressDto { City = "Sample City", Country = "Sample Country", Street = "Sample Street", ShowName = "Sample Show Name" },
-                To = new AddressDto { City = "Warsaw", Country = "Poland", Street = "Destination Street", ShowName = "Destination Show Name" },
+                FromCity = "Berlin",
+                FromCountry = "Germany",
+                FromStreet = "Sample Street",
+                FromShowName = "Sample Show Name",
+                ToCity = "Warsaw",
+                ToCountry = "Poland",
+                ToStreet = "Destination Street",
+                ToShowName = "Destination Show Name",
                 Start = DateTime.Now.AddHours(1),
                 End = DateTime.Now.AddHours(5),
                 SeatsAvailable = 50,
@@ -177,8 +238,7 @@ public class TransportService
                 PriceUnder3 = 50,
                 PriceUnder10 = 70,
                 PriceUnder18 = 80,
-                Type = "Airplane",
-                Discounts = new List<DiscountDto>()
+                Type = "Plane",
             }
         });
     }

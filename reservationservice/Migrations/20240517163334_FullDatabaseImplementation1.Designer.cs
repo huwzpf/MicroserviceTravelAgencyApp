@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using reservationservice.Persistence;
@@ -11,9 +12,10 @@ using reservationservice.Persistence;
 namespace reservationservice.Migrations
 {
     [DbContext(typeof(ReservationDbContext))]
-    partial class ReservationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240517163334_FullDatabaseImplementation1")]
+    partial class FullDatabaseImplementation1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,9 +55,6 @@ namespace reservationservice.Migrations
                     b.Property<Guid>("ReservationId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Size")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ReservationId");
@@ -72,10 +71,10 @@ namespace reservationservice.Migrations
                     b.Property<DateTime?>("CancellationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("Finalized")
-                        .HasColumnType("boolean");
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("FoodIncluded")
+                    b.Property<bool>("Finalized")
                         .HasColumnType("boolean");
 
                     b.Property<string>("FromCity")
@@ -83,13 +82,6 @@ namespace reservationservice.Migrations
 
                     b.Property<Guid>("FromDestinationTransport")
                         .HasColumnType("uuid");
-
-                    b.Property<Guid>("HotelId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("HotelName")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<int>("NumAdults")
                         .HasColumnType("integer");
@@ -103,13 +95,10 @@ namespace reservationservice.Migrations
                     b.Property<int>("NumUnder3")
                         .HasColumnType("integer");
 
-                    b.Property<int>("NumberOfNights")
-                        .HasColumnType("integer");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<DateTime>("ReservedUntil")
+                    b.Property<DateTime?>("ReservedUntil")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("StartDate")

@@ -20,5 +20,5 @@ public class HotelCreate
     public decimal FoodPricePerPerson { get; set; }
     
     [Required]
-    public IEnumerable<RoomsCount> Rooms { get; set; }
+    public IEnumerable<contracts.Dtos.RoomsCount> Rooms { get; set; }
 }

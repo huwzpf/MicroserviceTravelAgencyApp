@@ -17,6 +17,7 @@ public class BuyRequestConsumer : IConsumer<BuyRequest>
     public async Task Consume(ConsumeContext<BuyRequest> context)
     {
         _logger.LogInformation("{Consumer}: {Message}", nameof(BuyRequestConsumer), context.Message);
-        await context.RespondAsync(_reservationService.Buy(context.Message));
+        var response = await _reservationService.Buy(context.Message);
+        await context.RespondAsync(response);
     }
 }

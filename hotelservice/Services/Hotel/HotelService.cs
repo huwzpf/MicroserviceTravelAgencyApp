@@ -18,13 +18,13 @@ public class HotelService
     {
         return new AddHotelResponse(new HotelDto
         {
-            Id = Guid.NewGuid(),
-            Name = request.Hotel.Name,
-            Address = request.Hotel.Address,
-            Rooms = request.Hotel.Rooms,
-            Bookings = new List<RoomReservationDto>(),
-            Discounts = new List<DiscountDto>(),
-            FoodPricePerPerson = request.Hotel.FoodPricePerPerson
+                Id = Guid.NewGuid(),
+                Name = "G Hotel",
+                City = "Berlin",
+                Country = "Germany",
+                Street = "Sample Street",
+                Rooms =  new List<RoomsCount>(),
+                FoodPricePerPerson = 20
         });
     }
 
@@ -35,11 +35,31 @@ public class HotelService
             new HotelDto
             {
                 Id = Guid.NewGuid(),
-                Name = "Sample Hotel",
-                Address = new AddressDto { City = "Sample City", Country = "Sample Country", Street = "Sample Street", ShowName = "Sample Show Name" },
-                Rooms = new Dictionary<int, Tuple<decimal, int>> { { 2, new Tuple<decimal, int>(100, 5) } },
-                Bookings = new List<RoomReservationDto>(),
-                Discounts = new List<DiscountDto>(),
+                Name = "G Hotel",
+                City = "Gdansk",
+                Country = "Poland",
+                Street = "Sample Street",
+                Rooms = new List<RoomsCount>(),
+                FoodPricePerPerson = 20
+            },
+            new HotelDto
+            {
+                Id = Guid.NewGuid(),
+                Name = "W Hotel",
+                City = "Warsaw",
+                Country = "Poland",
+                Street = "Sample Street",
+                Rooms = new List<RoomsCount>(),
+                FoodPricePerPerson = 20
+            },
+            new HotelDto
+            {
+                Id = Guid.NewGuid(),
+                Name = "B Hotel",
+                City = "Berlin",
+                Country = "Germany",
+                Street = "Sample Street",
+                Rooms = new List<RoomsCount>(),
                 FoodPricePerPerson = 20
             }
         });
@@ -53,20 +73,20 @@ public class HotelService
             {
                 Id = Guid.NewGuid(),
                 Name = "Sample Hotel 1",
-                Address = new AddressDto { City = "Berlin", Country = "Germany", Street = "Sample Street", ShowName = "Sample Show Name" },
-                Rooms = new Dictionary<int, Tuple<decimal, int>> { { 2, new Tuple<decimal, int>(100, 5) } },
-                Bookings = new List<RoomReservationDto>(),
-                Discounts = new List<DiscountDto>(),
+                City = "Berlin",
+                Country = "Germany",
+                Street = "Sample Street",
+                Rooms = new List<RoomsCount>(){new RoomsCount{Price = 10, Size = 2, Count = 1}},
                 FoodPricePerPerson = 20
             },
             new HotelDto
             {
                 Id = Guid.NewGuid(),
                 Name = "Sample Hotel 2",
-                Address = new AddressDto { City = "Berlin", Country = "Germany", Street = "Sample Street", ShowName = "Sample Show Name" },
-                Rooms = new Dictionary<int, Tuple<decimal, int>> { { 2, new Tuple<decimal, int>(100, 5) } },
-                Bookings = new List<RoomReservationDto>(),
-                Discounts = new List<DiscountDto>(),
+                City = "Berlin",
+                Country = "Germany",
+                Street = "Sample Street",
+                Rooms = new List<RoomsCount>(){new RoomsCount{Price = 10, Size = 2, Count = 1}},
                 FoodPricePerPerson = 20
             },
             
@@ -74,10 +94,10 @@ public class HotelService
             {
                 Id = Guid.NewGuid(),
                 Name = "Sample Hotel 3",
-                Address = new AddressDto { City = "Paris", Country = "France", Street = "Sample Street", ShowName = "Sample Show Name" },
-                Rooms = new Dictionary<int, Tuple<decimal, int>> { { 2, new Tuple<decimal, int>(100, 5) } },
-                Bookings = new List<RoomReservationDto>(),
-                Discounts = new List<DiscountDto>(),
+                City = "Paris",
+                Country = "France",
+                Street = "Sample Street",
+                Rooms = new List<RoomsCount>(){new RoomsCount{Price = 10, Size = 2, Count = 1}},
                 FoodPricePerPerson = 20
             }
         });
@@ -89,10 +109,10 @@ public class HotelService
         {
             Id = request.Id,
             Name = "Sample Hotel",
-            Address = new AddressDto { City = "Sample City", Country = "Sample Country", Street = "Sample Street", ShowName = "Sample Show Name" },
-            Rooms = new Dictionary<int, Tuple<decimal, int>> { { 2, new Tuple<decimal, int>(100, 5) } },
-            Bookings = new List<RoomReservationDto>(),
-            Discounts = new List<DiscountDto>(),
+            City = "Berlin",
+            Country = "Germany",
+            Street = "Sample Street",
+            Rooms = new List<RoomsCount>(),
             FoodPricePerPerson = 20
         });
     }
@@ -106,18 +126,14 @@ public class HotelService
                 Id = Guid.NewGuid(),
                 Size = 2,
                 Start = request.BookingDetails.Start,
-                End = request.BookingDetails.End
+                NumberOfNights = request.BookingDetails.NumberOfNights
             }
         });
     }
 
     public HotelGetAvailableRoomsResponse GetAvailableRooms(HotelGetAvailableRoomsRequest request)
     {
-        return new HotelGetAvailableRoomsResponse(new Dictionary<int, int>
-        {
-            { 2, 5 },
-            { 3, 3 }
-        });
+        return new HotelGetAvailableRoomsResponse(new RoomAvailabilityDto {StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow.AddDays(1), Rooms = new List<RoomsCount>(){new RoomsCount{Price = 10, Size = 2, Count = 1}}});
     }
 
     public HotelAddDiscountResponse AddDiscount(HotelAddDiscountRequest request)

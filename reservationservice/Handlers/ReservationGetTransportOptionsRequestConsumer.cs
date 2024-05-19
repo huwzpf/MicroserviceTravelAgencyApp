@@ -17,7 +17,7 @@ public class ReservationGetTransportOptionsRequestConsumer : IConsumer<Reservati
     public async Task Consume(ConsumeContext<ReservationGetTransportOptionsRequest> context)
     {
         _logger.LogInformation("{Consumer}: {Message}", nameof(ReservationGetTransportOptionsRequestConsumer), context.Message);
-        var response = await _reservationService.ReservationGetTransportOptions(context.Message);
+        var response = await _reservationService.ReservationGetTransportOptions();
         await context.RespondAsync(response);
     }
 }

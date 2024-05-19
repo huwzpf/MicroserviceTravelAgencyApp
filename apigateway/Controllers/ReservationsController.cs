@@ -37,15 +37,16 @@ public class ReservationsController : ControllerBase
     
     [Authorize]
     [HttpGet(Name = "GetReservations")]
-    public async Task<ActionResult<IEnumerable<Reservation>>> Get()
+    public async Task<ActionResult<IEnumerable<ReservationDto>>> Get()
     {
-        var response = await _getReservationsClient.GetResponse<GetReservationsResponse>(new GetReservationsRequest(Guid.NewGuid())); // Replace with actual UserId
+        var response = await _getReservationsClient.GetResponse<GetReservationsResponse>(
+            new GetReservationsRequest(Guid.Parse(User.FindFirstValue(ClaimTypes.Name))));
         return Ok(response.Message.Reservations);
     }
     
     [Authorize]
     [HttpPost(Name = "PostReservation")]
-    public async Task<ActionResult<Reservation>> Post(ReservationCreate reservationCreate)
+    public async Task<ActionResult<ReservationDto>> Post(ReservationCreate reservationCreate)
     {
         var reservationDto = new CreateReservationDto
         {
@@ -59,8 +60,8 @@ public class ReservationsController : ControllerBase
             Rooms = new Dictionary<int, int>(reservationCreate.Rooms.Select(r => new KeyValuePair<int, int>(r.Size, r.Number))),
             FromDestinationTransport = reservationCreate.FromHotelTransportOptionId.GetValueOrDefault(),
             WithFood = reservationCreate.FoodIncluded,
-            StartDate = reservationCreate.DateTime.GetValueOrDefault(),
-            EndDate = reservationCreate.DateTime.GetValueOrDefault().AddDays(reservationCreate.NumberOfNights.GetValueOrDefault(1))
+            StartDate = reservationCreate.DateTime,
+            NumberOfNights = reservationCreate.NumberOfNights,
         };
         var response = await _createReservationClient.GetResponse<CreateReservationResponse>(new CreateReservationRequest(reservationDto));
         return Ok(response.Message.Reservation);
@@ -68,7 +69,7 @@ public class ReservationsController : ControllerBase
     
     [Authorize]
     [HttpGet("{id}", Name = "GetReservation")]
-    public async Task<ActionResult<Reservation>> Get(Guid id)
+    public async Task<ActionResult<ReservationDto>> Get(Guid id)
     {
         var response = await _getSingleReservationClient.GetResponse<GetSingleReservationResponse>(new GetSingleReservationRequest(id));
         return Ok(response.Message.Reservation);
@@ -81,8 +82,8 @@ public class ReservationsController : ControllerBase
         var paymentInfoDto = new PaymentInfoDto
         {
             CreditCardNumber = paymentInfo.CreditCardNumber,
-            CreditCardExpirationDate = new Tuple<string, string>(paymentInfo.ExpirationDate.Month.ToString(), paymentInfo.ExpirationDate.Year.ToString()),
-            CardSecurityCode = paymentInfo.SecurityNumber
+            ExpirationDate = paymentInfo.ExpirationDate,
+            SecurityNumber = paymentInfo.SecurityNumber
         };
         var response = await _buyClient.GetResponse<BuyResponse>(new BuyRequest(id, paymentInfoDto));
         return Ok(response.Message.Success);

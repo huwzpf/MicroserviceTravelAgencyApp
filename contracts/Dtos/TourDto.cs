@@ -1,13 +1,27 @@
 namespace contracts.Dtos;
+using System.ComponentModel.DataAnnotations;
 
 public class TourDto
 {
-    public Guid ToDestinationTransportOption { get; set; }
-    public Guid Hotel { get; set; }
-    public Guid FromDestinationTransportOption { get; set; }
-    public string TransportType { get; set; } // "Airplane", "Train", "Bus"
-    public string FromCity { get; set; }
-    public string ToCity { get; set; }
-    public DateTime StartDate { get; set; }
-    public int DurationDays { get; set; }
+    public Guid? ToHotelTransportOptionId { get; set; }
+
+    public Guid? FromHotelTransportOptionId { get; set; }
+    public Guid? HotelId { get; set; }
+    public string? FromCity { get; set; }
+    
+    [Required]
+    public string HotelName { get; set; }
+    
+    [Required]
+    public string HotelCity { get; set; }
+    
+    [Required]
+    public string TypeOfTransport { get; set; }
+    
+    [Required]
+    public DateTime DateTime { get; set; }
+    
+    [Required]
+    public int NumberOfNights { get; set; }
+
 }

@@ -39,7 +39,7 @@ public class HotelsController : ControllerBase
     }
     
     [HttpGet(Name = "GetHotels")]
-    public async Task<ActionResult<IEnumerable<Hotel>>> Get()
+    public async Task<ActionResult<IEnumerable<HotelDto>>> Get()
     {
         var response = await _getHotelsClient.GetResponse<ReservationGetHotelsResponse>(new ReservationGetHotelsRequest());
         return Ok(response.Message.Hotels);
@@ -47,42 +47,39 @@ public class HotelsController : ControllerBase
     
     [Authorize("RequireAdmin")]
     [HttpPost(Name = "PostHotel")]
-    public async Task<ActionResult<Hotel>> Post(HotelCreate hotelCreate)
+    public async Task<ActionResult<HotelDto>> Post(HotelCreate hotelCreate)
     {
+        var rooms = new List<contracts.Dtos.RoomsCount>();
+        
+        foreach (var room in hotelCreate.Rooms)
+        {
+            rooms.Add(new contracts.Dtos.RoomsCount { Size = room.Size, Price = room.Price,  Count = room.Count});
+        }
         var hotelDto = new HotelDto
         {
             Id = Guid.NewGuid(),
             Name = hotelCreate.Name,
-            Address = new AddressDto
-            {
-                City = hotelCreate.City,
-                Country = hotelCreate.Country,
-                Street = hotelCreate.Street
-            },
-            Rooms = new Dictionary<int, Tuple<decimal, int>>(),
-            Bookings = new List<RoomReservationDto>(),
-            Discounts = new List<DiscountDto>(),
+            City = hotelCreate.City,
+            Country = hotelCreate.Country,
+            Street = hotelCreate.Street,
+            Rooms = rooms,
             FoodPricePerPerson = hotelCreate.FoodPricePerPerson
         };
 
-        foreach (var room in hotelCreate.Rooms)
-        {
-            hotelDto.Rooms.Add(room.Size, new Tuple<decimal, int>(room.Price, room.Count));
-        }
 
         var response = await _addHotelClient.GetResponse<AddHotelResponse>(new AddHotelRequest(hotelDto));
         return Ok(response.Message.Hotel);
     }
     
     [HttpGet("{id}", Name = "GetHotel")]
-    public async Task<ActionResult<Hotel>> Get(Guid id, DateTime? fromTimeStamp)
+    public async Task<ActionResult<HotelDto>> Get(Guid id, DateTime? fromTimeStamp)
     {
         var response = await _getHotelClient.GetResponse<ReservationGetHotelResponse>(new ReservationGetHotelRequest(id));
         return Ok(response.Message.Hotel);
     }
     
     [HttpGet("{id}/RoomsAvailability", Name = "GetHotelRoomsAvailability")]
-    public async Task<ActionResult<HotelRoomAvailability>> GetRoomsAvailability(Guid id)
+    public async Task<ActionResult<RoomAvailabilityDto>> GetRoomsAvailability(Guid id)
     {
         var response = await _getAvailableRoomsClient.GetResponse<GetAvailableRoomsResponse>(new GetAvailableRoomsRequest(id, DateTime.UtcNow, DateTime.UtcNow.AddDays(1)));
         return Ok(response.Message.Rooms);

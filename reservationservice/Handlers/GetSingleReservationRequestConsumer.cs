@@ -17,6 +17,7 @@ public class GetSingleReservationRequestConsumer : IConsumer<GetSingleReservatio
     public async Task Consume(ConsumeContext<GetSingleReservationRequest> context)
     {
         _logger.LogInformation("{Consumer}: {Message}", nameof(GetSingleReservationRequestConsumer), context.Message);
-        await context.RespondAsync(_reservationService.GetSingleReservation(context.Message));
+        var response = await _reservationService.GetSingleReservation(context.Message);
+        await context.RespondAsync(response);
     }
 }
