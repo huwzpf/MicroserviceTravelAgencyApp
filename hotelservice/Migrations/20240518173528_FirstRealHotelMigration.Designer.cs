@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using hotelservice.Models;
@@ -11,9 +12,10 @@ using hotelservice.Models;
 namespace hotelservice.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240518173528_FirstRealHotelMigration")]
+    partial class FirstRealHotelMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,9 +110,6 @@ namespace hotelservice.Migrations
                     b.Property<Guid>("RoomsId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("RoomsId1")
-                        .HasColumnType("uuid");
-
                     b.Property<int>("RoomsReserved")
                         .HasColumnType("integer");
 
@@ -120,8 +119,6 @@ namespace hotelservice.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("RoomsId");
-
-                    b.HasIndex("RoomsId1");
 
                     b.ToTable("RoomReservations");
                 });
@@ -151,14 +148,6 @@ namespace hotelservice.Migrations
                         .HasForeignKey("RoomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("hotelservice.Models.Room", "Rooms")
-                        .WithMany()
-                        .HasForeignKey("RoomsId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("hotelservice.Models.Hotel", b =>

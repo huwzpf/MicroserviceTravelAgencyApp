@@ -1,7 +1,7 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using hotelservice.Handlers;
-using hotelservice.Persistence;
+using hotelservice.Models;
 using hotelservice.Services.Hotel;
 
 var builder = Host.CreateDefaultBuilder(args);

@@ -1,6 +1,7 @@
-﻿using hotelservice.Persistence;
-using contracts;
+﻿using contracts;
 using contracts.Dtos;
+using hotelservice.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace hotelservice.Services.Hotel;
@@ -13,108 +14,117 @@ public class HotelService
     {
         _dbContext = dbContext;
     }
-    
-    public AddHotelResponse AddHotel(AddHotelRequest request)
+
+    public async Task<AddHotelResponse> AddHotel(AddHotelRequest request)
     {
-        return new AddHotelResponse(new HotelDto
+        var hotel = new Models.Hotel
         {
-                Id = Guid.NewGuid(),
-                Name = "G Hotel",
-                City = "Berlin",
-                Country = "Germany",
-                Street = "Sample Street",
-                Rooms =  new List<RoomsCount>(),
-                FoodPricePerPerson = 20
-        });
+            Id = Guid.NewGuid(),
+            Name = request.Hotel.Name,
+            City = request.Hotel.City,
+            Country = request.Hotel.Country,
+            Street = request.Hotel.Street,
+            FoodPricePerPerson = request.Hotel.FoodPricePerPerson,
+            Discounts = new List<Discount>(),
+        };
+        
+        var Rooms = request.Hotel.Rooms.Select(rc => new Room
+        {
+            Id = Guid.NewGuid(),
+            HotelId = hotel.Id,
+            Size = rc.Size,
+            Price = rc.Price,
+            Count = rc.Count,
+            Bookings = new List<RoomReservation>()
+        }).ToList();
+
+
+        hotel.Rooms = Rooms;
+
+        await _dbContext.Hotels.AddAsync(hotel);
+        await _dbContext.SaveChangesAsync();
+
+        return new AddHotelResponse(hotel.ToDto());
     }
 
-    public HotelSearchResponse SearchHotels(HotelSearchRequest request)
+    public async Task<HotelSearchResponse> SearchHotels(HotelSearchRequest request)
     {
-        return new HotelSearchResponse(new List<HotelDto>
+        var searchCriteria = request.SearchCriteria;
+        var hotelsQuery = _dbContext.Hotels
+            .Include(h => h.Discounts)
+            .Include(h => h.Rooms)
+                .ThenInclude(r => r.Bookings)
+            .AsQueryable();
+
+        if (!string.IsNullOrEmpty(searchCriteria.City))
         {
-            new HotelDto
-            {
-                Id = Guid.NewGuid(),
-                Name = "G Hotel",
-                City = "Gdansk",
-                Country = "Poland",
-                Street = "Sample Street",
-                Rooms = new List<RoomsCount>(),
-                FoodPricePerPerson = 20
-            },
-            new HotelDto
-            {
-                Id = Guid.NewGuid(),
-                Name = "W Hotel",
-                City = "Warsaw",
-                Country = "Poland",
-                Street = "Sample Street",
-                Rooms = new List<RoomsCount>(),
-                FoodPricePerPerson = 20
-            },
-            new HotelDto
-            {
-                Id = Guid.NewGuid(),
-                Name = "B Hotel",
-                City = "Berlin",
-                Country = "Germany",
-                Street = "Sample Street",
-                Rooms = new List<RoomsCount>(),
-                FoodPricePerPerson = 20
-            }
-        });
+            hotelsQuery = hotelsQuery.Where(h => h.City == searchCriteria.City);
+        }
+
+        if (!string.IsNullOrEmpty(searchCriteria.Country))
+        {
+            hotelsQuery = hotelsQuery.Where(h => h.Country == searchCriteria.Country);
+        }
+
+        if (searchCriteria.MinimumGuests.HasValue)
+        {
+            hotelsQuery = hotelsQuery.Where(h =>
+                h.Rooms.Sum(r => r.Count * r.Size) >= searchCriteria.MinimumGuests.Value);
+        }
+
+        if (searchCriteria.MinStart.HasValue || searchCriteria.MaxEnd.HasValue)
+        {
+            hotelsQuery = hotelsQuery.Where(h =>
+                h.Rooms.Any(r =>
+                    r.Bookings.Any(b =>
+                        (!searchCriteria.MinStart.HasValue || b.Start >= searchCriteria.MinStart.Value) &&
+                        (!searchCriteria.MaxEnd.HasValue || b.End <= searchCriteria.MaxEnd.Value))));
+        }
+
+        if (searchCriteria.MinDuration.HasValue || searchCriteria.MaxDuration.HasValue)
+        {
+            hotelsQuery = hotelsQuery.Where(h =>
+                h.Rooms.Any(r =>
+                    r.Bookings.Any(b =>
+                        (!searchCriteria.MinDuration.HasValue || EF.Functions.DateDiffDay(b.Start, b.End) >= searchCriteria.MinDuration.Value) &&
+                        (!searchCriteria.MaxDuration.HasValue || EF.Functions.DateDiffDay(b.Start, b.End) <= searchCriteria.MaxDuration.Value))));
+        }
+
+        var hotels = await hotelsQuery.ToListAsync();
+        var hotelsDto = hotels.Select(hotel => hotel.ToDto()).ToList();
+
+        return new HotelSearchResponse(hotelsDto);
     }
 
-    public GetHotelsResponse GetHotels(GetHotelsRequest request)
+    public async Task<GetHotelsResponse> GetHotels(GetHotelsRequest request)
     {
-        return new GetHotelsResponse(new List<HotelDto>
-        {
-            new HotelDto
-            {
-                Id = Guid.NewGuid(),
-                Name = "Sample Hotel 1",
-                City = "Berlin",
-                Country = "Germany",
-                Street = "Sample Street",
-                Rooms = new List<RoomsCount>(){new RoomsCount{Price = 10, Size = 2, Count = 1}},
-                FoodPricePerPerson = 20
-            },
-            new HotelDto
-            {
-                Id = Guid.NewGuid(),
-                Name = "Sample Hotel 2",
-                City = "Berlin",
-                Country = "Germany",
-                Street = "Sample Street",
-                Rooms = new List<RoomsCount>(){new RoomsCount{Price = 10, Size = 2, Count = 1}},
-                FoodPricePerPerson = 20
-            },
-            
-            new HotelDto
-            {
-                Id = Guid.NewGuid(),
-                Name = "Sample Hotel 3",
-                City = "Paris",
-                Country = "France",
-                Street = "Sample Street",
-                Rooms = new List<RoomsCount>(){new RoomsCount{Price = 10, Size = 2, Count = 1}},
-                FoodPricePerPerson = 20
-            }
-        });
+        var hotels = await _dbContext.Hotels
+            .Include(h => h.Discounts)
+            .Include(h => h.Rooms)
+            .ThenInclude(r => r.Bookings)
+            .ToListAsync();
+        
+        var hotelsDto = hotels.Select(hotel => hotel.ToDto()).ToList();
+
+        return new GetHotelsResponse(hotelsDto);
     }
 
-    public GetHotelResponse GetHotel(GetHotelRequest request)
+    public async Task<GetHotelResponse> GetHotel(GetHotelRequest request)
     {
-        return new GetHotelResponse(new HotelDto
+        var hotel = await _dbContext.Hotels
+            .Include(h => h.Discounts)
+            .Include(h => h.Rooms)
+            .ThenInclude(r => r.Bookings)
+            .FirstOrDefaultAsync(h => h.Id == request.Id);
+
+        if (hotel == null)
         {
-            Id = request.Id,
-            Name = "Sample Hotel",
-            City = "Berlin",
-            Country = "Germany",
-            Street = "Sample Street",
-            Rooms = new List<RoomsCount>(),
-            FoodPricePerPerson = 20
-        });
+            return null;
+        }
+
+        var hotelDto = hotel.ToDto();
+
+        return new GetHotelResponse(hotelDto);
     }
 
     public HotelBookRoomsResponse BookRooms(HotelBookRoomsRequest request)
@@ -126,7 +136,6 @@ public class HotelService
                 Id = Guid.NewGuid(),
                 Size = 2,
                 Start = request.BookingDetails.Start,
-                NumberOfNights = request.BookingDetails.NumberOfNights
             }
         });
     }
