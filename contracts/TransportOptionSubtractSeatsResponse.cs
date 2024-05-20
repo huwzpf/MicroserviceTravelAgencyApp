@@ -1,4 +1,4 @@
 
 namespace contracts;
 
-public record TransportOptionSubtractSeatsResponse(bool Success);
+public record TransportOptionSubtractSeatsResponse();

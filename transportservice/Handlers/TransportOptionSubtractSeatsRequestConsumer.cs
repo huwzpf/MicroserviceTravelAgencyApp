@@ -18,6 +18,7 @@ public class TransportOptionSubtractSeatsRequestConsumer : IConsumer<TransportOp
     public async Task Consume(ConsumeContext<TransportOptionSubtractSeatsRequest> context)
     {
         _logger.LogInformation("{Consumer}: {Message}", nameof(TransportOptionSubtractSeatsRequestConsumer), context.Message);
-        await context.RespondAsync(_transportService.SubtractSeats(context.Message));
+        var response = await _transportService.SubtractSeats(context.Message);
+        await context.RespondAsync(response);
     }
 }

@@ -18,6 +18,7 @@ public class GetPopularDestinationsRequestConsumer : IConsumer<GetPopularDestina
     public async Task Consume(ConsumeContext<GetPopularDestinationsRequest> context)
     {
         _logger.LogInformation("{Consumer}: {Message}", nameof(GetPopularDestinationsRequest), context.Message);
-        await context.RespondAsync(_transportService.GetPopularDestinations(context.Message));
+        var response = await _transportService.GetPopularDestinations(context.Message);
+        await context.RespondAsync(response);
     }
 }

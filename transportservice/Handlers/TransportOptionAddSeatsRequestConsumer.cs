@@ -18,6 +18,7 @@ public class TransportOptionAddSeatsRequestConsumer : IConsumer<TransportOptionA
     public async Task Consume(ConsumeContext<TransportOptionAddSeatsRequest> context)
     {
         _logger.LogInformation("{Consumer}: {Message}", nameof(TransportOptionAddSeatsRequestConsumer), context.Message);
-        await context.RespondAsync(_transportService.AddSeats(context.Message));
+        var response = await _transportService.AddSeats(context.Message);
+        await context.RespondAsync(response);
     }
 }

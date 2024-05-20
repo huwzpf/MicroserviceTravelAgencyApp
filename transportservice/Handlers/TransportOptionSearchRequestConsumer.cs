@@ -18,6 +18,7 @@ public class TransportOptionSearchRequestConsumer : IConsumer<TransportOptionSea
     public async Task Consume(ConsumeContext<TransportOptionSearchRequest> context)
     {
         _logger.LogInformation("{Consumer}: {Message}", nameof(TransportOptionSearchRequestConsumer), context.Message);
-        await context.RespondAsync(_transportService.SearchTransportOptions(context.Message));
+        var response = await _transportService.SearchTransportOptions(context.Message);
+        await context.RespondAsync(response);
     }
 }

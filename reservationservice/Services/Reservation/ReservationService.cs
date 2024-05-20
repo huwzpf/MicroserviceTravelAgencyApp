@@ -405,27 +405,10 @@ namespace reservationservice.Services.Reservation;
                     new TransportOptionSubtractSeatsRequest(createReservationRequest.Reservation.ToDestinationTransport, 
                         GetTotalNumberOfPeople(createReservationRequest.Reservation)));
 
-                if (!toDestinationTransportResponse.Message.Success)
-                {
-                    // Revert hotel booking
-                    await RevertHotelBooking(createReservationRequest.Reservation.Hotel, hotelBookRoomsResponse.Message.RoomReservations.Select(room => room.Id).ToList());
-                    throw new Exception("Failed to reserve ToDestinationTransport");
-                }
-
                 // 3. Try to reserve FromDestinationTransport
                 var fromDestinationTransportResponse = await _subtractSeatsClient.GetResponse<TransportOptionSubtractSeatsResponse>(
                     new TransportOptionSubtractSeatsRequest(createReservationRequest.Reservation.FromDestinationTransport, 
                         GetTotalNumberOfPeople(createReservationRequest.Reservation)));
-
-                if (!fromDestinationTransportResponse.Message.Success)
-                {
-                    // Revert hotel booking
-                    await RevertHotelBooking(createReservationRequest.Reservation.Hotel, hotelBookRoomsResponse.Message.RoomReservations.Select(room => room.Id).ToList());
-                    // Revert ToDestinationTransport
-                    await RevertTransportBooking(createReservationRequest.Reservation.ToDestinationTransport, 
-                        GetTotalNumberOfPeople(createReservationRequest.Reservation));
-                    throw new Exception("Failed to reserve FromDestinationTransport");
-                }
 
                 // 4. If all above were positive, create Reservation object and add it to database
                 var reservation = await ReservationFromDtos(createReservationRequest, hotelBookRoomsResponse);
