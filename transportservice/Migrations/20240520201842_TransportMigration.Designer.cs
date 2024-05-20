@@ -12,8 +12,8 @@ using transportservice.Models;
 namespace transportservice.Migrations
 {
     [DbContext(typeof(TransportDbContext))]
-    [Migration("20240519180715_2007")]
-    partial class _2007
+    [Migration("20240520201842_TransportMigration")]
+    partial class TransportMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

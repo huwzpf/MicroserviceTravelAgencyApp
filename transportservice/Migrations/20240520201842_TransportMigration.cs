@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace transportservice.Migrations
 {
-    public partial class initial : Migration
+    public partial class TransportMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

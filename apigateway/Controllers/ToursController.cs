@@ -23,7 +23,7 @@ public class ToursController : ControllerBase
     }
     
     [HttpGet(Name = "GetTours")]
-    public async Task<ActionResult<IEnumerable<TourDto>>> Get(int numberOfPeople, string? fromCity, string? fromCountry, string? toCity, string? toCountry, DateTime? minStart, DateTime? maxEnd, int? minDuration, int? maxDuration)
+    public async Task<ActionResult<IEnumerable<TourDto>>> Get(int numberOfPeople, string? fromCity, string? fromCountry, string? toCity, string? toCountry, DateTime? minStart, DateTime? maxEnd, int? minDuration, int? maxDuration, string? typeOfTransport)
     {
         var toursDto = new GetAvailableToursDto
         {
@@ -35,7 +35,8 @@ public class ToursController : ControllerBase
             MinStart = minStart,
             MaxEnd = maxEnd,
             MinDuration = minDuration,
-            MaxDuration = maxDuration
+            MaxDuration = maxDuration,
+            Type = typeOfTransport
         };
         var response = await _getAvailableToursClient.GetResponse<GetAvailableToursResponse>(new GetAvailableToursRequest(toursDto));
         return Ok(response.Message.Tours);

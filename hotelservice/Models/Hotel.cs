@@ -4,21 +4,42 @@ namespace hotelservice.Models;
 
 public class Hotel
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public decimal FoodPricePerPerson { get; set; }
-    public string City { get; set; }
-    public string Country { get; set; }
-    public string Street { get; set; }
-    public List<Discount> Discounts { get; set; }
-    public List<Room> Rooms { get; set; }
+    public Guid Id { get; init; }
+    public string Name { get; init; }
+    public decimal FoodPricePerPerson { get; init; }
+    public string City { get; init; }
+    public string Country { get; init; }
+    public string Street { get; init; }
+    public List<Discount> Discounts { get; set; } = new List<Discount>();
+    
+    private List<Room> _rooms = new List<Room>();
+    public List<Room> Rooms
+    {
+        get => _rooms;
+        init
+        {
+            _rooms = value;
+            
+            for (int i = 1; i <= 10; i++)
+            {
+                GuestConfigurations[i] = GetConfigs(RoomsCountDict.Keys.ToList(), RoomsCountDict, i);
+            }
+        }
+    }
+
+    private Dictionary<int, int>? _roomsCount;
+    public Dictionary<int, int> RoomsCountDict 
+    {
+        get { return _roomsCount ??= GetRoomCounts(); }
+    }
+    
 
     // This property is needed for optimizing searching for hotel
     // It contains map numGuests: {roomSize: roomCount} - all possible room configurations for given number of guests
     // Splits are without duplicates and are "optimal" -
     // meaning that configuration with rooms accommodating more than  numGuests are possible, but roomCount is minimized
     // i.e. for 2 guests it's possible to have configuration with single room for 5 people, but not with 2 such rooms
-    public Dictionary<int, List<Dictionary<int, int>>> GuestConfigurations; 
+    public Dictionary<int, List<Dictionary<int, int>>> GuestConfigurations = new Dictionary<int, List<Dictionary<int, int>>>(); 
 
     public HotelDto ToDto()
     {
@@ -60,6 +81,11 @@ public class Hotel
     }
     public bool IsAvailable(DateTime start, DateTime end, int numPeople, int minLength=0)
     {
+        if (!GuestConfigurations.ContainsKey(numPeople))
+        {
+            GuestConfigurations[numPeople] = GetConfigs(RoomsCountDict.Keys.ToList(), RoomsCountDict, numPeople);
+        }
+
         // if minLength == 0: minLength = end - start
         foreach (var config in GuestConfigurations[numPeople])
         {
@@ -92,6 +118,49 @@ public class Hotel
             }
         }
         return false;
+    }
+    
+    private static List<Dictionary<int, int>> GetConfigs(List<int> rooms, Dictionary<int, int> numRooms, int numPeople)
+    {
+        var configs = new List<Dictionary<int, int>>();
+        if (rooms.Count == 0)
+        {
+            return configs;
+        }
+        
+        if (rooms.Count == 1)
+        {
+            for (int i = 0; i <= numRooms[rooms[0]]; i++)
+            {
+                if (rooms[0] * i >= numPeople)
+                {
+                    configs.Add(new Dictionary<int, int> { { rooms[0], i } });
+                }
+            }
+            return configs;
+        }
+
+        var existingRecursiveConfigs = new List<Dictionary<int, int>>();
+
+        for (int i = 0; i <= numRooms[rooms[0]]; i++)
+        {
+            var recursiveConfigs = GetConfigs(rooms.Skip(1).ToList(), numRooms, numPeople - i * rooms[0]);
+            foreach (var rc in recursiveConfigs)
+            {
+                if (!existingRecursiveConfigs.Any(c => c.SequenceEqual(rc)))
+                {
+                    existingRecursiveConfigs.Add(rc);
+                    var newConfig = new Dictionary<int, int> { { rooms[0], i } };
+                    foreach (var kvp in rc)
+                    {
+                        newConfig[kvp.Key] = kvp.Value;
+                    }
+                    configs.Add(newConfig);
+                }
+            }
+        }
+
+        return configs;
     }
 }
 

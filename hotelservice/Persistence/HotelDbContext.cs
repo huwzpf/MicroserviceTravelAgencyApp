@@ -71,6 +71,40 @@ namespace hotelservice.Models
                     }
                 }
             }
+
+            var hotel1Id = Guid.NewGuid();
+            var hotel2Id = Guid.NewGuid();
+            var hotel3Id = Guid.NewGuid();
+
+            var hotels = new[]
+            {
+                new Hotel
+                {
+                    Id = hotel1Id, Name = "Berlin Hotel", FoodPricePerPerson = 20, City = "Berlin", Country = "Germany", Street = "Alexanderplatz"
+                },
+                new Hotel
+                {
+                    Id = hotel2Id, Name = "Gdansk Hotel", FoodPricePerPerson = 15, City = "Gdansk", Country = "Poland", Street = "Dluga"
+                },
+                new Hotel
+                {
+                    Id = hotel3Id, Name = "Tokyo Hotel", FoodPricePerPerson = 25, City = "Tokyo", Country = "Japan", Street = "Shinjuku"
+                }
+            };
+
+            modelBuilder.Entity<Hotel>().HasData(hotels);
+
+            var rooms = new[]
+            {
+                new Room { Id = Guid.NewGuid(), HotelId = hotel1Id, Size = 25, Price = 100, Count = 5 },
+                new Room { Id = Guid.NewGuid(), HotelId = hotel1Id, Size = 35, Price = 150, Count = 5 },
+                new Room { Id = Guid.NewGuid(), HotelId = hotel2Id, Size = 20, Price = 80, Count = 5 },
+                new Room { Id = Guid.NewGuid(), HotelId = hotel2Id, Size = 30, Price = 120, Count = 5 },
+                new Room { Id = Guid.NewGuid(), HotelId = hotel3Id, Size = 22, Price = 200, Count = 5 },
+                new Room { Id = Guid.NewGuid(), HotelId = hotel3Id, Size = 40, Price = 300, Count = 5 }
+            };
+
+            modelBuilder.Entity<Room>().HasData(rooms);
         }
     }
 }

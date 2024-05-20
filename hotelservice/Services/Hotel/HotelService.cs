@@ -37,17 +37,9 @@ public class HotelService
             Country = request.Hotel.Country,
             Street = request.Hotel.Street,
             FoodPricePerPerson = request.Hotel.FoodPricePerPerson,
-            Discounts = new List<Discount>(),
             Rooms = rooms,
-            GuestConfigurations = new Dictionary<int, List<Dictionary<int, int>>>()
         };
-        
-        var roomCounts = hotel.GetRoomCounts();
 
-        for (int i = 1; i <= 10; i++)
-        {
-            hotel.GuestConfigurations[i] = GetConfigs(roomCounts.Keys.ToList(), roomCounts, i);
-        }
         await _dbContext.Hotels.AddAsync(hotel);
         await _dbContext.SaveChangesAsync();
 
@@ -57,6 +49,9 @@ public class HotelService
     public async Task<HotelCheckAvailabilityResponse> CheckHotelAvailability(HotelCheckAvailabilityRequest request)
     {
         var hotel = await _dbContext.Hotels
+            .Include(h => h.Discounts)
+            .Include(h => h.Rooms)
+            .ThenInclude(r => r.Bookings)
             .FirstOrDefaultAsync(h => h.Id == request.Id);
         
         var response = false;
@@ -239,43 +234,6 @@ public class HotelService
         return new HotelCancelBookRoomsResponse();
     }
 
-    private List<Dictionary<int, int>> GetConfigs(List<int> rooms, Dictionary<int, int> numRooms, int numPeople)
-    {
-        var configs = new List<Dictionary<int, int>>();
-        
-        if (rooms.Count == 1)
-        {
-            for (int i = 0; i <= numRooms[rooms[0]]; i++)
-            {
-                if (rooms[0] * i >= numPeople)
-                {
-                    configs.Add(new Dictionary<int, int> { { rooms[0], i } });
-                }
-            }
-            return configs;
-        }
-
-        var existingRecursiveConfigs = new List<Dictionary<int, int>>();
-
-        for (int i = 0; i <= numRooms[rooms[0]]; i++)
-        {
-            var recursiveConfigs = GetConfigs(rooms.Skip(1).ToList(), numRooms, numPeople - i * rooms[0]);
-            foreach (var rc in recursiveConfigs)
-            {
-                if (!existingRecursiveConfigs.Any(c => c.SequenceEqual(rc)))
-                {
-                    existingRecursiveConfigs.Add(rc);
-                    var newConfig = new Dictionary<int, int> { { rooms[0], i } };
-                    foreach (var kvp in rc)
-                    {
-                        newConfig[kvp.Key] = kvp.Value;
-                    }
-                    configs.Add(newConfig);
-                }
-            }
-        }
-
-        return configs;
-    }
+    
 }
 
