@@ -464,9 +464,10 @@ namespace reservationservice.Services.Reservation;
         
         public async Task<GetAvailableToursResponse> GetAvailableTours(GetAvailableToursRequest request)
         {
+            var numPeople = request.Tours.NumPeople == 0 ? 1 : request.Tours.NumPeople;
             var transportSearchDto = new TransportOptionSearchDto
             {
-                SeatsMinimum = request.Tours.NumPeople,
+                SeatsMinimum = numPeople,
                 SourceCity = request.Tours.SourceCity,
                 SourceCountry = request.Tours.SourceCountry,
                 DestinationCity = request.Tours.DestinationCity,
@@ -491,7 +492,10 @@ namespace reservationservice.Services.Reservation;
                 .ToList();
             var allTransportOptions = await _transportSearchClient.GetResponse<TransportOptionSearchResponse>(
                 new TransportOptionSearchRequest(transportSearchDto));
-            
+
+            var maxDuration = (request.Tours.MaxDuration == null || request.Tours.MaxDuration > 60)
+                ? 60
+                : request.Tours.MaxDuration;
             var tours = new List<TourDto>();
 
             foreach (var hotel in filteredResponses)
@@ -504,8 +508,8 @@ namespace reservationservice.Services.Reservation;
                         foreach (var fromTransportOption in allTransportOptions.Message.TransportOptions)
                         {
                             var duration = (int)(fromTransportOption.End - toTransportOption.Start).TotalDays;
-                            if (duration > request.Tours.MinDuration &&
-                                duration < request.Tours.MaxDuration &&
+                            if (duration > (request.Tours.MinDuration == null ? 0 :request.Tours.MinDuration)  &&
+                                duration < maxDuration &&
                                 toTransportOption.FromCity == fromTransportOption.ToCity &&
                                 toTransportOption.FromCountry == fromTransportOption.ToCountry &&
                                 toTransportOption.ToCity == fromTransportOption.FromCity &&
@@ -517,7 +521,7 @@ namespace reservationservice.Services.Reservation;
                                             hotel.Id,
                                             toTransportOption.End,
                                             fromTransportOption.Start,
-                                            request.Tours.NumPeople));
+                                            numPeople));
                                 if (!hotelAvailable.Message.Found)
                                 {
                                     continue;

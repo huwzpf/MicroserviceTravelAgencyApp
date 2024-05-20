@@ -29,7 +29,7 @@ builder.ConfigureServices((hostContext, services) =>
         
         busConfigurator.UsingRabbitMq((context,cfg) =>
         {
-            cfg.Host("127.0.0.1", "/", h => {
+            cfg.Host("rabbitmq", "/", h => {
                 h.Username("user_rabbitmq");
                 h.Password("password_rabbitmq");
             });
@@ -37,7 +37,7 @@ builder.ConfigureServices((hostContext, services) =>
         });
     });
     
-    services.AddDbContextFactory<ReservationDbContext>(options => options.UseNpgsql("Host=127.0.0.1:5432;Database=reservationservice_db;Username=user_reservationservice_db;Password=password_reservationservice_db"));
+    services.AddDbContextFactory<ReservationDbContext>(options => options.UseNpgsql("Host=postgres:5432;Database=reservationservice_db;Username=user_reservationservice_db;Password=password_reservationservice_db"));
     services.AddScoped<ReservationService>();
 });
 

@@ -155,7 +155,6 @@ namespace hotelservice.Migrations
                         .HasForeignKey("RoomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
                 });
 
             modelBuilder.Entity("hotelservice.Models.Hotel", b =>

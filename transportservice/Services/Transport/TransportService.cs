@@ -50,9 +50,24 @@ public class TransportService
             .Include(t => t.SeatsChanges)
             .AsQueryable();
 
+        if (searchCriteria.SeatsMinimum != 0)
+        {
+            transportOptionsQuery = transportOptionsQuery.Where(t => t.GetSeats() > searchCriteria.SeatsMinimum);
+        }
+        
         if (!string.IsNullOrEmpty(searchCriteria.SourceCountry))
         {
-            transportOptionsQuery = transportOptionsQuery.Where(t => t.FromCity == searchCriteria.SourceCountry);
+            transportOptionsQuery = transportOptionsQuery.Where(t => t.FromCountry == searchCriteria.SourceCountry);
+        }
+
+        if (!string.IsNullOrEmpty(searchCriteria.SourceCity))
+        {
+            transportOptionsQuery = transportOptionsQuery.Where(t => t.FromCity == searchCriteria.SourceCity);
+        }
+
+        if (!string.IsNullOrEmpty(searchCriteria.DestinationCountry))
+        {
+            transportOptionsQuery = transportOptionsQuery.Where(t => t.ToCountry == searchCriteria.DestinationCountry);
         }
 
         if (!string.IsNullOrEmpty(searchCriteria.DestinationCity))

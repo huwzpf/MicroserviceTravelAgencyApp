@@ -12,8 +12,8 @@ using reservationservice.Persistence;
 namespace reservationservice.Migrations
 {
     [DbContext(typeof(ReservationDbContext))]
-    [Migration("20240517163334_FullDatabaseImplementation1")]
-    partial class FullDatabaseImplementation1
+    [Migration("20240520190015_ReservationMigration")]
+    partial class ReservationMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,6 +55,12 @@ namespace reservationservice.Migrations
                     b.Property<Guid>("ReservationId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("Size")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("nRooms")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ReservationId");
@@ -71,10 +77,10 @@ namespace reservationservice.Migrations
                     b.Property<DateTime?>("CancellationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<bool>("Finalized")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("FoodIncluded")
                         .HasColumnType("boolean");
 
                     b.Property<string>("FromCity")
@@ -82,6 +88,13 @@ namespace reservationservice.Migrations
 
                     b.Property<Guid>("FromDestinationTransport")
                         .HasColumnType("uuid");
+
+                    b.Property<Guid>("HotelId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("HotelName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("NumAdults")
                         .HasColumnType("integer");
@@ -95,10 +108,13 @@ namespace reservationservice.Migrations
                     b.Property<int>("NumUnder3")
                         .HasColumnType("integer");
 
+                    b.Property<int>("NumberOfNights")
+                        .HasColumnType("integer");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<DateTime?>("ReservedUntil")
+                    b.Property<DateTime>("ReservedUntil")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("StartDate")

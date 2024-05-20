@@ -44,6 +44,11 @@ public class TransportOption
             ToShowName = this.ToShowName
         };
     }
+
+    public int GetSeats()
+    {
+        return InitialSeats;
+    }
 }
 public class Discount
 {
