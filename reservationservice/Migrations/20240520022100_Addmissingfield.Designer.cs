@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using reservationservice.Persistence;
@@ -11,9 +12,10 @@ using reservationservice.Persistence;
 namespace reservationservice.Migrations
 {
     [DbContext(typeof(ReservationDbContext))]
-    partial class ReservationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240520022100_Addmissingfield")]
+    partial class Addmissingfield
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

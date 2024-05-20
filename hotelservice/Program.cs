@@ -15,7 +15,7 @@ builder.ConfigureServices((hostContext, services) =>
             
         // Add consumers
         busConfigurator.AddConsumer<AddHotelRequestConsumer>();
-        busConfigurator.AddConsumer<HotelSearchRequestConsumer>();
+        busConfigurator.AddConsumer<HotelCheckAvailabilityRequestConsumer>();
         busConfigurator.AddConsumer<GetHotelsRequestConsumer>();
         busConfigurator.AddConsumer<GetHotelRequestConsumer>();
         busConfigurator.AddConsumer<HotelBookRoomsRequestConsumer>();
@@ -25,7 +25,7 @@ builder.ConfigureServices((hostContext, services) =>
         
         busConfigurator.UsingRabbitMq((context,cfg) =>
         {
-            cfg.Host("rabbitmq", "/", h => {
+            cfg.Host("127.0.0.1", "/", h => {
                 h.Username("user_rabbitmq");
                 h.Password("password_rabbitmq");
             });
@@ -33,7 +33,7 @@ builder.ConfigureServices((hostContext, services) =>
         });
     });
     
-    services.AddDbContext<HotelDbContext>(options => options.UseNpgsql("Host=postgres:5432;Database=hotelservice_db;Username=user_hotelservice_db;Password=password_hotelservice_db"));
+    services.AddDbContext<HotelDbContext>(options => options.UseNpgsql("Host=127.0.0.1:5432;Database=hotelservice_db;Username=user_hotelservice_db;Password=password_hotelservice_db"));
     services.AddScoped<HotelService>();
 });
 

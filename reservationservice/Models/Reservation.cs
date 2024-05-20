@@ -67,6 +67,7 @@ public class Reservation
 public class HotelRoomReservation
 {
     public int Size {get; set;}
+    public int nRooms {get; set;}
     public Guid Id { get; init; }
     public Guid ReservationId { get; init; } // Foreign key property
     public Guid HotelRoomReservationObjectId { get; init; }

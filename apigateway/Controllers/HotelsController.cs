@@ -79,9 +79,9 @@ public class HotelsController : ControllerBase
     }
     
     [HttpGet("{id}/RoomsAvailability", Name = "GetHotelRoomsAvailability")]
-    public async Task<ActionResult<RoomAvailabilityDto>> GetRoomsAvailability(Guid id)
+    public async Task<ActionResult<RoomAvailabilityDto>> GetRoomsAvailability(Guid id, DateTime Start, DateTime End)
     {
-        var response = await _getAvailableRoomsClient.GetResponse<GetAvailableRoomsResponse>(new GetAvailableRoomsRequest(id, DateTime.UtcNow, DateTime.UtcNow.AddDays(1)));
+        var response = await _getAvailableRoomsClient.GetResponse<GetAvailableRoomsResponse>(new GetAvailableRoomsRequest(id, Start, End));
         return Ok(response.Message.Rooms);
     }
     

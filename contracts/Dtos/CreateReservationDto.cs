@@ -12,6 +12,4 @@ public class CreateReservationDto
     public Dictionary<int, int> Rooms { get; set; } // size : number
     public Guid FromDestinationTransport { get; set; }
     public bool WithFood { get; set; }
-    public DateTime StartDate { get; set; }
-    public int NumberOfNights { get; set; }
 }

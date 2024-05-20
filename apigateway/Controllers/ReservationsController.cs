@@ -60,8 +60,6 @@ public class ReservationsController : ControllerBase
             Rooms = new Dictionary<int, int>(reservationCreate.Rooms.Select(r => new KeyValuePair<int, int>(r.Size, r.Number))),
             FromDestinationTransport = reservationCreate.FromHotelTransportOptionId.GetValueOrDefault(),
             WithFood = reservationCreate.FoodIncluded,
-            StartDate = reservationCreate.DateTime,
-            NumberOfNights = reservationCreate.NumberOfNights,
         };
         var response = await _createReservationClient.GetResponse<CreateReservationResponse>(new CreateReservationRequest(reservationDto));
         return Ok(response.Message.Reservation);

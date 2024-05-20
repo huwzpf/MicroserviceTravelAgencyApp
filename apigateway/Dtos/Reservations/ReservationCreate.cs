@@ -18,11 +18,6 @@ public class ReservationCreate
     public int NumberOfUnder10 { get; set; }
     [Required]
     public int NumberOfUnder18 { get; set; }
-    
-    public DateTime DateTime { get; set; }
-    
-    public int NumberOfNights { get; set; }
-    
     [Required]
     public bool FoodIncluded { get; set; }
     
