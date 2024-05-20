@@ -5,6 +5,14 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Load configuration
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: false)
+    .AddEnvironmentVariables();
+
+var configuration = builder.Configuration;
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -30,9 +38,13 @@ builder.Services.AddMassTransit(busConfigurator =>
     
     busConfigurator.UsingRabbitMq((context,cfg) =>
     {
-        cfg.Host("rabbitmq", "/", h => {
-            h.Username("user_rabbitmq");
-            h.Password("password_rabbitmq");
+        var rabbitMQHost = configuration.GetConnectionString("RabbitMQHost");
+        var rabbitMQUser = configuration.GetConnectionString("RabbitMQUser");
+        var rabbitMQPassword = configuration.GetConnectionString("RabbitMQPassword");
+        
+        cfg.Host(rabbitMQHost, "/", h => {
+            h.Username(rabbitMQUser);
+            h.Password(rabbitMQPassword);
         });
         cfg.ConfigureEndpoints(context);
     });

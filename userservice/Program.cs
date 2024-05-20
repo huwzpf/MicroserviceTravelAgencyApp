@@ -6,8 +6,19 @@ using userservice.Services.User;
 
 var builder = Host.CreateDefaultBuilder(args);
 
+builder.ConfigureAppConfiguration((hostingContext, config) =>
+{
+    var env = hostingContext.HostingEnvironment;
+    
+    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: false)
+        .AddEnvironmentVariables();
+});
+
 builder.ConfigureServices((hostContext, services) =>
 {
+    var configuration = hostContext.Configuration;
+    
     // Add MassTransit
     services.AddMassTransit(busConfigurator =>
     {
@@ -17,17 +28,25 @@ builder.ConfigureServices((hostContext, services) =>
         busConfigurator.AddConsumer<LoginRequestConsumer>();
         busConfigurator.AddConsumer<GetUserRequestConsumer>();
         
+        // Get the connection string from configuration
+        var rabbitMQHost = configuration.GetConnectionString("RabbitMQHost");
+        var rabbitMQUser = configuration.GetConnectionString("RabbitMQUser");
+        var rabbitMQPassword = configuration.GetConnectionString("RabbitMQPassword");
+        
         busConfigurator.UsingRabbitMq((context,cfg) =>
         {
-            cfg.Host("rabbitmq", "/", h => {
-                h.Username("user_rabbitmq");
-                h.Password("password_rabbitmq");
+            cfg.Host(rabbitMQHost, "/", h => {
+                h.Username(rabbitMQUser);
+                h.Password(rabbitMQPassword);
             });
             cfg.ConfigureEndpoints(context);
         });
     });
     
-    services.AddDbContext<UserDbContext>(options => options.UseNpgsql("Host=postgres:5432;Database=userservice_db;Username=user_userservice_db;Password=password_userservice_db"));
+    // Get the connection string from configuration
+    var postgresConnectionString = configuration.GetConnectionString("PostgresConnectionString");
+    
+    services.AddDbContext<UserDbContext>(options => options.UseNpgsql(postgresConnectionString));
     services.AddScoped<UserService>();
 });
 
