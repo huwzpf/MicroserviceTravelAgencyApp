@@ -18,6 +18,7 @@ public class HotelAddDiscountRequestConsumer : IConsumer<HotelAddDiscountRequest
     public async Task Consume(ConsumeContext<HotelAddDiscountRequest> context)
     {
         _logger.LogInformation("{Consumer}: {Message}", nameof(HotelAddDiscountRequestConsumer), context.Message);
-        await context.RespondAsync(_hotelService.AddDiscount(context.Message));
+        var response = await _hotelService.AddDiscount(context.Message);
+        await context.RespondAsync(response);
     }
 }

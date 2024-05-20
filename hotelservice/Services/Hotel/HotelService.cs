@@ -145,8 +145,32 @@ public class HotelService
         return new HotelGetAvailableRoomsResponse(new RoomAvailabilityDto {StartDate = DateTime.UtcNow, EndDate = DateTime.UtcNow.AddDays(1), Rooms = new List<RoomsCount>(){new RoomsCount{Price = 10, Size = 2, Count = 1}}});
     }
 
-    public HotelAddDiscountResponse AddDiscount(HotelAddDiscountRequest request)
+    public async Task<HotelAddDiscountResponse> AddDiscount(HotelAddDiscountRequest request)
     {
+        var hotelQuery = await _dbContext.Hotels
+            .Include(h => h.Discounts)
+            .Include(h => h.Rooms)
+            .ThenInclude(r => r.Bookings)
+            .FirstOrDefaultAsync(to => to.Id == request.Id);
+
+        if(hotelQuery == null)
+        {
+            return null;
+        }
+
+        var newDiscount = new Discount
+        {
+            Id = Guid.NewGuid(),
+            HotelId = request.Id,
+            Value = request.Discount.Value,
+            Start = DateTime.SpecifyKind(request.Discount.Start, DateTimeKind.Utc),
+            End = DateTime.SpecifyKind(request.Discount.End, DateTimeKind.Utc),
+        };
+
+        hotelQuery.Discounts.Add(newDiscount);
+        await _dbContext.Discounts.AddAsync(newDiscount);
+        await _dbContext.SaveChangesAsync();
+        
         return new HotelAddDiscountResponse();
     }
 
@@ -154,6 +178,5 @@ public class HotelService
     {
         return new HotelCancelBookRoomsResponse();
     }
-    
 }
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace hotelservice.Migrations
 {
-    public partial class FirstRealHotelMigration : Migration
+    public partial class _2245 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -73,7 +73,8 @@ namespace hotelservice.Migrations
                     RoomsReserved = table.Column<int>(type: "integer", nullable: false),
                     Start = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     End = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CancelationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    CancelationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    RoomsId1 = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,6 +82,12 @@ namespace hotelservice.Migrations
                     table.ForeignKey(
                         name: "FK_RoomReservations_Rooms_RoomsId",
                         column: x => x.RoomsId,
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RoomReservations_Rooms_RoomsId1",
+                        column: x => x.RoomsId1,
                         principalTable: "Rooms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -95,6 +102,11 @@ namespace hotelservice.Migrations
                 name: "IX_RoomReservations_RoomsId",
                 table: "RoomReservations",
                 column: "RoomsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoomReservations_RoomsId1",
+                table: "RoomReservations",
+                column: "RoomsId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rooms_HotelId",
