@@ -154,8 +154,8 @@ public class ReservationService
             FromDestinationTransport = createReservationRequest.Reservation.FromDestinationTransport,
             Finalized = false,
             StartDate = toTransportOptionResponse.Message.TransportOption.Start,
-            NumberOfNights = (int)(fromTransportOptionResponse.Message.TransportOption.Start
-                                   - toTransportOptionResponse.Message.TransportOption.End).TotalDays,
+            NumberOfNights = (int)(fromTransportOptionResponse.Message.TransportOption.End
+                                   - toTransportOptionResponse.Message.TransportOption.Start).TotalDays,
             Price = CalculatePrice(
                 createReservationRequest.Reservation,
                 hotelResponse.Message.Hotel,
@@ -412,8 +412,8 @@ public class ReservationService
                 {
                     Id = createReservationRequest.Reservation.Hotel,
                     Start = toTransportOptionResponse.Message.TransportOption.Start,
-                    NumberOfNights = (int)(fromTransportOptionResponse.Message.TransportOption.End - 
-                                           toTransportOptionResponse.Message.TransportOption.Start).TotalDays,
+                    NumberOfNights = (int)(fromTransportOptionResponse.Message.TransportOption.Start - 
+                                           toTransportOptionResponse.Message.TransportOption.End).TotalDays,
                     Sizes = createReservationRequest.Reservation.Rooms
                 }));
 
