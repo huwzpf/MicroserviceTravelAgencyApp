@@ -30,8 +30,13 @@ builder.ConfigureServices((hostContext, services) =>
         
         // Get the connection string from configuration
         var rabbitMQHost = configuration.GetConnectionString("RabbitMQHost");
-        var rabbitMQUser = configuration.GetConnectionString("RabbitMQUser");
-        var rabbitMQPassword = configuration.GetConnectionString("RabbitMQPassword");
+	Console.WriteLine("RabbitMQ Host: " + rabbitMQHost);
+
+	var rabbitMQUser = configuration.GetConnectionString("RabbitMQUser");
+	Console.WriteLine("RabbitMQ User: " + rabbitMQUser);
+
+	var rabbitMQPassword = configuration.GetConnectionString("RabbitMQPassword");
+	Console.WriteLine("RabbitMQ Password: " + rabbitMQPassword);
         
         busConfigurator.UsingRabbitMq((context,cfg) =>
         {
@@ -46,6 +51,7 @@ builder.ConfigureServices((hostContext, services) =>
     // Get the connection string from configuration
     var postgresConnectionString = configuration.GetConnectionString("PostgresConnectionString");
     
+    Console.WriteLine("postgresConnecitonString: " + postgresConnectionString);
     services.AddDbContext<UserDbContext>(options => options.UseNpgsql(postgresConnectionString));
     services.AddScoped<UserService>();
 });
