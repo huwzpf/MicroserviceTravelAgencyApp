@@ -26,7 +26,7 @@ public class TransportOption
         return new TransportOptionDto
         {
             Id = Id,
-            SeatsAvailable = InitialSeats,
+            SeatsAvailable = GetSeats(),
             Start = Start,
             End = End,
             PriceAdult = PriceAdult,

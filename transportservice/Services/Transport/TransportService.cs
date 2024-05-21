@@ -118,13 +118,14 @@ public class TransportService
 
         if (transportQuery == null) return new TransportOptionAddSeatsResponse();
 
-        transportQuery.SeatsChanges.Add(new SeatsChange
+        await _dbContext.SeatsChanges.AddAsync(new SeatsChange
         {
             Id = Guid.NewGuid(),
             TransportOptionId = transportQuery.Id,
             ChangeBy = request.SeatsAmount
         });
 
+        await _dbContext.SaveChangesAsync();
         return new TransportOptionAddSeatsResponse();
     }
 
@@ -158,13 +159,15 @@ public class TransportService
         if (transportQuery == null || transportQuery.GetSeats() < request.SeatsAmount)
             return new TransportOptionSubtractSeatsResponse(false);
 
-        transportQuery.SeatsChanges.Add(new SeatsChange
+        await _dbContext.SeatsChanges.AddAsync(new SeatsChange
         {
             Id = Guid.NewGuid(),
             TransportOptionId = transportQuery.Id,
             ChangeBy = -request.SeatsAmount
         });
 
+        await _dbContext.SaveChangesAsync();
+        
         return new TransportOptionSubtractSeatsResponse(true);
     }
 

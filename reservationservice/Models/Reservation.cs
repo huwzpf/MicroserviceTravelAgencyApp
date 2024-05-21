@@ -39,11 +39,10 @@ public class Reservation
             NumberOfUnder18 = NumUnder18,
             ToHotelTransportOptionId = ToDestinationTransport,
             HotelId = HotelId,
-            Rooms = HotelRoomReservations.GroupBy
-                    (r => r.Size).Select(group => new ReservationHotelRoom
+            Rooms = HotelRoomReservations.Select(r => new ReservationHotelRoom
                 {
-                    Size = group.Key,
-                    Number = group.Count()
+                    Size = r.Size,
+                    Number = r.nRooms
                 })
                 .ToList(),
             FromHotelTransportOptionId = FromDestinationTransport,

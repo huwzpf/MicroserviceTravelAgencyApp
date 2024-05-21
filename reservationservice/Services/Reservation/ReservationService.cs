@@ -88,12 +88,12 @@ public class ReservationService
 
         // Revert all bookings
         await RevertHotelBooking(reservation.HotelId,
-            reservation.HotelRoomReservations.Select(room => room.Id).ToList());
+            reservation.HotelRoomReservations.Select(room => room.HotelRoomReservationObjectId).ToList());
 
         await RevertTransportBooking(reservation.ToDestinationTransport,
             GetTotalNumberOfPeople(reservation));
 
-        await RevertTransportBooking(reservation.ToDestinationTransport,
+        await RevertTransportBooking(reservation.FromDestinationTransport,
             GetTotalNumberOfPeople(reservation));
 
         dbContext.Reservations.Update(reservation);
@@ -392,7 +392,7 @@ public class ReservationService
     {
         await using var dbContext = _dbContextFactory.CreateDbContext();
         await using var transaction = await dbContext.Database.BeginTransactionAsync();
-
+        Response<HotelBookRoomsResponse>? hotelBookRoomsResponse = null;
         try
         {
             var toTransportOptionResponse =
@@ -407,13 +407,13 @@ public class ReservationService
                 throw new Exception("Transport options do not exist");
 
             // Try to book hotel with given number of rooms
-            var hotelBookRoomsResponse = await _bookRoomsClient.GetResponse<HotelBookRoomsResponse>(
+            hotelBookRoomsResponse = await _bookRoomsClient.GetResponse<HotelBookRoomsResponse>(
                 new HotelBookRoomsRequest(new HotelBookRoomsDto
                 {
                     Id = createReservationRequest.Reservation.Hotel,
                     Start = toTransportOptionResponse.Message.TransportOption.Start,
-                    NumberOfNights = (int)(fromTransportOptionResponse.Message.TransportOption.Start
-                                           - toTransportOptionResponse.Message.TransportOption.End).TotalDays,
+                    NumberOfNights = (int)(fromTransportOptionResponse.Message.TransportOption.End - 
+                                           toTransportOptionResponse.Message.TransportOption.Start).TotalDays,
                     Sizes = createReservationRequest.Reservation.Rooms
                 }));
 
@@ -428,7 +428,11 @@ public class ReservationService
                         GetTotalNumberOfPeople(createReservationRequest.Reservation)));
 
             if (toDestinationTransportResponse == null || !toDestinationTransportResponse.Message.Success)
+            {
+                await RevertHotelBooking(createReservationRequest.Reservation.Hotel, 
+                    hotelBookRoomsResponse.Message.RoomReservations.Select(room => room.Id).ToList());
                 throw new Exception("Failed to book transport option");
+            };
 
             // Try to reserve FromDestinationTransport
             var fromDestinationTransportResponse =
@@ -439,7 +443,13 @@ public class ReservationService
 
 
             if (fromDestinationTransportResponse == null || !fromDestinationTransportResponse.Message.Success)
+            {
+                await RevertTransportBooking(createReservationRequest.Reservation.ToDestinationTransport,
+                    GetTotalNumberOfPeople(createReservationRequest.Reservation));
+                await RevertHotelBooking(createReservationRequest.Reservation.Hotel, 
+                    hotelBookRoomsResponse.Message.RoomReservations.Select(room => room.Id).ToList());
                 throw new Exception("Failed to book transport option");
+            }
 
             // 4. If all above were positive, create Reservation object and add it to databas
             var reservation = await ReservationFromDtos(createReservationRequest, hotelBookRoomsResponse,
@@ -454,6 +464,16 @@ public class ReservationService
         }
         catch (Exception ex)
         {
+            // Revert everything
+            await RevertTransportBooking(createReservationRequest.Reservation.ToDestinationTransport,
+                GetTotalNumberOfPeople(createReservationRequest.Reservation));
+            await RevertTransportBooking(createReservationRequest.Reservation.FromDestinationTransport,
+                GetTotalNumberOfPeople(createReservationRequest.Reservation));
+            if (hotelBookRoomsResponse is { Message.RoomReservations: not null })
+            {
+                await RevertHotelBooking(createReservationRequest.Reservation.Hotel,
+                    hotelBookRoomsResponse.Message.RoomReservations.Select(room => room.Id).ToList());
+            }
             _logger.LogError(ex, "Error occurred while creating reservation, reverting transactions");
             await transaction.RollbackAsync();
 
@@ -505,11 +525,11 @@ public class ReservationService
                              hotel.Country == request.Tours.DestinationCountry))
             .ToList();
 
-        var toHotelTransportOptionsResponse = await _transportSearchClient.GetResponse<TransportOptionSearchResponse>(
-            new TransportOptionSearchRequest(toTransportSearchDto));
-
         var fromHotelTransportOptionsResponse = await _transportSearchClient.GetResponse<TransportOptionSearchResponse>(
             new TransportOptionSearchRequest(fromTransportSearchDto));
+
+        var toHotelTransportOptionsResponse = await _transportSearchClient.GetResponse<TransportOptionSearchResponse>(
+            new TransportOptionSearchRequest(toTransportSearchDto));
 
         var maxDuration = request.Tours.MaxDuration == null || request.Tours.MaxDuration > 60
             ? 60
@@ -524,10 +544,10 @@ public class ReservationService
                     var duration = (int)(fromHotelTransportOption.End - toHotelTransportOption.Start).TotalDays;
                     if (duration > (request.Tours.MinDuration ?? 0) &&
                         duration < maxDuration &&
-                        toHotelTransportOption.FromCity == fromHotelTransportOption.ToCity &&
-                        toHotelTransportOption.FromCountry == fromHotelTransportOption.ToCountry &&
-                        toHotelTransportOption.ToCity == fromHotelTransportOption.FromCity &&
-                        toHotelTransportOption.ToCountry == fromHotelTransportOption.FromCountry)
+                        fromHotelTransportOption.FromCity == toHotelTransportOption.ToCity &&
+                        fromHotelTransportOption.FromCountry == toHotelTransportOption.ToCountry &&
+                        fromHotelTransportOption.ToCity == toHotelTransportOption.FromCity &&
+                        fromHotelTransportOption.ToCountry == toHotelTransportOption.FromCountry)
                     {
                         var hotelAvailableResponse =
                             await _hotelCheckAvailabilityClient.GetResponse<HotelCheckAvailabilityResponse>(
@@ -548,7 +568,7 @@ public class ReservationService
                             HotelCity = hotel.City,
                             FromCity = toHotelTransportOption.FromCity,
                             DateTime = toHotelTransportOption.Start,
-                            NumberOfNights = (fromHotelTransportOption.Start - toHotelTransportOption.Start).Days
+                            NumberOfNights = duration
                         };
                         tours.Add(tour);
                     }
