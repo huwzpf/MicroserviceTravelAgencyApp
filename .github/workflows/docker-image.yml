@@ -24,19 +24,19 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/hpds:apigateway -f apigateway/Dockerfile .
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/hpds:userservice -f userservice/Dockerfile .
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/hpds:reservationservice -f reservationservice/Dockerfile .
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/hpds:hotelservice -f hotelservice/Dockerfile .
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/hpds:transportservice -f transportservice/Dockerfile .
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/hpds:postgres -f postgres/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_apigateway -f apigateway/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_userservice -f userservice/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_reservationservice -f reservationservice/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_hotelservice -f hotelservice/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_transportservice -f transportservice/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_postgres -f postgres/Dockerfile .
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/hpds:apigateway
-          docker push ${{ secrets.DOCKER_USERNAME }}/hpds:userservice
-          docker push ${{ secrets.DOCKER_USERNAME }}/hpds:reservationservice
-          docker push ${{ secrets.DOCKER_USERNAME }}/hpds:hotelservice
-          docker push ${{ secrets.DOCKER_USERNAME }}/hpds:transportservice
-          docker push ${{ secrets.DOCKER_USERNAME }}/hpds:postgres
+          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_apigateway
+          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_userservice
+          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_reservationservice
+          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_hotelservice
+          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_transportservice
+          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_postgres
           
