@@ -24,19 +24,19 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_apigateway -f apigateway/Dockerfile .
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_userservice -f userservice/Dockerfile .
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_reservationservice -f reservationservice/Dockerfile .
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_hotelservice -f hotelservice/Dockerfile .
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_transportservice -f transportservice/Dockerfile .
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_postgres -f postgres/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_apigateway:${{ github.event.release.tag_name }} -f apigateway/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_userservice:${{ github.event.release.tag_name }} -f userservice/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_reservationservice:${{ github.event.release.tag_name }} -f reservationservice/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_hotelservice:${{ github.event.release.tag_name }} -f hotelservice/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_transportservice:${{ github.event.release.tag_name }} -f transportservice/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_postgres:${{ github.event.release.tag_name }} -f postgres/Dockerfile .
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_apigateway
-          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_userservice
-          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_reservationservice
-          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_hotelservice
-          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_transportservice
-          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_postgres
+          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_apigateway:${{ github.event.release.tag_name }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_userservice:${{ github.event.release.tag_name }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_reservationservice:${{ github.event.release.tag_name }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_hotelservice:${{ github.event.release.tag_name }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_transportservice:${{ github.event.release.tag_name }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_postgres:${{ github.event.release.tag_name }}
           
