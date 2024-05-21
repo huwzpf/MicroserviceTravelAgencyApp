@@ -32,7 +32,6 @@ builder.ConfigureServices((hostContext, services) =>
         busConfigurator.AddConsumer<TransportOptionAddSeatsRequestConsumer>();
         busConfigurator.AddConsumer<TransportOptionAddDiscountRequestConsumer>();
         busConfigurator.AddConsumer<TransportOptionSubtractSeatsRequestConsumer>();
-        busConfigurator.AddConsumer<GetTransportOptionWhenRequestConsumer>();
         busConfigurator.AddConsumer<GetPopularDestinationsRequestConsumer>();
 
         // Get the connection string from configuration

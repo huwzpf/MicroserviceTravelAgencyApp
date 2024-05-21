@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using apigateway.Dtos.TransportOptions;
+﻿using apigateway.Dtos.TransportOptions;
 using contracts;
 using contracts.Dtos;
 using MassTransit;
@@ -20,8 +17,7 @@ public class TransportOptionsController : ControllerBase
     private readonly IRequestClient<AddTransportOptionRequest> _addTransportOptionClient;
     private readonly IRequestClient<TransportOptionAddDiscountRequest> _addTransportDiscountClient;
 
-    public TransportOptionsController(
-        ILogger<TransportOptionsController> logger,
+    public TransportOptionsController(ILogger<TransportOptionsController> logger,
         IRequestClient<ReservationGetTransportOptionsRequest> getTransportOptionsClient,
         IRequestClient<ReservationGetTransportOptionRequest> getTransportOptionClient,
         IRequestClient<AddTransportOptionRequest> addTransportOptionClient,
@@ -33,14 +29,16 @@ public class TransportOptionsController : ControllerBase
         _addTransportOptionClient = addTransportOptionClient;
         _addTransportDiscountClient = addTransportDiscountClient;
     }
-    
+
     [HttpGet(Name = "GetTransportOptions")]
     public async Task<ActionResult<IEnumerable<TransportOptionDto>>> Get()
     {
-        var response = await _getTransportOptionsClient.GetResponse<ReservationGetTransportOptionsResponse>(new ReservationGetTransportOptionsRequest());
+        var response =
+            await _getTransportOptionsClient.GetResponse<ReservationGetTransportOptionsResponse>(
+                new ReservationGetTransportOptionsRequest());
         return Ok(response.Message.TransportOptions);
     }
-    
+
     [Authorize("RequireAdmin")]
     [HttpPost(Name = "PostTransportOption")]
     public async Task<ActionResult<TransportOptionDto>> Post(TransportOptionCreate transportOptionCreate)
@@ -63,23 +61,31 @@ public class TransportOptionsController : ControllerBase
             PriceUnder3 = transportOptionCreate.PriceUnder3,
             PriceUnder10 = transportOptionCreate.PriceUnder10,
             PriceUnder18 = transportOptionCreate.PriceUnder18,
-            Type = transportOptionCreate.Type.ToString()
+            Type = transportOptionCreate.Type
         };
 
-        var response = await _addTransportOptionClient.GetResponse<AddTransportOptionResponse>(new AddTransportOptionRequest(transportOptionDto));
+        var response =
+            await _addTransportOptionClient.GetResponse<AddTransportOptionResponse>(
+                new AddTransportOptionRequest(transportOptionDto));
         return Ok(response.Message.TransportOption);
     }
-    
+
     [HttpGet("{id}", Name = "GetTransportOption")]
-    public async Task<ActionResult<TransportOptionDto>> Get(Guid id, DateTime? fromTimeStamp)
+    public async Task<ActionResult<TransportOptionDto>> Get(Guid id)
     {
-        var response = await _getTransportOptionClient.GetResponse<ReservationGetTransportOptionResponse>(new ReservationGetTransportOptionRequest(id));
-        return Ok(response.Message.TransportOption);
+        var response =
+            await _getTransportOptionClient.GetResponse<ReservationGetTransportOptionResponse>(
+                new ReservationGetTransportOptionRequest(id));
+        return response.Message.TransportOption == null
+            ? BadRequest(new ProblemDetails { Title = "Buy failed", Status = 400 })
+            : Ok(response.Message.TransportOption);
+        ;
     }
-    
+
     [Authorize("RequireAdmin")]
     [HttpPost("{id}/Discount", Name = "PostTransportOptionDiscount")]
-    public async Task<IActionResult> PostTransportOptionDiscount(Guid id, TransportOptionDiscount transportOptionDiscount)
+    public async Task<IActionResult> PostTransportOptionDiscount(Guid id,
+        TransportOptionDiscount transportOptionDiscount)
     {
         var discountDto = new DiscountDto
         {
@@ -88,7 +94,8 @@ public class TransportOptionsController : ControllerBase
             End = transportOptionDiscount.End
         };
 
-        await _addTransportDiscountClient.GetResponse<TransportOptionAddDiscountResponse>(new TransportOptionAddDiscountRequest(id, discountDto));
+        await _addTransportDiscountClient.GetResponse<TransportOptionAddDiscountResponse>(
+            new TransportOptionAddDiscountRequest(id, discountDto));
         return Ok();
     }
 }

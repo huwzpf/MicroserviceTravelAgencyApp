@@ -45,6 +45,16 @@ services:
       postgres:
         condition: service_healthy
 
+  paymentservice:
+    build:
+      context: .
+      dockerfile: paymentservice/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
 
   transportservice:
       build:

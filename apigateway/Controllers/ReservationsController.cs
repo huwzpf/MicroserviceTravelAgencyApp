@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using apigateway.Dtos.Reservations;
 using contracts;
 using contracts.Dtos;
@@ -34,7 +31,7 @@ public class ReservationsController : ControllerBase
         _createReservationClient = createReservationClient;
         _buyClient = buyClient;
     }
-    
+
     [Authorize]
     [HttpGet(Name = "GetReservations")]
     public async Task<ActionResult<IEnumerable<ReservationDto>>> Get()
@@ -43,10 +40,10 @@ public class ReservationsController : ControllerBase
             new GetReservationsRequest(Guid.Parse(User.FindFirstValue(ClaimTypes.Name))));
         return Ok(response.Message.Reservations);
     }
-    
+
     [Authorize]
     [HttpPost(Name = "PostReservation")]
-    public async Task<ActionResult<ReservationDto>> Post(ReservationCreate reservationCreate)
+    public async Task<ActionResult<ReservationDto?>> Post(ReservationCreate reservationCreate)
     {
         var reservationDto = new CreateReservationDto
         {
@@ -57,25 +54,34 @@ public class ReservationsController : ControllerBase
             NumUnder18 = reservationCreate.NumberOfUnder18,
             ToDestinationTransport = reservationCreate.ToHotelTransportOptionId.GetValueOrDefault(),
             Hotel = reservationCreate.HotelId,
-            Rooms = new Dictionary<int, int>(reservationCreate.Rooms.Select(r => new KeyValuePair<int, int>(r.Size, r.Number))),
+            Rooms = new Dictionary<int, int>(
+                reservationCreate.Rooms.Select(r => new KeyValuePair<int, int>(r.Size, r.Number))),
             FromDestinationTransport = reservationCreate.FromHotelTransportOptionId.GetValueOrDefault(),
-            WithFood = reservationCreate.FoodIncluded,
+            WithFood = reservationCreate.FoodIncluded
         };
-        var response = await _createReservationClient.GetResponse<CreateReservationResponse>(new CreateReservationRequest(reservationDto));
-        return Ok(response.Message.Reservation);
+        var response =
+            await _createReservationClient.GetResponse<CreateReservationResponse>(
+                new CreateReservationRequest(reservationDto));
+        return response.Message.Reservation == null ? BadRequest(new ProblemDetails
+        {
+            Title = "Reservation was not added",
+            Status = 400
+        }) : Ok(response.Message.Reservation);
     }
-    
+
     [Authorize]
     [HttpGet("{id}", Name = "GetReservation")]
     public async Task<ActionResult<ReservationDto>> Get(Guid id)
     {
-        var response = await _getSingleReservationClient.GetResponse<GetSingleReservationResponse>(new GetSingleReservationRequest(id));
+        var response =
+            await _getSingleReservationClient.GetResponse<GetSingleReservationResponse>(
+                new GetSingleReservationRequest(id));
         return Ok(response.Message.Reservation);
     }
-    
+
     [Authorize]
     [HttpPost("{id}/Buy", Name = "BuyReservation")]
-    public async Task<ActionResult<bool>> BuyReservation(Guid id, PaymentInfo paymentInfo)
+    public async Task<ActionResult> BuyReservation(Guid id, PaymentInfo paymentInfo)
     {
         var paymentInfoDto = new PaymentInfoDto
         {
@@ -84,6 +90,12 @@ public class ReservationsController : ControllerBase
             SecurityNumber = paymentInfo.SecurityNumber
         };
         var response = await _buyClient.GetResponse<BuyResponse>(new BuyRequest(id, paymentInfoDto));
-        return Ok(response.Message.Success);
+        return response.Message.Success
+            ? Ok()
+            : BadRequest(new ProblemDetails
+            {
+                Title = "Buy failed",
+                Status = 400
+            });
     }
 }

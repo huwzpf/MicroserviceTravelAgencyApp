@@ -7,7 +7,7 @@ public class TransportOption
     public Guid Id { get; set; }
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
-    public Decimal PriceAdult { get; set; }
+    public decimal PriceAdult { get; set; }
     public string Type { get; set; }
     public int InitialSeats { get; set; }
     public string FromCity { get; set; }
@@ -19,37 +19,39 @@ public class TransportOption
     public string ToStreet { get; set; }
     public string? ToShowName { get; set; }
     public List<Discount> Discounts { get; set; } = new();
-    public List<SeatsChange> SeatsChanges { get; set; }
+    public List<SeatsChange> SeatsChanges { get; set; } = new();
 
     public TransportOptionDto ToDto()
     {
         return new TransportOptionDto
         {
-            Id = this.Id,
-            SeatsAvailable = this.InitialSeats,
-            Start = this.Start,
-            End = this.End,
-            PriceAdult = this.PriceAdult,
+            Id = Id,
+            SeatsAvailable = InitialSeats,
+            Start = Start,
+            End = End,
+            PriceAdult = PriceAdult,
             PriceUnder3 = PriceAdult * (decimal)0.1,
             PriceUnder10 = PriceAdult * (decimal)0.5,
             PriceUnder18 = PriceAdult * (decimal)0.9,
-            Type = this.Type,
-            FromStreet = this.FromStreet,
-            FromCity = this.FromCity,
-            FromCountry = this.FromCountry,
-            FromShowName = this.FromShowName,
-            ToStreet = this.ToStreet,
-            ToCity = this.ToCity,
-            ToCountry = this.ToCountry,
-            ToShowName = this.ToShowName
+            Type = Type,
+            FromStreet = FromStreet,
+            FromCity = FromCity,
+            FromCountry = FromCountry,
+            FromShowName = FromShowName,
+            ToStreet = ToStreet,
+            ToCity = ToCity,
+            ToCountry = ToCountry,
+            ToShowName = ToShowName
         };
     }
 
     public int GetSeats()
     {
-        return InitialSeats;
+        int totalChange = SeatsChanges.Sum(sc => sc.ChangeBy);
+        return InitialSeats + totalChange;
     }
 }
+
 public class Discount
 {
     public Guid Id { get; set; }
@@ -57,17 +59,6 @@ public class Discount
     public decimal Value { get; set; }
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
-
-    public DiscountDto ToDto()
-    {
-        return new DiscountDto
-        {
-            Id = this.Id,
-            Value = this.Value,
-            Start = this.Start,
-            End = this.End
-        };
-    }
 }
 
 public class SeatsChange

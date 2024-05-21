@@ -3,4 +3,4 @@ using contracts.Dtos;
 
 namespace contracts;
 
-public record GetTransportOptionResponse(TransportOptionDto TransportOption);
+public record GetTransportOptionResponse(TransportOptionDto? TransportOption);
