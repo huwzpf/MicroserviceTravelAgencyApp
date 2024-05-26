@@ -29,6 +29,7 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_reservationservice:${{ github.event.release.tag_name }} -f reservationservice/Dockerfile .
           docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_hotelservice:${{ github.event.release.tag_name }} -f hotelservice/Dockerfile .
           docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_transportservice:${{ github.event.release.tag_name }} -f transportservice/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_paymentservice:${{ github.event.release.tag_name }} -f paymentservice/Dockerfile .
           docker build -t ${{ secrets.DOCKER_USERNAME }}/rsww_184297_postgres:${{ github.event.release.tag_name }} -f postgres/Dockerfile .
 
       - name: Push Docker image
@@ -38,5 +39,6 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_reservationservice:${{ github.event.release.tag_name }}
           docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_hotelservice:${{ github.event.release.tag_name }}
           docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_transportservice:${{ github.event.release.tag_name }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_paymentservice:${{ github.event.release.tag_name }}
           docker push ${{ secrets.DOCKER_USERNAME }}/rsww_184297_postgres:${{ github.event.release.tag_name }}
           
