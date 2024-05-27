@@ -6,23 +6,31 @@ namespace transportservice.Services.Transport;
 
 public class TransportService
 {
-    private readonly TransportDbContext _dbContext;
+    private readonly IDbContextFactory<TransportDbContext> _dbContextFactory;
+    private readonly IEventBus _eventBus;
 
-    public TransportService(TransportDbContext dbContext)
+    public TransportService(IDbContextFactory<TransportDbContext> dbContextFactory, IEventBus eventBus)
     {
-        _dbContext = dbContext;
+        _dbContextFactory = dbContextFactory;
+        _eventBus = eventBus;
     }
 
-    private IQueryable<TransportOption> FetchTransportOptions()
+    private IQueryable<CommandTransportOption> FetchCommandTransportOptions(TransportDbContext dbContext)
     {
-        return _dbContext.TransportOptions
+        return dbContext.CommandTransportOptions
             .Include(to => to.Discounts)
             .Include(to => to.SeatsChanges);
     }
 
+    private IQueryable<QueryTransportOption> FetchQueryTransportOptions(TransportDbContext dbContext)
+    {
+        return dbContext.QueryTransportOptions.AsQueryable();
+    }
+
     public async Task<AddTransportOptionResponse> AddTransportOption(AddTransportOptionRequest request)
     {
-        var transport = new TransportOption
+        using var dbContext = _dbContextFactory.CreateDbContext();
+        var transport = new CommandTransportOption
         {
             Id = Guid.NewGuid(),
             FromCountry = request.TransportOption.FromCountry,
@@ -37,23 +45,27 @@ public class TransportService
             End = request.TransportOption.End,
             InitialSeats = request.TransportOption.SeatsAvailable,
             PriceAdult = request.TransportOption.PriceAdult,
+            PriceUnder3 = request.TransportOption.PriceUnder3,
+            PriceUnder10 = request.TransportOption.PriceUnder10,
+            PriceUnder18 = request.TransportOption.PriceUnder18,
             Type = request.TransportOption.Type,
             Discounts = new List<Discount>()
         };
 
-        _dbContext.TransportOptions.Add(transport);
-        await _dbContext.SaveChangesAsync();
+        dbContext.CommandTransportOptions.Add(transport);
+        await dbContext.SaveChangesAsync();
 
-        return new AddTransportOptionResponse(transport.ToDto());
+        var transportDto = transport.ToDto();
+        _eventBus.Publish(new TransportOptionAddedEvent(transportDto));
+
+        return new AddTransportOptionResponse(transportDto);
     }
 
     public async Task<TransportOptionSearchResponse> SearchTransportOptions(TransportOptionSearchRequest request)
     {
+        using var dbContext = _dbContextFactory.CreateDbContext();
         var searchCriteria = request.SearchCriteria;
-        var transportOptionsQuery = _dbContext.Set<TransportOption>()
-            .Include(t => t.Discounts)
-            .Include(t => t.SeatsChanges)
-            .AsQueryable();
+        var transportOptionsQuery = dbContext.Set<QueryTransportOption>().AsQueryable();
 
         if (!string.IsNullOrEmpty(searchCriteria.SourceCountry))
             transportOptionsQuery = transportOptionsQuery.Where(t => t.FromCountry == searchCriteria.SourceCountry);
@@ -76,16 +88,10 @@ public class TransportService
         if (!string.IsNullOrEmpty(searchCriteria.Type))
             transportOptionsQuery = transportOptionsQuery.Where(t => t.Type == searchCriteria.Type);
 
-        // Retrieve the filtered transport options from the database
-        var transportOptions = await transportOptionsQuery.ToListAsync();
-
-        // Perform in-memory filtering for the seats criteria
         if (searchCriteria.SeatsMinimum != 0)
-            transportOptions = transportOptions
-                .Where(t => t.GetSeats() > searchCriteria.SeatsMinimum)
-                .ToList();
+            transportOptionsQuery = transportOptionsQuery.Where(t => t.Seats >= searchCriteria.SeatsMinimum);
 
-        // Convert to DTOs
+        var transportOptions = await transportOptionsQuery.ToListAsync();
         var transportOptionsDto = transportOptions.Select(t => t.ToDto()).ToList();
 
         return new TransportOptionSearchResponse(transportOptionsDto);
@@ -93,9 +99,8 @@ public class TransportService
 
     public async Task<GetTransportOptionsResponse> GetTransportOptions(GetTransportOptionsRequest request)
     {
-        var transports = await FetchTransportOptions()
-            .ToListAsync();
-
+        using var dbContext = _dbContextFactory.CreateDbContext();
+        var transports = await FetchQueryTransportOptions(dbContext).ToListAsync();
         var transportsDto = transports.Select(transport => transport.ToDto()).ToList();
 
         return new GetTransportOptionsResponse(transportsDto);
@@ -103,7 +108,8 @@ public class TransportService
 
     public async Task<GetTransportOptionResponse> GetTransportOption(GetTransportOptionRequest request)
     {
-        var transportQuery = await FetchTransportOptions()
+        using var dbContext = _dbContextFactory.CreateDbContext();
+        var transportQuery = await FetchQueryTransportOptions(dbContext)
             .FirstOrDefaultAsync(to => to.Id == request.Id);
 
         if (transportQuery == null) return new GetTransportOptionResponse(null);
@@ -113,25 +119,31 @@ public class TransportService
 
     public async Task<TransportOptionAddSeatsResponse> AddSeats(TransportOptionAddSeatsRequest request)
     {
-        var transportQuery = await FetchTransportOptions()
+        using var dbContext = _dbContextFactory.CreateDbContext();
+        var transportQuery = await FetchCommandTransportOptions(dbContext)
             .FirstOrDefaultAsync(to => to.Id == request.Id);
 
         if (transportQuery == null) return new TransportOptionAddSeatsResponse();
 
-        await _dbContext.SeatsChanges.AddAsync(new SeatsChange
+        var seatsChange = new SeatsChange
         {
             Id = Guid.NewGuid(),
             TransportOptionId = transportQuery.Id,
             ChangeBy = request.SeatsAmount
-        });
+        };
 
-        await _dbContext.SaveChangesAsync();
+        await dbContext.SeatsChanges.AddAsync(seatsChange);
+        await dbContext.SaveChangesAsync();
+
+        _eventBus.Publish(new SeatsChangedEvent(transportQuery.Id, request.SeatsAmount));
+        
         return new TransportOptionAddSeatsResponse();
     }
 
     public async Task<TransportOptionAddDiscountResponse> AddDiscount(TransportOptionAddDiscountRequest request)
     {
-        var transportQuery = await FetchTransportOptions()
+        using var dbContext = _dbContextFactory.CreateDbContext();
+        var transportQuery = await FetchCommandTransportOptions(dbContext)
             .FirstOrDefaultAsync(to => to.Id == request.Id);
 
         if (transportQuery == null) return new TransportOptionAddDiscountResponse();
@@ -142,41 +154,44 @@ public class TransportService
             TransportOptionId = request.Id,
             Value = request.Discount.Value,
             Start = request.Discount.Start,
-            End = request.Discount.End
         };
 
-        await _dbContext.Discounts.AddAsync(newDiscount);
-        await _dbContext.SaveChangesAsync();
+        await dbContext.Discounts.AddAsync(newDiscount);
+        await dbContext.SaveChangesAsync();
 
+        _eventBus.Publish(new DiscountAddedEvent(request.Id, request.Discount.Value));
+        
         return new TransportOptionAddDiscountResponse();
     }
 
     public async Task<TransportOptionSubtractSeatsResponse> SubtractSeats(TransportOptionSubtractSeatsRequest request)
     {
-        var transportQuery = await FetchTransportOptions()
+        using var dbContext = _dbContextFactory.CreateDbContext();
+        var transportQuery = await FetchCommandTransportOptions(dbContext)
             .FirstOrDefaultAsync(to => to.Id == request.Id);
 
         if (transportQuery == null || transportQuery.GetSeats() < request.SeatsAmount)
             return new TransportOptionSubtractSeatsResponse(false);
 
-        await _dbContext.SeatsChanges.AddAsync(new SeatsChange
+        var seatsChange = new SeatsChange
         {
             Id = Guid.NewGuid(),
             TransportOptionId = transportQuery.Id,
             ChangeBy = -request.SeatsAmount
-        });
+        };
 
-        await _dbContext.SaveChangesAsync();
+        await dbContext.SeatsChanges.AddAsync(seatsChange);
+        await dbContext.SaveChangesAsync();
+
+        _eventBus.Publish(new SeatsChangedEvent(transportQuery.Id, -request.SeatsAmount));
         
         return new TransportOptionSubtractSeatsResponse(true);
     }
 
     public async Task<GetPopularDestinationsResponse> GetPopularDestinations(GetPopularDestinationsRequest request)
     {
-        var transportOptions = await FetchTransportOptions()
-            .Take(10)
-            .ToListAsync();
-
+        using var dbContext = _dbContextFactory.CreateDbContext();
+        var transportOptions = await FetchQueryTransportOptions(dbContext).Take(10).ToListAsync();
         var transportOptionsDto = transportOptions.Select(t => t.ToDto()).ToList();
 
         return new GetPopularDestinationsResponse(transportOptionsDto);

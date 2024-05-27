@@ -2,12 +2,15 @@
 
 namespace transportservice.Models;
 
-public class TransportOption
+public class CommandTransportOption
 {
     public Guid Id { get; set; }
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
     public decimal PriceAdult { get; set; }
+    public decimal PriceUnder3 { get; set; }
+    public decimal PriceUnder10 { get; set; }
+    public decimal PriceUnder18 { get; set; }
     public string Type { get; set; }
     public int InitialSeats { get; set; }
     public string FromCity { get; set; }
@@ -30,9 +33,9 @@ public class TransportOption
             Start = Start,
             End = End,
             PriceAdult = PriceAdult,
-            PriceUnder3 = PriceAdult * (decimal)0.1,
-            PriceUnder10 = PriceAdult * (decimal)0.5,
-            PriceUnder18 = PriceAdult * (decimal)0.9,
+            PriceUnder3 = PriceUnder3,
+            PriceUnder10 = PriceUnder10,
+            PriceUnder18 = PriceUnder18,
             Type = Type,
             FromStreet = FromStreet,
             FromCity = FromCity,
@@ -58,7 +61,6 @@ public class Discount
     public Guid TransportOptionId { get; set; } // Foreign key
     public decimal Value { get; set; }
     public DateTime Start { get; set; }
-    public DateTime End { get; set; }
 }
 
 public class SeatsChange
@@ -66,4 +68,56 @@ public class SeatsChange
     public Guid Id { get; set; }
     public Guid TransportOptionId { get; set; } // Foreign Key
     public int ChangeBy { get; set; }
+}
+
+public class QueryTransportOption
+{
+    public Guid Id { get; set; }
+    public DateTime Start { get; set; }
+    public DateTime End { get; set; }
+    public decimal PriceAdult { get; set; }
+    public decimal PriceUnder3 { get; set; }
+    public decimal PriceUnder10 { get; set; }
+    public decimal PriceUnder18 { get; set; }
+    public string Type { get; set; }
+    public int Seats { get; set; }
+    public string FromCity { get; set; }
+    public string FromCountry { get; set; }
+    public string FromStreet { get; set; }
+    public string? FromShowName { get; set; }
+    public string ToCity { get; set; }
+    public string ToCountry { get; set; }
+    public string ToStreet { get; set; }
+    public string? ToShowName { get; set; }
+    
+    public decimal? Discount { get; set; }
+
+    public TransportOptionDto ToDto()
+    {
+        return new TransportOptionDto
+        {
+            Id = Id,
+            SeatsAvailable = Seats,
+            Start = Start,
+            End = End,
+            PriceAdult = GetPrice(PriceAdult),
+            PriceUnder3 = GetPrice(PriceUnder3),
+            PriceUnder10 = GetPrice(PriceUnder10),
+            PriceUnder18 = GetPrice(PriceUnder18),
+            Type = Type,
+            FromStreet = FromStreet,
+            FromCity = FromCity,
+            FromCountry = FromCountry,
+            FromShowName = FromShowName,
+            ToStreet = ToStreet,
+            ToCity = ToCity,
+            ToCountry = ToCountry,
+            ToShowName = ToShowName
+        };
+    }
+    private decimal GetPrice(decimal price)
+    {
+        return Discount.HasValue ? price * Discount.Value : price ;
+    }
+
 }
