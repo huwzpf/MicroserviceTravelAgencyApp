@@ -131,6 +131,8 @@ public class ReservationService
             throw new Exception("Could not fetch hotel or transport option");
         }
         var newReservationGuid = Guid.NewGuid();
+        var nights = (int)(fromTransportOptionResponse.Message.TransportOption.End
+                           - toTransportOptionResponse.Message.TransportOption.Start).TotalDays;
         var reservation = new Models.Reservation
         {
             Id = newReservationGuid,
@@ -154,13 +156,13 @@ public class ReservationService
             FromDestinationTransport = createReservationRequest.Reservation.FromDestinationTransport,
             Finalized = false,
             StartDate = toTransportOptionResponse.Message.TransportOption.Start,
-            NumberOfNights = (int)(fromTransportOptionResponse.Message.TransportOption.End
-                                   - toTransportOptionResponse.Message.TransportOption.Start).TotalDays,
+            NumberOfNights = nights,
             Price = CalculatePrice(
                 createReservationRequest.Reservation,
                 hotelResponse.Message.Hotel,
                 toTransportOptionResponse.Message.TransportOption,
-                fromTransportOptionResponse.Message.TransportOption
+                fromTransportOptionResponse.Message.TransportOption,
+                nights
             ),
             FromCity = toTransportOptionResponse.Message.TransportOption.FromCity,
             ToCity = toTransportOptionResponse.Message.TransportOption.ToCity,
@@ -197,11 +199,15 @@ public class ReservationService
     }
 
     private static decimal CalculatePrice(CreateReservationDto reservation, HotelDto hotel,
-        TransportOptionDto toTransport, TransportOptionDto fromTransport)
+        TransportOptionDto toTransport, TransportOptionDto fromTransport, int numberOfNights)
     {
         decimal totalPrice = 0;
 
-        totalPrice += CalculateHotelPrice(reservation, hotel);
+        totalPrice += numberOfNights * CalculateHotelPrice(reservation, hotel);
+        if (reservation.WithFood)
+        {
+            totalPrice += numberOfNights * hotel.FoodPricePerPerson * GetTotalNumberOfPeople(reservation);
+        }
         totalPrice += CalculateTransportPrice(reservation, toTransport);
         totalPrice += CalculateTransportPrice(reservation, fromTransport);
 
