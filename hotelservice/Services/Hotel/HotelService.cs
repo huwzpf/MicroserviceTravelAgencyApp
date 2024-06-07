@@ -1,6 +1,7 @@
 ﻿using contracts;
 using contracts.Dtos;
 using hotelservice.Models;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 namespace hotelservice.Services.Hotel;
@@ -8,10 +9,12 @@ namespace hotelservice.Services.Hotel;
 public class HotelService
 {
     private readonly HotelDbContext _dbContext;
+    private readonly IPublishEndpoint  _publishEndpoint;
 
-    public HotelService(HotelDbContext dbContext)
+    public HotelService(HotelDbContext dbContext, IPublishEndpoint  publishEndpoint)
     {
         _dbContext = dbContext;
+        _publishEndpoint = publishEndpoint;
     }
 
     private IQueryable<Models.Hotel> FetchHotels()
@@ -175,15 +178,17 @@ public class HotelService
         {
             Id = Guid.NewGuid(),
             HotelId = request.Id,
-            Value = request.Discount.Value,
-            Start = DateTime.SpecifyKind(request.Discount.Start, DateTimeKind.Utc),
-            End = DateTime.SpecifyKind(request.Discount.End, DateTimeKind.Utc)
+            Value = request.Discount,
+            Start = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc)
         };
 
         hotelQuery.Discounts.Add(newDiscount);
         await _dbContext.Discounts.AddAsync(newDiscount);
         await _dbContext.SaveChangesAsync();
 
+        // Publish event about discount being added
+        await _publishEndpoint.Publish(new DiscountAddedEvent(request.Id));
+        
         return new HotelAddDiscountResponse();
     }
 
@@ -199,5 +204,20 @@ public class HotelService
         }
 
         return new HotelCancelBookRoomsResponse();
+    }
+
+    public async Task<GetPopularHotelsResponse> GetPopularHotels(GetPopularHotelsRequest request)
+    {
+        var hotels = new List<Tuple<string, string, string>>
+        {
+            new Tuple<string, string, string>("USA", "New York", "Hotel Plaza"),
+            new Tuple<string, string, string>("USA", "Los Angeles", "Hotel California"),
+            new Tuple<string, string, string>("Germany", "Berlin", "Hotel Adlon"),
+            new Tuple<string, string, string>("Germany", "Munich", "Hotel Bayerischer Hof"),
+            new Tuple<string, string, string>("Japan", "Tokyo", "Park Hyatt Tokyo"),
+            new Tuple<string, string, string>("Japan", "Osaka", "Hotel Monterey Grasmere Osaka")
+        };
+
+        return new GetPopularHotelsResponse(hotels);
     }
 }

@@ -16,7 +16,6 @@ public class ReservationService
     private readonly IRequestClient<GetHotelRequest> _getHotelClient;
     private readonly IRequestClient<GetHotelsRequest> _getHotelsClient;
     private readonly IRequestClient<HotelGetAvailableRoomsRequest> _getAvailableRoomsClient;
-    private readonly IRequestClient<GetPopularDestinationsRequest> _getPopularDestinationsClient;
     private readonly IRequestClient<HotelBookRoomsRequest> _bookRoomsClient;
     private readonly IRequestClient<TransportOptionSubtractSeatsRequest> _subtractSeatsClient;
     private readonly IRequestClient<TransportOptionAddSeatsRequest> _addSeatsClient;
@@ -24,6 +23,7 @@ public class ReservationService
     private readonly IRequestClient<HotelCheckAvailabilityRequest> _hotelCheckAvailabilityClient;
     private readonly IRequestClient<TransportOptionSearchRequest> _transportSearchClient;
     private readonly IRequestClient<PayRequest> _payRequestClient;
+    private readonly IPublishEndpoint  _publishEndpoint;
     private readonly ILogger<ReservationService> _logger;
     private readonly TimerManager _timerManager;
 
@@ -34,7 +34,6 @@ public class ReservationService
         IRequestClient<GetHotelRequest> getHotelClient,
         IRequestClient<GetHotelsRequest> getHotelsClient,
         IRequestClient<HotelGetAvailableRoomsRequest> getAvailableRoomsClient,
-        IRequestClient<GetPopularDestinationsRequest> getPopularDestinationsClient,
         IRequestClient<HotelBookRoomsRequest> bookRoomsClient,
         IRequestClient<TransportOptionSubtractSeatsRequest> subtractSeatsClient,
         IRequestClient<TransportOptionAddSeatsRequest> addSeatsClient,
@@ -42,6 +41,7 @@ public class ReservationService
         IRequestClient<TransportOptionSearchRequest> transportSearchClient,
         IRequestClient<HotelCancelBookRoomsRequest> cancelBookRoomsClient,
         IRequestClient<PayRequest> payRequestClient,
+        IPublishEndpoint  publishEndpoint,
         ILogger<ReservationService> logger)
     {
         _dbContextFactory = dbContextFactory;
@@ -50,7 +50,6 @@ public class ReservationService
         _getHotelClient = getHotelClient;
         _getHotelsClient = getHotelsClient;
         _getAvailableRoomsClient = getAvailableRoomsClient;
-        _getPopularDestinationsClient = getPopularDestinationsClient;
         _bookRoomsClient = bookRoomsClient;
         _subtractSeatsClient = subtractSeatsClient;
         _addSeatsClient = addSeatsClient;
@@ -58,6 +57,7 @@ public class ReservationService
         _hotelCheckAvailabilityClient = hotelCheckAvailabilityClient;
         _transportSearchClient = transportSearchClient;
         _payRequestClient = payRequestClient;
+        _publishEndpoint = publishEndpoint;
         _logger = logger;
         _timerManager = new TimerManager(OnTimerElapsed);
     }
@@ -131,8 +131,8 @@ public class ReservationService
             throw new Exception("Could not fetch hotel or transport option");
         }
         var newReservationGuid = Guid.NewGuid();
-        var nights = (int)(fromTransportOptionResponse.Message.TransportOption.End
-                           - toTransportOptionResponse.Message.TransportOption.Start).TotalDays;
+        var nights = GetStayDuration(toTransportOptionResponse.Message.TransportOption.Start,
+                                        fromTransportOptionResponse.Message.TransportOption.End);
         var reservation = new Models.Reservation
         {
             Id = newReservationGuid,
@@ -362,38 +362,7 @@ public class ReservationService
             return new BuyResponse(false);
         }
     }
-
-    public async Task<GetPopularOffersResponse> GetPopularOffers()
-    {
-        var destinationsResponse = await _getPopularDestinationsClient.GetResponse<GetPopularDestinationsResponse>(
-            new GetPopularDestinationsRequest());
-
-        // offer is a Dict<Country: Dict<City : List<Hotels>>>
-        var offers = new Dictionary<string, Dictionary<string, List<string>>>();
-
-        // iterate over destinationsResponse, extract To Address from each one and save City + Country
-        foreach (var transport in destinationsResponse.Message.TransportOptions)
-        {
-            var country = transport.ToCountry;
-            var city = transport.ToCity;
-
-            if (!offers.ContainsKey(country)) offers[country] = new Dictionary<string, List<string>>();
-
-            if (!offers[country].ContainsKey(city)) offers[country][city] = new List<string>();
-        }
-
-        // Get all hotels
-        var hotelsResponse = await _getHotelsClient.GetResponse<GetHotelsResponse>(new GetHotelsRequest());
-
-        // For each City + Country combination save list of hotels in this location
-        hotelsResponse.Message.Hotels
-            .Where(hotel => offers.ContainsKey(hotel.Country) && offers[hotel.Country].ContainsKey(hotel.City))
-            .ToList()
-            .ForEach(hotel => offers[hotel.Country][hotel.City].Add(hotel.Name));
-        // TODO: do not return destinations with 0 hotels
-        return new GetPopularOffersResponse(offers);
-    }
-
+    
     public async Task<CreateReservationResponse> CreateReservation(CreateReservationRequest createReservationRequest)
     {
         await using var dbContext = _dbContextFactory.CreateDbContext();
@@ -418,8 +387,8 @@ public class ReservationService
                 {
                     Id = createReservationRequest.Reservation.Hotel,
                     Start = toTransportOptionResponse.Message.TransportOption.Start,
-                    NumberOfNights = (int)(fromTransportOptionResponse.Message.TransportOption.Start - 
-                                           toTransportOptionResponse.Message.TransportOption.End).TotalDays,
+                    NumberOfNights = GetStayDuration(toTransportOptionResponse.Message.TransportOption.End,
+                                                     fromTransportOptionResponse.Message.TransportOption.Start),
                     Sizes = createReservationRequest.Reservation.Rooms
                 }));
 
@@ -466,6 +435,11 @@ public class ReservationService
 
             await transaction.CommitAsync();
             _timerManager.StartInitialTimer(reservation.Id);
+            
+            // Publish event about tour being reserved
+            await _publishEndpoint.Publish(new TourReservedEvent(reservation.HotelId,
+                reservation.Id, reservation.ToDestinationTransport, reservation.FromDestinationTransport));
+            
             return new CreateReservationResponse(reservation.ToDto());
         }
         catch (Exception ex)
@@ -487,6 +461,11 @@ public class ReservationService
         }
     }
 
+    private int GetStayDuration(DateTime start, DateTime end)
+    {
+        return (int)Math.Ceiling((end - start).TotalDays);
+
+    }
     public async Task<GetAvailableToursResponse> GetAvailableTours(GetAvailableToursRequest request)
     {
         var numPeople = request.Tours.NumPeople == 0 ? 1 : request.Tours.NumPeople;
@@ -547,9 +526,9 @@ public class ReservationService
             if (toHotelTransportOption.ToCity == hotel.City && toHotelTransportOption.ToCountry == hotel.Country)
                 foreach (var fromHotelTransportOption in fromHotelTransportOptionsResponse.Message.TransportOptions)
                 {
-                    var duration = (int)(fromHotelTransportOption.End - toHotelTransportOption.Start).TotalDays;
+                    var duration = GetStayDuration(toHotelTransportOption.Start, fromHotelTransportOption.End);
                     if (duration > (request.Tours.MinDuration ?? 0) &&
-                        duration < maxDuration &&
+                        duration <= maxDuration &&
                         fromHotelTransportOption.FromCity == toHotelTransportOption.ToCity &&
                         fromHotelTransportOption.FromCountry == toHotelTransportOption.ToCountry &&
                         fromHotelTransportOption.ToCity == toHotelTransportOption.FromCity &&
@@ -574,6 +553,7 @@ public class ReservationService
                             HotelCity = hotel.City,
                             FromCity = toHotelTransportOption.FromCity,
                             DateTime = toHotelTransportOption.Start,
+                            HotelName = hotel.Name,
                             NumberOfNights = duration
                         };
                         tours.Add(tour);

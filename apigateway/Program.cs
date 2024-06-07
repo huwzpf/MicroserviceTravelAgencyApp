@@ -1,7 +1,12 @@
+using System.Threading.Channels;
 using apigateway.Authentication;
+using apigateway.Handlers;
 using apigateway.Swagger;
+using contracts;
 using MassTransit;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using apigateway.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,10 +29,10 @@ builder.Services.AddSwaggerGen(options =>
     options.AddSecurityDefinition("Token", new OpenApiSecurityScheme
     {
         Description = "Token authentication.",
-        Name = "Authorization", // Nagłówek, w którym znajduje się token
-        In = ParameterLocation.Header, // Gdzie znajduje się token: w nagłówku
-        Type = SecuritySchemeType.ApiKey, // Typ uwierzytelniania (ApiKey w przypadku nagłówka Authorization)
-        Scheme = "ApiKeyAuth" // Nazwa schematu uwierzytelniania
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "ApiKeyAuth"
     });
 });
 
@@ -36,7 +41,10 @@ builder.Services.AddMassTransit(busConfigurator =>
 {
     busConfigurator.SetKebabCaseEndpointNameFormatter();
     
-    busConfigurator.UsingRabbitMq((context,cfg) =>
+    busConfigurator.AddConsumer<TourReservedConsumer>();
+    busConfigurator.AddConsumer<DiscountAddedConsumer>();
+    
+    busConfigurator.UsingRabbitMq((context, cfg) =>
     {
         var rabbitMQHost = configuration.GetConnectionString("RabbitMQHost");
         var rabbitMQUser = configuration.GetConnectionString("RabbitMQUser");
@@ -49,6 +57,14 @@ builder.Services.AddMassTransit(busConfigurator =>
         cfg.ConfigureEndpoints(context);
     });
 });
+
+// Register the channels and background services as singletons
+builder.Services.AddSingleton(Channel.CreateUnbounded<TourReservedEvent>());
+builder.Services.AddSingleton(Channel.CreateUnbounded<DiscountAddedEvent>());
+builder.Services.AddSingleton<WebSocketController.BroadcastService<TourReservedEvent>>();
+builder.Services.AddSingleton<WebSocketController.BroadcastService<DiscountAddedEvent>>();
+builder.Services.AddHostedService(provider => provider.GetService<WebSocketController.BroadcastService<TourReservedEvent>>());
+builder.Services.AddHostedService(provider => provider.GetService<WebSocketController.BroadcastService<DiscountAddedEvent>>());
 
 builder.Services.AddAuthentication("Token")
     .AddScheme<BasicAuthenticationOptions, CustomAuthenticationHandler>("Token", null);
@@ -76,7 +92,12 @@ app.UseCors("AllowAll");
 //     app.UseSwagger();
 //     app.UseSwaggerUI();
 // }
+var webSocketOptions = new WebSocketOptions
+{
+    KeepAliveInterval = TimeSpan.FromMinutes(1)
+};
 
+app.UseWebSockets(webSocketOptions);
 app.UseSwagger();
 app.UseSwaggerUI();
 

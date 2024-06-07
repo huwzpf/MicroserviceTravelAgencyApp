@@ -33,6 +33,7 @@ builder.ConfigureServices((hostContext, services) =>
         busConfigurator.AddConsumer<HotelGetAvailableRoomsRequestConsumer>();
         busConfigurator.AddConsumer<HotelAddDiscountRequestConsumer>();
         busConfigurator.AddConsumer<HotelCancelBookRoomsRequestConsumer>();
+        busConfigurator.AddConsumer<GetPopularHotelsRequestConsumer>();
         
         // Get the connection string from configuration
         var rabbitMQHost = configuration.GetConnectionString("RabbitMQHost");

@@ -92,18 +92,25 @@ public class QueryTransportOption
     
     public decimal? Discount { get; set; }
 
+    private decimal GetDiscount()
+    {
+        return Discount ?? 1;
+    }
+
     public TransportOptionDto ToDto()
     {
+        var discount = GetDiscount();
         return new TransportOptionDto
         {
             Id = Id,
             SeatsAvailable = Seats,
             Start = Start,
             End = End,
-            PriceAdult = GetPrice(PriceAdult),
-            PriceUnder3 = GetPrice(PriceUnder3),
-            PriceUnder10 = GetPrice(PriceUnder10),
-            PriceUnder18 = GetPrice(PriceUnder18),
+            PriceAdult = PriceAdult * discount,
+            PriceUnder3 = PriceUnder3 * discount,
+            PriceUnder10 = PriceUnder10 * discount,
+            PriceUnder18 = PriceUnder18 * discount,
+            Discount = discount,
             Type = Type,
             FromStreet = FromStreet,
             FromCity = FromCity,
@@ -115,9 +122,4 @@ public class QueryTransportOption
             ToShowName = ToShowName
         };
     }
-    private decimal GetPrice(decimal price)
-    {
-        return Discount.HasValue ? price * Discount.Value : price ;
-    }
-
 }

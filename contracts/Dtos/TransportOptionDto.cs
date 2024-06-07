@@ -36,5 +36,7 @@ public class TransportOptionDto
     [Required]
     public decimal PriceUnder18 { get; set; }
     [Required]
+    public decimal Discount { get; set; }
+    [Required]
     public string Type { get; set; } // "Plane", "Train", "Bus"
 }

@@ -29,7 +29,6 @@ builder.ConfigureServices((hostContext, services) =>
         busConfigurator.AddConsumer<GetReservationsRequestConsumer>();
         busConfigurator.AddConsumer<GetSingleReservationRequestConsumer>();
         busConfigurator.AddConsumer<BuyRequestConsumer>();
-        busConfigurator.AddConsumer<GetPopularOffersRequestConsumer>();
         busConfigurator.AddConsumer<CreateReservationRequestConsumer>();
         busConfigurator.AddConsumer<GetAvailableToursRequestConsumer>();
         busConfigurator.AddConsumer<ReservationGetTransportOptionRequestConsumer>();

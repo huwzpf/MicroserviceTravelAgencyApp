@@ -28,9 +28,6 @@ namespace hotelservice.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("End")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid>("HotelId")
                         .HasColumnType("uuid");
 
@@ -79,7 +76,7 @@ namespace hotelservice.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0a3efaf9-b617-4289-8afc-06f4f5260106"),
+                            Id = new Guid("e69488ef-5468-4301-ba52-0c0248480911"),
                             City = "Durres",
                             Country = "albania",
                             FoodPricePerPerson = 83m,
@@ -88,7 +85,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ed65f816-8a45-4fdf-9460-0ba2242b4576"),
+                            Id = new Guid("95a4b949-df50-4c39-99d8-836cbe7f0ac3"),
                             City = "Durres",
                             Country = "albania",
                             FoodPricePerPerson = 34m,
@@ -97,7 +94,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8c6d9bc2-f359-4a7b-b4de-952cf48019aa"),
+                            Id = new Guid("6a6e01aa-c848-47d4-bfb1-cede6abe8a14"),
                             City = "Durres",
                             Country = "albania",
                             FoodPricePerPerson = 31m,
@@ -106,7 +103,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d0cdfde2-390c-42bf-9ded-14dc608b195b"),
+                            Id = new Guid("6965f8e0-b3b3-43da-87b4-beca8798d1f3"),
                             City = "Vlora",
                             Country = "albania",
                             FoodPricePerPerson = 90m,
@@ -115,7 +112,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cef41a55-9cd3-4144-ba46-c0a160dae3db"),
+                            Id = new Guid("3a736cd3-b233-436c-911c-7073b4befd00"),
                             City = "Vlora",
                             Country = "albania",
                             FoodPricePerPerson = 99m,
@@ -124,7 +121,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("606eb796-f8c0-44c1-b6e7-d9c74c0e7aef"),
+                            Id = new Guid("d7426795-c33a-4a80-887b-5fdb61e85189"),
                             City = "Durres",
                             Country = "albania",
                             FoodPricePerPerson = 94m,
@@ -133,7 +130,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4da21b0d-26ab-4ce1-af64-a18f729b05f0"),
+                            Id = new Guid("5a9fa78e-b2d1-4cde-955c-1571b9a626f4"),
                             City = "Durres",
                             Country = "albania",
                             FoodPricePerPerson = 74m,
@@ -142,7 +139,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0eca1b28-f97e-4363-b310-e9d321001a67"),
+                            Id = new Guid("57a2fb51-16c7-4473-9eb9-f74be1117c10"),
                             City = "Chania",
                             Country = "grecja",
                             FoodPricePerPerson = 91m,
@@ -151,7 +148,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("dc159078-7c6d-4b29-928b-cc635819a9d0"),
+                            Id = new Guid("a6150683-f3f8-4578-ae91-74a2816b8f1c"),
                             City = "Peloponez",
                             Country = "grecja",
                             FoodPricePerPerson = 43m,
@@ -160,7 +157,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("52e2248d-8c44-413e-8f75-9194126c34cc"),
+                            Id = new Guid("1d2d61f2-2cbb-459c-be2d-1f8ed260a82f"),
                             City = "Nero",
                             Country = "grecja",
                             FoodPricePerPerson = 56m,
@@ -169,7 +166,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e5f235c5-c4e2-48df-a927-bc68c49f4840"),
+                            Id = new Guid("9534c589-acd0-49e8-bb4e-449e58445b2e"),
                             City = "Heraklion",
                             Country = "grecja",
                             FoodPricePerPerson = 74m,
@@ -178,7 +175,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("eb92356c-007d-4038-ae7e-f140aee1a1f0"),
+                            Id = new Guid("35f98b61-1d9e-4a7a-b9b3-1c8b88372c9b"),
                             City = "Nero",
                             Country = "grecja",
                             FoodPricePerPerson = 110m,
@@ -187,7 +184,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3c876902-2e40-46ea-bbe2-700f8344aa16"),
+                            Id = new Guid("2b78b471-830c-4962-9528-1138ea6bbcd8"),
                             City = "Olimpijska",
                             Country = "grecja",
                             FoodPricePerPerson = 31m,
@@ -196,7 +193,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("99073865-f88c-4f28-8173-2193299b411a"),
+                            Id = new Guid("4eb84047-b94a-469c-8f86-88592dab054e"),
                             City = "Marmaris",
                             Country = "turcja",
                             FoodPricePerPerson = 109m,
@@ -205,7 +202,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("daedf97d-0277-4e8a-874f-038c0608f189"),
+                            Id = new Guid("0737c9f6-d5d2-4670-b36a-676cf05162e7"),
                             City = "Turecka",
                             Country = "turcja",
                             FoodPricePerPerson = 111m,
@@ -214,7 +211,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e183174a-4833-4ee0-b916-3fa404526b5a"),
+                            Id = new Guid("60c22255-ba18-41dd-a0ef-87dd77035055"),
                             City = "Turecka",
                             Country = "turcja",
                             FoodPricePerPerson = 114m,
@@ -223,7 +220,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f1c8d7e8-b08e-40c3-97e7-dcedd3520f7e"),
+                            Id = new Guid("5522d316-af4b-43ab-8700-3dd77a1dc2be"),
                             City = "Turecka",
                             Country = "turcja",
                             FoodPricePerPerson = 35m,
@@ -232,7 +229,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e24043be-eccc-401d-8043-7d82f6aa3655"),
+                            Id = new Guid("ef28f7ba-5f04-49a7-aa7d-846c79471671"),
                             City = "Turecka",
                             Country = "turcja",
                             FoodPricePerPerson = 50m,
@@ -241,7 +238,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("086aec19-0d5e-4cdc-9f47-08477a6978ba"),
+                            Id = new Guid("60a51295-7af8-47ec-8a4e-4f6c4feeb74c"),
                             City = "Turecka",
                             Country = "turcja",
                             FoodPricePerPerson = 107m,
@@ -250,7 +247,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("15a863c6-f0af-46cc-814f-d37a1dcef9d8"),
+                            Id = new Guid("22700625-15d0-4773-8024-09759cbd76f4"),
                             City = "Almeria",
                             Country = "hiszpania",
                             FoodPricePerPerson = 38m,
@@ -259,7 +256,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("09b224f1-17f3-469f-8867-d0663c86a2ad"),
+                            Id = new Guid("b23a15ff-7161-4d3f-9da5-ddc10d69690e"),
                             City = "Brava",
                             Country = "hiszpania",
                             FoodPricePerPerson = 96m,
@@ -268,7 +265,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b2534063-171c-4be8-93a3-4a60be8dc272"),
+                            Id = new Guid("ac76333f-1a54-4bc7-a615-04121417b975"),
                             City = "Luz",
                             Country = "hiszpania",
                             FoodPricePerPerson = 94m,
@@ -277,7 +274,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00fca576-8fd4-4ac1-97ce-8dbe8880301b"),
+                            Id = new Guid("b28b03ba-9bc3-4e76-aa25-8842d9da7125"),
                             City = "Brava",
                             Country = "hiszpania",
                             FoodPricePerPerson = 37m,
@@ -286,7 +283,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d690b2bb-718a-4e7c-950a-dfbcc19e4108"),
+                            Id = new Guid("a9463ad4-4c8e-4169-ac7d-888e4da65cdf"),
                             City = "Brava",
                             Country = "hiszpania",
                             FoodPricePerPerson = 67m,
@@ -295,7 +292,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e184f9fc-616f-406b-b2ef-6c570792a655"),
+                            Id = new Guid("2b0499aa-f505-4f07-96db-1beac88a40a5"),
                             City = "Maresme",
                             Country = "hiszpania",
                             FoodPricePerPerson = 106m,
@@ -304,7 +301,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7c0ce2fe-9a04-426a-833b-43e8ade405be"),
+                            Id = new Guid("73950b5b-00a3-462b-8fe8-1ab5975538d4"),
                             City = "Brava",
                             Country = "hiszpania",
                             FoodPricePerPerson = 77m,
@@ -313,7 +310,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7965d57f-a0ba-408f-b4b2-c7e141df8abd"),
+                            Id = new Guid("fef1b7d4-5330-46d9-9497-6c8192fb731c"),
                             City = "Kalabria",
                             Country = "wlochy",
                             FoodPricePerPerson = 79m,
@@ -322,7 +319,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("22f44e2f-5cb2-4a2e-8bf4-d6b3c576f7ba"),
+                            Id = new Guid("f6721867-bada-4412-a649-efe2fea10ba8"),
                             City = "Kalabria",
                             Country = "wlochy",
                             FoodPricePerPerson = 47m,
@@ -331,7 +328,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("aa282794-4b9d-47c5-b7f9-4d657ecdfe4b"),
+                            Id = new Guid("240c7544-7f24-46db-9cf4-b3a7077f3219"),
                             City = "Kalabria",
                             Country = "wlochy",
                             FoodPricePerPerson = 93m,
@@ -340,7 +337,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1335ee5b-7ca5-4bb6-a106-f28c5a15e654"),
+                            Id = new Guid("7df7ce44-24e8-4cba-9848-5f872b24c0e0"),
                             City = "Kalabria",
                             Country = "wlochy",
                             FoodPricePerPerson = 81m,
@@ -349,7 +346,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a4165ec6-43c0-4ba5-82bc-e9455e27be3f"),
+                            Id = new Guid("df03a41e-617c-4637-be81-426f59520ff2"),
                             City = "Riwiera",
                             Country = "chorwacja",
                             FoodPricePerPerson = 116m,
@@ -358,7 +355,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("450f571d-b811-4a35-9b01-e88f62003758"),
+                            Id = new Guid("feed0ab7-f131-4481-91e0-60dba2702c8c"),
                             City = "Riwiera",
                             Country = "chorwacja",
                             FoodPricePerPerson = 31m,
@@ -367,7 +364,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fd2ec648-7ff4-485c-928e-c97272823862"),
+                            Id = new Guid("14d17a0c-0430-4566-871f-892896a088bb"),
                             City = "Riwiera",
                             Country = "chorwacja",
                             FoodPricePerPerson = 42m,
@@ -376,7 +373,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("18519dfd-80db-41c4-aa75-f61803f90477"),
+                            Id = new Guid("e742c5b7-6cfd-4e8b-b50f-2df1ce562ab3"),
                             City = "Riwiera",
                             Country = "chorwacja",
                             FoodPricePerPerson = 88m,
@@ -385,7 +382,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b729250c-f872-478b-a297-643840368782"),
+                            Id = new Guid("a34b791f-8993-4377-9177-0cd9a93330b9"),
                             City = "Riwiera",
                             Country = "chorwacja",
                             FoodPricePerPerson = 83m,
@@ -394,7 +391,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("94c25c53-975c-452c-b35f-9112134ed5b7"),
+                            Id = new Guid("f18ad2a3-87ab-4563-8a4e-62501a24ba63"),
                             City = "Alam",
                             Country = "egipt",
                             FoodPricePerPerson = 97m,
@@ -403,7 +400,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c2b21d2c-9c87-4b3c-9898-76187afe18d1"),
+                            Id = new Guid("df518aaf-3e1e-40cb-b5e9-d40da5debb0a"),
                             City = "Sheikh",
                             Country = "egipt",
                             FoodPricePerPerson = 76m,
@@ -412,7 +409,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8c10ea27-8d72-4d6b-ad47-98f7131e4baf"),
+                            Id = new Guid("8df68a40-c7a2-4d3b-9956-1a7c4fcf5be3"),
                             City = "Sheikh",
                             Country = "egipt",
                             FoodPricePerPerson = 74m,
@@ -421,7 +418,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e155db27-2552-4c02-8441-11626ef2bc01"),
+                            Id = new Guid("092ce8d5-6ec0-46ef-baa7-025b0c6a0808"),
                             City = "Alam",
                             Country = "egipt",
                             FoodPricePerPerson = 33m,
@@ -430,7 +427,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b49466bc-7701-4a23-9da8-4ea5b6bdec65"),
+                            Id = new Guid("145aa16e-eeac-45bd-a513-c1ee1423e2c8"),
                             City = "Sheikh",
                             Country = "egipt",
                             FoodPricePerPerson = 116m,
@@ -439,7 +436,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("aade28ca-437f-48cb-aee9-99a510b740e6"),
+                            Id = new Guid("e057c1d0-789e-44ee-989c-8f393367970a"),
                             City = "Alam",
                             Country = "egipt",
                             FoodPricePerPerson = 80m,
@@ -448,7 +445,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b90c2fe3-4d24-4bcd-aa95-9659c1b5857e"),
+                            Id = new Guid("8e7d534f-b5ef-45a0-aa20-f4955f296e6b"),
                             City = "Alam",
                             Country = "egipt",
                             FoodPricePerPerson = 89m,
@@ -457,7 +454,7 @@ namespace hotelservice.Migrations
                         },
                         new
                         {
-                            Id = new Guid("73b1ede0-a09e-42e5-8709-49982716aa64"),
+                            Id = new Guid("72398cd6-f009-48f7-b6c4-0d21cc667043"),
                             City = "Alam",
                             Country = "egipt",
                             FoodPricePerPerson = 83m,
@@ -493,1377 +490,1377 @@ namespace hotelservice.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("218d1fe6-fb23-4173-91c6-a2a7da0b0c8b"),
+                            Id = new Guid("0e33b455-c96e-4328-8c54-6b7baf00adec"),
                             Count = 3,
-                            HotelId = new Guid("0a3efaf9-b617-4289-8afc-06f4f5260106"),
+                            HotelId = new Guid("e69488ef-5468-4301-ba52-0c0248480911"),
                             Price = 119m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("72095243-4828-4f2b-a6c2-f4d1aae50ea8"),
+                            Id = new Guid("9f6e4495-314d-41e5-a59c-02c036494e26"),
                             Count = 2,
-                            HotelId = new Guid("0a3efaf9-b617-4289-8afc-06f4f5260106"),
+                            HotelId = new Guid("e69488ef-5468-4301-ba52-0c0248480911"),
                             Price = 95m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("483cc984-d591-42dd-9a34-73e517b1db6f"),
+                            Id = new Guid("0b5978f3-45f7-40cc-8ef1-1463ace598aa"),
                             Count = 2,
-                            HotelId = new Guid("0a3efaf9-b617-4289-8afc-06f4f5260106"),
+                            HotelId = new Guid("e69488ef-5468-4301-ba52-0c0248480911"),
                             Price = 123m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("4453fd93-a28d-4c82-a6e4-1ea528376826"),
+                            Id = new Guid("a7b64b77-aabb-41a3-ab0d-a2424a84202c"),
                             Count = 2,
-                            HotelId = new Guid("0a3efaf9-b617-4289-8afc-06f4f5260106"),
+                            HotelId = new Guid("e69488ef-5468-4301-ba52-0c0248480911"),
                             Price = 215m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("2444778b-9f4a-4aad-95ad-605df060d730"),
+                            Id = new Guid("c9413b76-ef6f-4c5c-8291-873c0a724e6e"),
                             Count = 2,
-                            HotelId = new Guid("ed65f816-8a45-4fdf-9460-0ba2242b4576"),
+                            HotelId = new Guid("95a4b949-df50-4c39-99d8-836cbe7f0ac3"),
                             Price = 145m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("2cfc7807-4801-4a39-a511-f66e8a1aec34"),
+                            Id = new Guid("f258af04-74df-43fb-bf09-655d4d4d084e"),
                             Count = 2,
-                            HotelId = new Guid("ed65f816-8a45-4fdf-9460-0ba2242b4576"),
+                            HotelId = new Guid("95a4b949-df50-4c39-99d8-836cbe7f0ac3"),
                             Price = 138m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("c2c9a531-17de-448a-b8b6-04a718489495"),
+                            Id = new Guid("31260f95-2833-448c-8381-47723e1caeb7"),
                             Count = 3,
-                            HotelId = new Guid("ed65f816-8a45-4fdf-9460-0ba2242b4576"),
+                            HotelId = new Guid("95a4b949-df50-4c39-99d8-836cbe7f0ac3"),
                             Price = 74m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("70d4aaac-a563-44c5-b18d-865d36397a66"),
+                            Id = new Guid("1c9b2701-535b-43e4-936d-8ff9980c00ed"),
                             Count = 1,
-                            HotelId = new Guid("ed65f816-8a45-4fdf-9460-0ba2242b4576"),
+                            HotelId = new Guid("95a4b949-df50-4c39-99d8-836cbe7f0ac3"),
                             Price = 205m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("6bc53aa9-2c9a-4b32-bd21-5ca0fbe5def8"),
+                            Id = new Guid("a0d231f6-a5ff-459d-b0b7-a17cafa01b89"),
                             Count = 2,
-                            HotelId = new Guid("8c6d9bc2-f359-4a7b-b4de-952cf48019aa"),
+                            HotelId = new Guid("6a6e01aa-c848-47d4-bfb1-cede6abe8a14"),
                             Price = 186m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("480c9dbd-86b9-429f-94e1-1e298850fb3a"),
+                            Id = new Guid("1b12e675-6c5d-4db6-8e9b-18e49baeb5d9"),
                             Count = 3,
-                            HotelId = new Guid("8c6d9bc2-f359-4a7b-b4de-952cf48019aa"),
+                            HotelId = new Guid("6a6e01aa-c848-47d4-bfb1-cede6abe8a14"),
                             Price = 247m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("63239170-e0b9-4b83-8353-388e7c243fc9"),
+                            Id = new Guid("05329b55-c053-4c65-b67c-84c097d6ddcb"),
                             Count = 1,
-                            HotelId = new Guid("8c6d9bc2-f359-4a7b-b4de-952cf48019aa"),
+                            HotelId = new Guid("6a6e01aa-c848-47d4-bfb1-cede6abe8a14"),
                             Price = 164m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("2b58ba91-d477-4360-8034-7fba74171031"),
+                            Id = new Guid("80f723c9-b6b0-40e0-849b-3ed9873a8135"),
                             Count = 1,
-                            HotelId = new Guid("8c6d9bc2-f359-4a7b-b4de-952cf48019aa"),
+                            HotelId = new Guid("6a6e01aa-c848-47d4-bfb1-cede6abe8a14"),
                             Price = 69m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("b53dad0a-1c73-44dc-839e-07ff6ea951f6"),
+                            Id = new Guid("72d34663-67c2-4c8c-86cd-c090a01ceed8"),
                             Count = 1,
-                            HotelId = new Guid("d0cdfde2-390c-42bf-9ded-14dc608b195b"),
+                            HotelId = new Guid("6965f8e0-b3b3-43da-87b4-beca8798d1f3"),
                             Price = 84m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("55aee54e-c00d-42b5-979f-e2c87f7f4e44"),
+                            Id = new Guid("fb698f0a-6bb9-43ce-a82b-4e11cbd0f114"),
                             Count = 3,
-                            HotelId = new Guid("d0cdfde2-390c-42bf-9ded-14dc608b195b"),
+                            HotelId = new Guid("6965f8e0-b3b3-43da-87b4-beca8798d1f3"),
                             Price = 147m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("bde342a2-4964-4d34-92a6-d74b4ee1af79"),
+                            Id = new Guid("1112cb94-3b41-40ec-93c3-3305eaad4367"),
                             Count = 2,
-                            HotelId = new Guid("d0cdfde2-390c-42bf-9ded-14dc608b195b"),
+                            HotelId = new Guid("6965f8e0-b3b3-43da-87b4-beca8798d1f3"),
                             Price = 78m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("7be6ea95-e61b-42ef-9807-280eff6be55d"),
+                            Id = new Guid("e58b02e4-6bf5-45fb-bcfa-f9a1906b56e7"),
                             Count = 3,
-                            HotelId = new Guid("d0cdfde2-390c-42bf-9ded-14dc608b195b"),
+                            HotelId = new Guid("6965f8e0-b3b3-43da-87b4-beca8798d1f3"),
                             Price = 110m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("63fcc672-a4ce-4218-a3f3-e4c133b8ed01"),
+                            Id = new Guid("d4b67c2c-28d9-4737-a308-96e06acbf765"),
                             Count = 3,
-                            HotelId = new Guid("cef41a55-9cd3-4144-ba46-c0a160dae3db"),
+                            HotelId = new Guid("3a736cd3-b233-436c-911c-7073b4befd00"),
                             Price = 193m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("1accea07-829f-46d8-93aa-223fc4aa6c15"),
+                            Id = new Guid("d46ebb60-e247-4ba7-82d4-80dfc8ceee20"),
                             Count = 1,
-                            HotelId = new Guid("cef41a55-9cd3-4144-ba46-c0a160dae3db"),
+                            HotelId = new Guid("3a736cd3-b233-436c-911c-7073b4befd00"),
                             Price = 182m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("3b7221db-e30a-4eeb-b7e8-59960655ca31"),
+                            Id = new Guid("fde0204e-166a-4435-b712-ac455dd96f91"),
                             Count = 1,
-                            HotelId = new Guid("cef41a55-9cd3-4144-ba46-c0a160dae3db"),
+                            HotelId = new Guid("3a736cd3-b233-436c-911c-7073b4befd00"),
                             Price = 238m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("336e3c8b-328b-49ca-9372-02cf82bfefef"),
+                            Id = new Guid("8caa4e44-79e7-4d70-ae42-263751bbcef0"),
                             Count = 3,
-                            HotelId = new Guid("cef41a55-9cd3-4144-ba46-c0a160dae3db"),
+                            HotelId = new Guid("3a736cd3-b233-436c-911c-7073b4befd00"),
                             Price = 70m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("b53d315e-aaaa-4912-8ced-6b466c54a299"),
+                            Id = new Guid("03c1046b-c4a7-4333-a68b-0d9ce3582f0b"),
                             Count = 3,
-                            HotelId = new Guid("606eb796-f8c0-44c1-b6e7-d9c74c0e7aef"),
+                            HotelId = new Guid("d7426795-c33a-4a80-887b-5fdb61e85189"),
                             Price = 219m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("1d56fae4-bc92-4b05-a7b2-b8d7b2404a86"),
+                            Id = new Guid("3685b94e-55f9-4448-a9b0-ab93672bb874"),
                             Count = 3,
-                            HotelId = new Guid("606eb796-f8c0-44c1-b6e7-d9c74c0e7aef"),
+                            HotelId = new Guid("d7426795-c33a-4a80-887b-5fdb61e85189"),
                             Price = 109m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("4d4b78c7-420e-459b-af3e-638a5013e9e7"),
+                            Id = new Guid("8447414d-da90-4508-b590-ddb3d6f02871"),
                             Count = 3,
-                            HotelId = new Guid("606eb796-f8c0-44c1-b6e7-d9c74c0e7aef"),
+                            HotelId = new Guid("d7426795-c33a-4a80-887b-5fdb61e85189"),
                             Price = 78m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("19887486-63c8-4c8c-805b-0161026559ff"),
+                            Id = new Guid("56570a72-6108-4855-b9a6-11df8fc801fa"),
                             Count = 2,
-                            HotelId = new Guid("606eb796-f8c0-44c1-b6e7-d9c74c0e7aef"),
+                            HotelId = new Guid("d7426795-c33a-4a80-887b-5fdb61e85189"),
                             Price = 143m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("afc4608f-8615-4974-bd2f-048e9d64964f"),
+                            Id = new Guid("6e2a8aaa-c00d-4bb6-a127-5493d559872d"),
                             Count = 3,
-                            HotelId = new Guid("4da21b0d-26ab-4ce1-af64-a18f729b05f0"),
+                            HotelId = new Guid("5a9fa78e-b2d1-4cde-955c-1571b9a626f4"),
                             Price = 104m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("d7bb40af-0060-4083-8a49-38eca125d088"),
+                            Id = new Guid("87e02661-02f8-437e-a95b-0d4bcb1a8cbd"),
                             Count = 1,
-                            HotelId = new Guid("4da21b0d-26ab-4ce1-af64-a18f729b05f0"),
+                            HotelId = new Guid("5a9fa78e-b2d1-4cde-955c-1571b9a626f4"),
                             Price = 136m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("99cd4b93-95f5-4845-8c1b-e0bac1ba03c6"),
+                            Id = new Guid("b1aba2bb-b91d-4d70-9958-f4c70a4464f6"),
                             Count = 3,
-                            HotelId = new Guid("4da21b0d-26ab-4ce1-af64-a18f729b05f0"),
+                            HotelId = new Guid("5a9fa78e-b2d1-4cde-955c-1571b9a626f4"),
                             Price = 177m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("ad9b801b-84c8-42ad-9b45-44c46c07602a"),
+                            Id = new Guid("7c143c1f-b884-4eb3-987f-0a2b016e541b"),
                             Count = 2,
-                            HotelId = new Guid("4da21b0d-26ab-4ce1-af64-a18f729b05f0"),
+                            HotelId = new Guid("5a9fa78e-b2d1-4cde-955c-1571b9a626f4"),
                             Price = 105m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("49d218c0-5b0d-4308-8781-c9c762131aa0"),
+                            Id = new Guid("e8442234-2d5c-40df-9451-56af99d6e7be"),
                             Count = 2,
-                            HotelId = new Guid("0eca1b28-f97e-4363-b310-e9d321001a67"),
+                            HotelId = new Guid("57a2fb51-16c7-4473-9eb9-f74be1117c10"),
                             Price = 211m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("85f64acb-f3ae-4666-b8e0-255121d366ef"),
+                            Id = new Guid("42b6be9f-5e94-4574-9326-799b2c10b79c"),
                             Count = 1,
-                            HotelId = new Guid("0eca1b28-f97e-4363-b310-e9d321001a67"),
+                            HotelId = new Guid("57a2fb51-16c7-4473-9eb9-f74be1117c10"),
                             Price = 77m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("66e13e21-851c-46ba-8363-01e11bb8f9ae"),
+                            Id = new Guid("6a7a0995-04a0-45f3-a3a2-509bb57e0a70"),
                             Count = 2,
-                            HotelId = new Guid("0eca1b28-f97e-4363-b310-e9d321001a67"),
+                            HotelId = new Guid("57a2fb51-16c7-4473-9eb9-f74be1117c10"),
                             Price = 169m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("ce2e107a-7e37-4121-8724-ff7b879065c6"),
+                            Id = new Guid("ef75b7df-bdeb-4b20-a34b-61462023d5bb"),
                             Count = 1,
-                            HotelId = new Guid("0eca1b28-f97e-4363-b310-e9d321001a67"),
+                            HotelId = new Guid("57a2fb51-16c7-4473-9eb9-f74be1117c10"),
                             Price = 84m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("ba0313a1-27e3-426b-800e-378fdd85e854"),
+                            Id = new Guid("25546242-bcef-4f76-b1d4-136ee9c38bea"),
                             Count = 2,
-                            HotelId = new Guid("dc159078-7c6d-4b29-928b-cc635819a9d0"),
+                            HotelId = new Guid("a6150683-f3f8-4578-ae91-74a2816b8f1c"),
                             Price = 239m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("2599221b-c375-4a44-b926-95351c9d9053"),
+                            Id = new Guid("2dbdc278-8122-4eae-8934-563fd5475ea8"),
                             Count = 3,
-                            HotelId = new Guid("dc159078-7c6d-4b29-928b-cc635819a9d0"),
+                            HotelId = new Guid("a6150683-f3f8-4578-ae91-74a2816b8f1c"),
                             Price = 208m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("ddf0d252-552c-40bc-81db-b12a1bd0fb94"),
+                            Id = new Guid("2ab979ec-0134-495c-b57b-3007aaf244ce"),
                             Count = 3,
-                            HotelId = new Guid("dc159078-7c6d-4b29-928b-cc635819a9d0"),
+                            HotelId = new Guid("a6150683-f3f8-4578-ae91-74a2816b8f1c"),
                             Price = 161m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("4156a32b-a715-4454-bc4d-83a818534f9d"),
+                            Id = new Guid("d9dde1db-dc1e-4379-9804-ae1d518a5a00"),
                             Count = 1,
-                            HotelId = new Guid("dc159078-7c6d-4b29-928b-cc635819a9d0"),
+                            HotelId = new Guid("a6150683-f3f8-4578-ae91-74a2816b8f1c"),
                             Price = 64m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("5137c90a-f581-4c63-9728-690efa62c17e"),
+                            Id = new Guid("9d491578-be3a-458b-bb82-bae610a0b52d"),
                             Count = 1,
-                            HotelId = new Guid("52e2248d-8c44-413e-8f75-9194126c34cc"),
+                            HotelId = new Guid("1d2d61f2-2cbb-459c-be2d-1f8ed260a82f"),
                             Price = 129m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("3980fabf-808d-444d-b4f8-772468ce6fc9"),
+                            Id = new Guid("171cd3d5-5028-4588-8390-de1b1d6b5b70"),
                             Count = 2,
-                            HotelId = new Guid("52e2248d-8c44-413e-8f75-9194126c34cc"),
+                            HotelId = new Guid("1d2d61f2-2cbb-459c-be2d-1f8ed260a82f"),
                             Price = 234m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("27806582-a4fe-498c-a091-5d4669669794"),
+                            Id = new Guid("c1ad1055-419e-47e6-aeaa-63c1f78d430e"),
                             Count = 3,
-                            HotelId = new Guid("52e2248d-8c44-413e-8f75-9194126c34cc"),
+                            HotelId = new Guid("1d2d61f2-2cbb-459c-be2d-1f8ed260a82f"),
                             Price = 84m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("cb05be9d-d4f4-45bd-9818-4dfb31144d67"),
+                            Id = new Guid("30436ac7-c69e-4f9d-bf62-552b989e6d88"),
                             Count = 3,
-                            HotelId = new Guid("52e2248d-8c44-413e-8f75-9194126c34cc"),
+                            HotelId = new Guid("1d2d61f2-2cbb-459c-be2d-1f8ed260a82f"),
                             Price = 216m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("55310490-d52c-4150-8f6f-eee4a5fb1e28"),
+                            Id = new Guid("efddbe45-c4c6-42f1-b849-61732723463b"),
                             Count = 2,
-                            HotelId = new Guid("e5f235c5-c4e2-48df-a927-bc68c49f4840"),
+                            HotelId = new Guid("9534c589-acd0-49e8-bb4e-449e58445b2e"),
                             Price = 165m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("9ad7322e-ec58-43fc-b0a2-d8c0e377f0dd"),
+                            Id = new Guid("9b50e494-c1e9-4240-ac65-a6ac698b6990"),
                             Count = 2,
-                            HotelId = new Guid("e5f235c5-c4e2-48df-a927-bc68c49f4840"),
+                            HotelId = new Guid("9534c589-acd0-49e8-bb4e-449e58445b2e"),
                             Price = 88m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("80666e6f-ad58-451c-831c-c12305c8b56e"),
+                            Id = new Guid("a5800805-229f-4d41-9032-21388f55f307"),
                             Count = 1,
-                            HotelId = new Guid("e5f235c5-c4e2-48df-a927-bc68c49f4840"),
+                            HotelId = new Guid("9534c589-acd0-49e8-bb4e-449e58445b2e"),
                             Price = 210m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("49fc83d9-9317-4de0-903f-3ad956786453"),
+                            Id = new Guid("215e4c29-e65c-44b2-832c-aba1c2a848e0"),
                             Count = 1,
-                            HotelId = new Guid("e5f235c5-c4e2-48df-a927-bc68c49f4840"),
+                            HotelId = new Guid("9534c589-acd0-49e8-bb4e-449e58445b2e"),
                             Price = 119m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("ee01e133-8f08-4410-8ac8-ebf4830ada27"),
+                            Id = new Guid("4b845036-57b8-4331-8c92-9f54234b0b65"),
                             Count = 1,
-                            HotelId = new Guid("eb92356c-007d-4038-ae7e-f140aee1a1f0"),
+                            HotelId = new Guid("35f98b61-1d9e-4a7a-b9b3-1c8b88372c9b"),
                             Price = 130m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("e918dbff-78a1-430e-bb0a-a9f4ae3fc15a"),
+                            Id = new Guid("8c9ef855-4da3-4a0b-83c5-ebdbf9e1f578"),
                             Count = 3,
-                            HotelId = new Guid("eb92356c-007d-4038-ae7e-f140aee1a1f0"),
+                            HotelId = new Guid("35f98b61-1d9e-4a7a-b9b3-1c8b88372c9b"),
                             Price = 97m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("815a0e39-831c-4bb8-b322-6b6ba3628468"),
+                            Id = new Guid("23a2fd68-35f2-470a-9e23-a2c5d9a2b00e"),
                             Count = 3,
-                            HotelId = new Guid("eb92356c-007d-4038-ae7e-f140aee1a1f0"),
+                            HotelId = new Guid("35f98b61-1d9e-4a7a-b9b3-1c8b88372c9b"),
                             Price = 165m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("9bb66b6c-d95d-4ad1-ba45-f20db3da2740"),
+                            Id = new Guid("8a57bda3-9a80-4113-b804-6c087e1c3561"),
                             Count = 1,
-                            HotelId = new Guid("eb92356c-007d-4038-ae7e-f140aee1a1f0"),
+                            HotelId = new Guid("35f98b61-1d9e-4a7a-b9b3-1c8b88372c9b"),
                             Price = 72m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("2010ff59-a091-4cb2-920f-635bfb84c3eb"),
+                            Id = new Guid("6d48d200-92ef-4035-b82f-f4c0bad8c4e1"),
                             Count = 1,
-                            HotelId = new Guid("3c876902-2e40-46ea-bbe2-700f8344aa16"),
+                            HotelId = new Guid("2b78b471-830c-4962-9528-1138ea6bbcd8"),
                             Price = 153m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("dae716c4-19e5-4ae5-afc2-92fc91ce810b"),
+                            Id = new Guid("34fa625d-fa66-4455-b772-c6d78a919cf9"),
                             Count = 2,
-                            HotelId = new Guid("3c876902-2e40-46ea-bbe2-700f8344aa16"),
+                            HotelId = new Guid("2b78b471-830c-4962-9528-1138ea6bbcd8"),
                             Price = 125m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("299f9ec5-81a1-4e66-b319-b755f4a3ddeb"),
+                            Id = new Guid("47bf865a-c7ea-4cc1-b792-c4de3f342f58"),
                             Count = 1,
-                            HotelId = new Guid("3c876902-2e40-46ea-bbe2-700f8344aa16"),
+                            HotelId = new Guid("2b78b471-830c-4962-9528-1138ea6bbcd8"),
                             Price = 183m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("9adf5a6a-321f-467f-987a-514b9d4635fd"),
+                            Id = new Guid("75c0a25b-3ade-4d9f-ab6e-5593fc921a5d"),
                             Count = 1,
-                            HotelId = new Guid("3c876902-2e40-46ea-bbe2-700f8344aa16"),
+                            HotelId = new Guid("2b78b471-830c-4962-9528-1138ea6bbcd8"),
                             Price = 84m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("4e45b01e-294a-4c90-ae45-63aee3d8279f"),
+                            Id = new Guid("20c78981-4345-4380-ad8b-e8a55b680ef9"),
                             Count = 2,
-                            HotelId = new Guid("99073865-f88c-4f28-8173-2193299b411a"),
+                            HotelId = new Guid("4eb84047-b94a-469c-8f86-88592dab054e"),
                             Price = 207m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("ca013163-412c-4397-af1d-b680a8cc4cf6"),
+                            Id = new Guid("d41d9cf8-c7e5-4f49-9bd8-446062b538be"),
                             Count = 3,
-                            HotelId = new Guid("99073865-f88c-4f28-8173-2193299b411a"),
+                            HotelId = new Guid("4eb84047-b94a-469c-8f86-88592dab054e"),
                             Price = 131m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("6aa4194b-426d-482e-a0ef-e3169f34acd2"),
+                            Id = new Guid("c988edc5-d871-45da-b5ad-fbfbc7624e45"),
                             Count = 3,
-                            HotelId = new Guid("99073865-f88c-4f28-8173-2193299b411a"),
+                            HotelId = new Guid("4eb84047-b94a-469c-8f86-88592dab054e"),
                             Price = 146m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("688591ed-6b32-473a-b1e3-58ff36c778b9"),
+                            Id = new Guid("637b2ca5-766f-4aa2-a6cf-d10c02da1dc2"),
                             Count = 1,
-                            HotelId = new Guid("99073865-f88c-4f28-8173-2193299b411a"),
+                            HotelId = new Guid("4eb84047-b94a-469c-8f86-88592dab054e"),
                             Price = 119m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("1d8506e5-56c4-428c-94e7-f16c79942c6d"),
+                            Id = new Guid("4641c224-a218-4202-a81c-45902ea2c2f4"),
                             Count = 3,
-                            HotelId = new Guid("daedf97d-0277-4e8a-874f-038c0608f189"),
+                            HotelId = new Guid("0737c9f6-d5d2-4670-b36a-676cf05162e7"),
                             Price = 132m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("6c01386b-05cc-4da9-a01b-015daecd3c23"),
+                            Id = new Guid("67c98dc3-ae55-4f82-8836-55b7241f134d"),
                             Count = 2,
-                            HotelId = new Guid("daedf97d-0277-4e8a-874f-038c0608f189"),
+                            HotelId = new Guid("0737c9f6-d5d2-4670-b36a-676cf05162e7"),
                             Price = 244m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("6d48e5d6-b6e2-484f-af4a-18785ea976b0"),
+                            Id = new Guid("663ca017-cba9-46cb-85e3-da0debd9f7e6"),
                             Count = 1,
-                            HotelId = new Guid("daedf97d-0277-4e8a-874f-038c0608f189"),
+                            HotelId = new Guid("0737c9f6-d5d2-4670-b36a-676cf05162e7"),
                             Price = 243m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("5bb7c355-aacc-4722-99cc-93a51f2b56f4"),
+                            Id = new Guid("e7d0ff6c-d840-414f-b66a-b37ff9d570ef"),
                             Count = 2,
-                            HotelId = new Guid("daedf97d-0277-4e8a-874f-038c0608f189"),
+                            HotelId = new Guid("0737c9f6-d5d2-4670-b36a-676cf05162e7"),
                             Price = 111m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("743b84c0-9625-4cb9-8643-6a4c6ea90534"),
+                            Id = new Guid("cc5683fb-2b91-4d3b-9526-b4603586cbac"),
                             Count = 3,
-                            HotelId = new Guid("e183174a-4833-4ee0-b916-3fa404526b5a"),
+                            HotelId = new Guid("60c22255-ba18-41dd-a0ef-87dd77035055"),
                             Price = 148m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("1c787a55-971e-4f83-aabf-de655f43bdf8"),
+                            Id = new Guid("8693e51a-0ff1-4340-998f-cfedee14e492"),
                             Count = 2,
-                            HotelId = new Guid("e183174a-4833-4ee0-b916-3fa404526b5a"),
+                            HotelId = new Guid("60c22255-ba18-41dd-a0ef-87dd77035055"),
                             Price = 168m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("bb063a09-9326-482d-a095-bb5c1dd14551"),
+                            Id = new Guid("4eb436f6-04f2-4ac0-9605-d5ce0a85b6f1"),
                             Count = 3,
-                            HotelId = new Guid("e183174a-4833-4ee0-b916-3fa404526b5a"),
+                            HotelId = new Guid("60c22255-ba18-41dd-a0ef-87dd77035055"),
                             Price = 230m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("3b2277b7-ec06-4710-9523-520813b73bfc"),
+                            Id = new Guid("9ed6436e-a00a-43c5-90e4-a83cefcb096f"),
                             Count = 3,
-                            HotelId = new Guid("e183174a-4833-4ee0-b916-3fa404526b5a"),
+                            HotelId = new Guid("60c22255-ba18-41dd-a0ef-87dd77035055"),
                             Price = 111m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("51803451-e86b-4b63-9644-627b5903d423"),
+                            Id = new Guid("8b28aaba-ec8a-4a1c-b7f3-520aa6e47202"),
                             Count = 1,
-                            HotelId = new Guid("f1c8d7e8-b08e-40c3-97e7-dcedd3520f7e"),
+                            HotelId = new Guid("5522d316-af4b-43ab-8700-3dd77a1dc2be"),
                             Price = 201m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("7627832c-a64b-47b9-bea7-b921eb8c519b"),
+                            Id = new Guid("fb9afd0f-826b-423e-a661-615a946ce3f9"),
                             Count = 2,
-                            HotelId = new Guid("f1c8d7e8-b08e-40c3-97e7-dcedd3520f7e"),
+                            HotelId = new Guid("5522d316-af4b-43ab-8700-3dd77a1dc2be"),
                             Price = 219m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("d11cc252-5fc9-4ae0-8302-aec3038c8e02"),
+                            Id = new Guid("223f3062-8c8a-4c5d-ab2f-f87cf6ea9203"),
                             Count = 2,
-                            HotelId = new Guid("f1c8d7e8-b08e-40c3-97e7-dcedd3520f7e"),
+                            HotelId = new Guid("5522d316-af4b-43ab-8700-3dd77a1dc2be"),
                             Price = 76m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("93da5343-6328-452c-b716-c1829713ca5d"),
+                            Id = new Guid("7679c208-b47a-4eba-a904-496c6cc24171"),
                             Count = 1,
-                            HotelId = new Guid("f1c8d7e8-b08e-40c3-97e7-dcedd3520f7e"),
+                            HotelId = new Guid("5522d316-af4b-43ab-8700-3dd77a1dc2be"),
                             Price = 63m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("71efcb4d-c10c-44c9-bf41-51cbfee53e8d"),
+                            Id = new Guid("69b48915-65a3-4197-8f0a-43d57ab42479"),
                             Count = 1,
-                            HotelId = new Guid("e24043be-eccc-401d-8043-7d82f6aa3655"),
+                            HotelId = new Guid("ef28f7ba-5f04-49a7-aa7d-846c79471671"),
                             Price = 175m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("e3c5f804-618b-45bc-9821-ab5d1d8d56ce"),
+                            Id = new Guid("9851efb4-5150-4f4b-b067-794ecfef8329"),
                             Count = 1,
-                            HotelId = new Guid("e24043be-eccc-401d-8043-7d82f6aa3655"),
+                            HotelId = new Guid("ef28f7ba-5f04-49a7-aa7d-846c79471671"),
                             Price = 245m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("ee1a5b1b-14fa-4a53-b1b1-3ce901a2ef53"),
+                            Id = new Guid("2db45f23-e2f2-4618-b474-3f048cf2fde6"),
                             Count = 1,
-                            HotelId = new Guid("e24043be-eccc-401d-8043-7d82f6aa3655"),
+                            HotelId = new Guid("ef28f7ba-5f04-49a7-aa7d-846c79471671"),
                             Price = 50m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("74c2b12e-aaa0-4acc-beac-9da94136ba0a"),
+                            Id = new Guid("90c14f49-06bd-499c-af46-40be3ba789b5"),
                             Count = 1,
-                            HotelId = new Guid("e24043be-eccc-401d-8043-7d82f6aa3655"),
+                            HotelId = new Guid("ef28f7ba-5f04-49a7-aa7d-846c79471671"),
                             Price = 219m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("6ce3a6ce-8fed-4253-a914-e757751d855b"),
+                            Id = new Guid("499c017f-44ea-493b-a1bc-74cc44302b31"),
                             Count = 3,
-                            HotelId = new Guid("086aec19-0d5e-4cdc-9f47-08477a6978ba"),
+                            HotelId = new Guid("60a51295-7af8-47ec-8a4e-4f6c4feeb74c"),
                             Price = 215m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("3efc743b-1a3a-49ff-bc48-56974496f3c8"),
+                            Id = new Guid("40fdc8fe-6269-4a29-abc7-cb4520b9bd44"),
                             Count = 1,
-                            HotelId = new Guid("086aec19-0d5e-4cdc-9f47-08477a6978ba"),
+                            HotelId = new Guid("60a51295-7af8-47ec-8a4e-4f6c4feeb74c"),
                             Price = 164m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("33406056-5a39-414f-93d0-3c694949b08d"),
+                            Id = new Guid("98ed6096-48e6-4da7-98e9-f9c8036ce96c"),
                             Count = 3,
-                            HotelId = new Guid("086aec19-0d5e-4cdc-9f47-08477a6978ba"),
+                            HotelId = new Guid("60a51295-7af8-47ec-8a4e-4f6c4feeb74c"),
                             Price = 163m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("d00689b2-b79b-4d9e-89bb-85ff9f76a9d3"),
+                            Id = new Guid("f2ba77a4-7ad5-427a-b8f4-c07f88bce1c0"),
                             Count = 2,
-                            HotelId = new Guid("086aec19-0d5e-4cdc-9f47-08477a6978ba"),
+                            HotelId = new Guid("60a51295-7af8-47ec-8a4e-4f6c4feeb74c"),
                             Price = 247m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("4952773c-1fa5-4913-b312-077db9651e6b"),
+                            Id = new Guid("3471bf13-6eb0-40f4-96f0-fede47254cf7"),
                             Count = 1,
-                            HotelId = new Guid("15a863c6-f0af-46cc-814f-d37a1dcef9d8"),
+                            HotelId = new Guid("22700625-15d0-4773-8024-09759cbd76f4"),
                             Price = 76m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("d55296c8-83fc-4c4f-a874-de40379dbcbf"),
+                            Id = new Guid("f429e78a-dd3a-4cbd-8422-85fe2cf3a805"),
                             Count = 3,
-                            HotelId = new Guid("15a863c6-f0af-46cc-814f-d37a1dcef9d8"),
+                            HotelId = new Guid("22700625-15d0-4773-8024-09759cbd76f4"),
                             Price = 149m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("2548a1f6-408c-4f2a-abc5-2f9b6d0357fc"),
+                            Id = new Guid("885fa813-648e-4ffa-84b1-3c788945de1c"),
                             Count = 3,
-                            HotelId = new Guid("15a863c6-f0af-46cc-814f-d37a1dcef9d8"),
+                            HotelId = new Guid("22700625-15d0-4773-8024-09759cbd76f4"),
                             Price = 197m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("97fb4e24-dd16-4166-9c1a-e9c9749eaf33"),
+                            Id = new Guid("956ac331-8ae7-4a06-acaf-e5b1fce8dce1"),
                             Count = 2,
-                            HotelId = new Guid("15a863c6-f0af-46cc-814f-d37a1dcef9d8"),
+                            HotelId = new Guid("22700625-15d0-4773-8024-09759cbd76f4"),
                             Price = 237m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("f4f7a2b2-bbce-4446-8fda-75097c17720f"),
+                            Id = new Guid("e86817b5-335d-4b80-8cc6-a8080c6b3b47"),
                             Count = 2,
-                            HotelId = new Guid("09b224f1-17f3-469f-8867-d0663c86a2ad"),
+                            HotelId = new Guid("b23a15ff-7161-4d3f-9da5-ddc10d69690e"),
                             Price = 87m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("6953fa73-d4cb-4b19-8bbc-0e46ad7563e2"),
+                            Id = new Guid("2de6c432-dddd-47c4-950f-e98f909128a8"),
                             Count = 1,
-                            HotelId = new Guid("09b224f1-17f3-469f-8867-d0663c86a2ad"),
+                            HotelId = new Guid("b23a15ff-7161-4d3f-9da5-ddc10d69690e"),
                             Price = 247m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("d4a43b75-74c3-404e-990b-563f4ed77a99"),
+                            Id = new Guid("8653a808-a4e6-4b33-8bdc-69ab8ea0fe82"),
                             Count = 3,
-                            HotelId = new Guid("09b224f1-17f3-469f-8867-d0663c86a2ad"),
+                            HotelId = new Guid("b23a15ff-7161-4d3f-9da5-ddc10d69690e"),
                             Price = 70m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("8a691dc3-b59d-4ae3-92b5-d7b23c2322d3"),
+                            Id = new Guid("41550545-def9-4097-b614-711fd548e24e"),
                             Count = 3,
-                            HotelId = new Guid("09b224f1-17f3-469f-8867-d0663c86a2ad"),
+                            HotelId = new Guid("b23a15ff-7161-4d3f-9da5-ddc10d69690e"),
                             Price = 184m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("2d1b62be-c8a5-44cf-b173-e990068f4d99"),
+                            Id = new Guid("435dbf5b-4874-47e8-9092-7d046fd05a6e"),
                             Count = 3,
-                            HotelId = new Guid("b2534063-171c-4be8-93a3-4a60be8dc272"),
+                            HotelId = new Guid("ac76333f-1a54-4bc7-a615-04121417b975"),
                             Price = 242m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("def96cdb-c68d-4189-bee5-fc5134625645"),
+                            Id = new Guid("ed787cad-94ea-401a-9522-b29727c661d5"),
                             Count = 1,
-                            HotelId = new Guid("b2534063-171c-4be8-93a3-4a60be8dc272"),
+                            HotelId = new Guid("ac76333f-1a54-4bc7-a615-04121417b975"),
                             Price = 132m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("9a31fed0-d5d3-49d0-a6dd-65e22a443aa4"),
+                            Id = new Guid("b4b784a6-bb76-407b-9e1d-3c41f95f9c67"),
                             Count = 3,
-                            HotelId = new Guid("b2534063-171c-4be8-93a3-4a60be8dc272"),
+                            HotelId = new Guid("ac76333f-1a54-4bc7-a615-04121417b975"),
                             Price = 142m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("4a60fe73-b213-445d-9a24-225973b9453a"),
+                            Id = new Guid("58c60bd5-99b3-4ef9-a718-b06352efa814"),
                             Count = 2,
-                            HotelId = new Guid("b2534063-171c-4be8-93a3-4a60be8dc272"),
+                            HotelId = new Guid("ac76333f-1a54-4bc7-a615-04121417b975"),
                             Price = 154m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("4652781c-62ec-4c3f-b9c4-cef2d952fad7"),
+                            Id = new Guid("8526409d-62b1-48b5-b960-6ac1e206f894"),
                             Count = 3,
-                            HotelId = new Guid("00fca576-8fd4-4ac1-97ce-8dbe8880301b"),
+                            HotelId = new Guid("b28b03ba-9bc3-4e76-aa25-8842d9da7125"),
                             Price = 233m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("8c38e2c7-09e7-4a15-b792-ab68fff47fde"),
+                            Id = new Guid("872ff097-f4c8-4399-94d3-507ece35cb80"),
                             Count = 3,
-                            HotelId = new Guid("00fca576-8fd4-4ac1-97ce-8dbe8880301b"),
+                            HotelId = new Guid("b28b03ba-9bc3-4e76-aa25-8842d9da7125"),
                             Price = 204m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("5776eb4f-1350-481d-b311-6b15459fac44"),
+                            Id = new Guid("49e085db-6784-421e-b6a8-5541654c0fb4"),
                             Count = 1,
-                            HotelId = new Guid("00fca576-8fd4-4ac1-97ce-8dbe8880301b"),
+                            HotelId = new Guid("b28b03ba-9bc3-4e76-aa25-8842d9da7125"),
                             Price = 171m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("31786618-681a-48a0-84a5-76dd9b1bf97b"),
+                            Id = new Guid("34860c18-bbea-44b5-9e9f-11a6896f56cf"),
                             Count = 1,
-                            HotelId = new Guid("00fca576-8fd4-4ac1-97ce-8dbe8880301b"),
+                            HotelId = new Guid("b28b03ba-9bc3-4e76-aa25-8842d9da7125"),
                             Price = 94m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("ef7418e2-3165-41b8-9a6d-900b7b0c2dd6"),
+                            Id = new Guid("4918879c-1374-4359-b29b-1c2e5bfeeeac"),
                             Count = 1,
-                            HotelId = new Guid("d690b2bb-718a-4e7c-950a-dfbcc19e4108"),
+                            HotelId = new Guid("a9463ad4-4c8e-4169-ac7d-888e4da65cdf"),
                             Price = 53m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("56c9253b-e6ba-43ea-9b74-478c025c4ea7"),
+                            Id = new Guid("f4f10e02-6c0d-4ea3-882a-bb035537660f"),
                             Count = 3,
-                            HotelId = new Guid("d690b2bb-718a-4e7c-950a-dfbcc19e4108"),
+                            HotelId = new Guid("a9463ad4-4c8e-4169-ac7d-888e4da65cdf"),
                             Price = 92m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("3c4c5bfb-0546-41d9-ad0a-313101da05ef"),
+                            Id = new Guid("d6365c48-d07f-4708-8f61-f8d3c7753dee"),
                             Count = 3,
-                            HotelId = new Guid("d690b2bb-718a-4e7c-950a-dfbcc19e4108"),
+                            HotelId = new Guid("a9463ad4-4c8e-4169-ac7d-888e4da65cdf"),
                             Price = 250m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("ec004b7c-8d3d-4967-b6b1-636ee3b72e81"),
+                            Id = new Guid("52bd9b0b-c514-441b-9406-a5bafbe54d3f"),
                             Count = 3,
-                            HotelId = new Guid("d690b2bb-718a-4e7c-950a-dfbcc19e4108"),
+                            HotelId = new Guid("a9463ad4-4c8e-4169-ac7d-888e4da65cdf"),
                             Price = 241m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("c53cdec2-302f-44a1-b06a-0ea2d36ca9e0"),
+                            Id = new Guid("0fc548fa-0d14-47ac-bd24-90cc8b4fdc39"),
                             Count = 3,
-                            HotelId = new Guid("e184f9fc-616f-406b-b2ef-6c570792a655"),
+                            HotelId = new Guid("2b0499aa-f505-4f07-96db-1beac88a40a5"),
                             Price = 190m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("1a53f593-e2f5-41c6-af7e-a54e539a49ab"),
+                            Id = new Guid("58a67ae8-4a19-4fbd-a863-fcda359a968f"),
                             Count = 1,
-                            HotelId = new Guid("e184f9fc-616f-406b-b2ef-6c570792a655"),
+                            HotelId = new Guid("2b0499aa-f505-4f07-96db-1beac88a40a5"),
                             Price = 112m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("44532019-8fff-46cb-b48c-a6422a8485cd"),
+                            Id = new Guid("869cf108-f0cf-4dc8-a6a3-759284b4eee7"),
                             Count = 2,
-                            HotelId = new Guid("e184f9fc-616f-406b-b2ef-6c570792a655"),
+                            HotelId = new Guid("2b0499aa-f505-4f07-96db-1beac88a40a5"),
                             Price = 152m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("283a6834-96d1-4b6a-9a86-64c914358be9"),
+                            Id = new Guid("26aa3764-3c2f-403d-8bfd-323442a04c11"),
                             Count = 1,
-                            HotelId = new Guid("e184f9fc-616f-406b-b2ef-6c570792a655"),
+                            HotelId = new Guid("2b0499aa-f505-4f07-96db-1beac88a40a5"),
                             Price = 177m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("3362c175-627a-4cf1-b536-5f2f95ee725e"),
+                            Id = new Guid("6c5ca85f-1665-4dd8-b9e6-00ffba9344c9"),
                             Count = 2,
-                            HotelId = new Guid("7c0ce2fe-9a04-426a-833b-43e8ade405be"),
+                            HotelId = new Guid("73950b5b-00a3-462b-8fe8-1ab5975538d4"),
                             Price = 60m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("c1695ca9-9d49-4a22-b74e-8684d5c6e36e"),
+                            Id = new Guid("94f0a3ef-6516-4a99-816a-8abd6cebad72"),
                             Count = 3,
-                            HotelId = new Guid("7c0ce2fe-9a04-426a-833b-43e8ade405be"),
+                            HotelId = new Guid("73950b5b-00a3-462b-8fe8-1ab5975538d4"),
                             Price = 190m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("85c3454a-b83d-4878-88e1-5b987d27ba1e"),
+                            Id = new Guid("1a2d8b42-107b-46b9-acea-9342ad717be3"),
                             Count = 3,
-                            HotelId = new Guid("7c0ce2fe-9a04-426a-833b-43e8ade405be"),
+                            HotelId = new Guid("73950b5b-00a3-462b-8fe8-1ab5975538d4"),
                             Price = 77m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("6d3312da-95bd-4b00-b33b-c1a907a4d4d0"),
+                            Id = new Guid("4de97032-9f5f-41f5-aba0-27bd49f833ca"),
                             Count = 3,
-                            HotelId = new Guid("7c0ce2fe-9a04-426a-833b-43e8ade405be"),
+                            HotelId = new Guid("73950b5b-00a3-462b-8fe8-1ab5975538d4"),
                             Price = 217m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("c9d5c9fb-3eb8-459a-a00b-280aeefbdc69"),
+                            Id = new Guid("def185c7-d9a5-4dc0-8fe9-f422a1f6958a"),
                             Count = 1,
-                            HotelId = new Guid("7965d57f-a0ba-408f-b4b2-c7e141df8abd"),
+                            HotelId = new Guid("fef1b7d4-5330-46d9-9497-6c8192fb731c"),
                             Price = 146m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("dee509a7-73ec-4a99-b931-cf140f6304b5"),
+                            Id = new Guid("271a91a6-d352-4134-8165-b2eaa8bf5dd1"),
                             Count = 3,
-                            HotelId = new Guid("7965d57f-a0ba-408f-b4b2-c7e141df8abd"),
+                            HotelId = new Guid("fef1b7d4-5330-46d9-9497-6c8192fb731c"),
                             Price = 107m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("caaa157b-1a50-43dd-aaac-9274f0fcab4b"),
+                            Id = new Guid("a39b32c9-bb57-4c68-af49-2fe17ecbda54"),
                             Count = 1,
-                            HotelId = new Guid("7965d57f-a0ba-408f-b4b2-c7e141df8abd"),
+                            HotelId = new Guid("fef1b7d4-5330-46d9-9497-6c8192fb731c"),
                             Price = 164m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("633c2ce6-ce29-4802-b785-82e91ee59243"),
+                            Id = new Guid("c4d1d348-4088-4a25-bb38-214ae39bc532"),
                             Count = 3,
-                            HotelId = new Guid("7965d57f-a0ba-408f-b4b2-c7e141df8abd"),
+                            HotelId = new Guid("fef1b7d4-5330-46d9-9497-6c8192fb731c"),
                             Price = 162m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("c448be82-ef4e-48fb-8d2f-56e5d09a0eab"),
+                            Id = new Guid("98edaacd-b5be-450a-a7fe-b28ddd7d0dee"),
                             Count = 2,
-                            HotelId = new Guid("22f44e2f-5cb2-4a2e-8bf4-d6b3c576f7ba"),
+                            HotelId = new Guid("f6721867-bada-4412-a649-efe2fea10ba8"),
                             Price = 213m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("bd800ee4-5641-42ae-9a0b-6041f5ad720f"),
+                            Id = new Guid("c7539016-44bb-4297-b531-3b33d9083e49"),
                             Count = 2,
-                            HotelId = new Guid("22f44e2f-5cb2-4a2e-8bf4-d6b3c576f7ba"),
+                            HotelId = new Guid("f6721867-bada-4412-a649-efe2fea10ba8"),
                             Price = 131m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("313be7dc-e62f-41d7-9528-6005f077646b"),
+                            Id = new Guid("61b078c5-c99f-4ecf-99d9-39f0a30e0b2e"),
                             Count = 2,
-                            HotelId = new Guid("22f44e2f-5cb2-4a2e-8bf4-d6b3c576f7ba"),
+                            HotelId = new Guid("f6721867-bada-4412-a649-efe2fea10ba8"),
                             Price = 140m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("1ace775f-e083-462e-8b4b-6d12499285c5"),
+                            Id = new Guid("fe1abfc2-eb08-4ed2-9c30-9c532e68df1f"),
                             Count = 2,
-                            HotelId = new Guid("22f44e2f-5cb2-4a2e-8bf4-d6b3c576f7ba"),
+                            HotelId = new Guid("f6721867-bada-4412-a649-efe2fea10ba8"),
                             Price = 250m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("01c8f7d4-5191-44ec-b944-acea3831a540"),
+                            Id = new Guid("e70a06ea-fb44-43a1-a702-ef9d085fa99a"),
                             Count = 3,
-                            HotelId = new Guid("aa282794-4b9d-47c5-b7f9-4d657ecdfe4b"),
+                            HotelId = new Guid("240c7544-7f24-46db-9cf4-b3a7077f3219"),
                             Price = 178m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("63bc813d-207f-41d6-8431-5aa191ef3ea4"),
+                            Id = new Guid("a9432440-21a1-4734-891d-d2b46fae7978"),
                             Count = 3,
-                            HotelId = new Guid("aa282794-4b9d-47c5-b7f9-4d657ecdfe4b"),
+                            HotelId = new Guid("240c7544-7f24-46db-9cf4-b3a7077f3219"),
                             Price = 216m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("64fd57a0-801a-42d4-97ee-e8a19a9f6798"),
+                            Id = new Guid("ba32740b-b6c0-4956-a8f7-e282b753bc49"),
                             Count = 1,
-                            HotelId = new Guid("aa282794-4b9d-47c5-b7f9-4d657ecdfe4b"),
+                            HotelId = new Guid("240c7544-7f24-46db-9cf4-b3a7077f3219"),
                             Price = 98m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("b97786d5-f052-42e9-9bc7-d4014279ce5a"),
+                            Id = new Guid("10a47ce0-8164-4c86-bd0b-c76fc8a8ff7c"),
                             Count = 3,
-                            HotelId = new Guid("aa282794-4b9d-47c5-b7f9-4d657ecdfe4b"),
+                            HotelId = new Guid("240c7544-7f24-46db-9cf4-b3a7077f3219"),
                             Price = 165m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("29cf8d8d-a13b-412e-90b1-f9eab17c08b3"),
+                            Id = new Guid("e35894f2-9a28-4b41-8082-0f7d3cd6a528"),
                             Count = 3,
-                            HotelId = new Guid("1335ee5b-7ca5-4bb6-a106-f28c5a15e654"),
+                            HotelId = new Guid("7df7ce44-24e8-4cba-9848-5f872b24c0e0"),
                             Price = 118m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("4161eab2-4d2f-4dd0-a53b-ed4b1f6419e1"),
+                            Id = new Guid("334cf008-6caf-4055-9a64-bc1aea9b3cc9"),
                             Count = 2,
-                            HotelId = new Guid("1335ee5b-7ca5-4bb6-a106-f28c5a15e654"),
+                            HotelId = new Guid("7df7ce44-24e8-4cba-9848-5f872b24c0e0"),
                             Price = 73m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("a4ac1750-509f-4f8c-862e-748f80f0695e"),
+                            Id = new Guid("a11e45cc-6925-4a06-b677-1caaceaba251"),
                             Count = 1,
-                            HotelId = new Guid("1335ee5b-7ca5-4bb6-a106-f28c5a15e654"),
+                            HotelId = new Guid("7df7ce44-24e8-4cba-9848-5f872b24c0e0"),
                             Price = 166m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("0960b91d-1b61-460e-9dcb-ad9e36909c5a"),
+                            Id = new Guid("fa5472ae-a0e9-4e50-b672-1918a1193fc5"),
                             Count = 2,
-                            HotelId = new Guid("1335ee5b-7ca5-4bb6-a106-f28c5a15e654"),
+                            HotelId = new Guid("7df7ce44-24e8-4cba-9848-5f872b24c0e0"),
                             Price = 81m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("f1782a56-c79f-4ff2-8b8b-bb681f639b38"),
+                            Id = new Guid("beac2b04-a116-421a-aac7-cef5b0e108d4"),
                             Count = 2,
-                            HotelId = new Guid("a4165ec6-43c0-4ba5-82bc-e9455e27be3f"),
+                            HotelId = new Guid("df03a41e-617c-4637-be81-426f59520ff2"),
                             Price = 111m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("6eb52e44-5c8e-43c5-8040-08d8f3a81b51"),
+                            Id = new Guid("25297678-aec2-4580-9b2c-278edc7aa72e"),
                             Count = 1,
-                            HotelId = new Guid("a4165ec6-43c0-4ba5-82bc-e9455e27be3f"),
+                            HotelId = new Guid("df03a41e-617c-4637-be81-426f59520ff2"),
                             Price = 110m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("85b06894-8cab-475c-94fb-b6797891b8d5"),
+                            Id = new Guid("6075777b-b85c-4797-9125-968215b7275a"),
                             Count = 1,
-                            HotelId = new Guid("a4165ec6-43c0-4ba5-82bc-e9455e27be3f"),
+                            HotelId = new Guid("df03a41e-617c-4637-be81-426f59520ff2"),
                             Price = 95m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("4a0a21a2-65a7-409b-9f4a-049440f0f379"),
+                            Id = new Guid("b22b7581-6085-41e8-ba14-a91592c86640"),
                             Count = 3,
-                            HotelId = new Guid("a4165ec6-43c0-4ba5-82bc-e9455e27be3f"),
+                            HotelId = new Guid("df03a41e-617c-4637-be81-426f59520ff2"),
                             Price = 239m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("3f633072-9c83-4511-bd6b-3fdd6d0bac78"),
+                            Id = new Guid("ed7aaae0-c1c9-488d-b4ec-e76f0f18818d"),
                             Count = 1,
-                            HotelId = new Guid("450f571d-b811-4a35-9b01-e88f62003758"),
+                            HotelId = new Guid("feed0ab7-f131-4481-91e0-60dba2702c8c"),
                             Price = 121m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("7e5dc0ba-d394-4117-9e5a-af22f67334b6"),
+                            Id = new Guid("67064173-cba0-4c85-a727-e27f861cb424"),
                             Count = 1,
-                            HotelId = new Guid("450f571d-b811-4a35-9b01-e88f62003758"),
+                            HotelId = new Guid("feed0ab7-f131-4481-91e0-60dba2702c8c"),
                             Price = 187m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("503bd43c-1489-4515-9e19-b9227ef5065e"),
+                            Id = new Guid("f0f35bc0-3e4b-48c9-8257-487d6486a78e"),
                             Count = 2,
-                            HotelId = new Guid("450f571d-b811-4a35-9b01-e88f62003758"),
+                            HotelId = new Guid("feed0ab7-f131-4481-91e0-60dba2702c8c"),
                             Price = 201m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("bc74a4fb-2bdc-4b08-89c7-62c993561d7c"),
+                            Id = new Guid("5d5cd80a-04fb-4218-832f-b008af6b95a2"),
                             Count = 1,
-                            HotelId = new Guid("450f571d-b811-4a35-9b01-e88f62003758"),
+                            HotelId = new Guid("feed0ab7-f131-4481-91e0-60dba2702c8c"),
                             Price = 73m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("f54c4ea1-a447-47a8-a821-e9d758012b00"),
+                            Id = new Guid("ed8e4f99-4595-4d45-9646-391eb43abeb2"),
                             Count = 3,
-                            HotelId = new Guid("fd2ec648-7ff4-485c-928e-c97272823862"),
+                            HotelId = new Guid("14d17a0c-0430-4566-871f-892896a088bb"),
                             Price = 84m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("fc88df53-0235-4497-8ec2-8c9503ad9cc8"),
+                            Id = new Guid("cf98de02-39d6-49f4-ae49-7457ab97d9f0"),
                             Count = 1,
-                            HotelId = new Guid("fd2ec648-7ff4-485c-928e-c97272823862"),
+                            HotelId = new Guid("14d17a0c-0430-4566-871f-892896a088bb"),
                             Price = 145m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("b94a2dc4-69cc-420a-89f2-a2555ae515ee"),
+                            Id = new Guid("c9a7ff67-a018-45b1-bb13-d1eda3f0ac8e"),
                             Count = 2,
-                            HotelId = new Guid("fd2ec648-7ff4-485c-928e-c97272823862"),
+                            HotelId = new Guid("14d17a0c-0430-4566-871f-892896a088bb"),
                             Price = 221m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("d57b19b7-17e2-4122-b4d1-8681bc163897"),
+                            Id = new Guid("9c101a0e-b6d9-4c41-b75e-f668662b13c0"),
                             Count = 2,
-                            HotelId = new Guid("fd2ec648-7ff4-485c-928e-c97272823862"),
+                            HotelId = new Guid("14d17a0c-0430-4566-871f-892896a088bb"),
                             Price = 108m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("90033f73-589b-4218-8230-c31a9b8b4944"),
+                            Id = new Guid("9a1ae371-e120-4e51-9cbd-107ee12817b1"),
                             Count = 2,
-                            HotelId = new Guid("18519dfd-80db-41c4-aa75-f61803f90477"),
+                            HotelId = new Guid("e742c5b7-6cfd-4e8b-b50f-2df1ce562ab3"),
                             Price = 220m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("3ade7f47-f02e-4c23-a1ff-33dab1d76755"),
+                            Id = new Guid("be3a41cd-acb6-4bbe-8395-752023d55dff"),
                             Count = 2,
-                            HotelId = new Guid("18519dfd-80db-41c4-aa75-f61803f90477"),
+                            HotelId = new Guid("e742c5b7-6cfd-4e8b-b50f-2df1ce562ab3"),
                             Price = 96m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("09b8175f-7499-457c-b02e-851feb668414"),
+                            Id = new Guid("7b6463f9-eb50-42a8-af7d-198f126f7995"),
                             Count = 1,
-                            HotelId = new Guid("18519dfd-80db-41c4-aa75-f61803f90477"),
+                            HotelId = new Guid("e742c5b7-6cfd-4e8b-b50f-2df1ce562ab3"),
                             Price = 143m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("f2f7b3a2-49cc-406a-adde-5e874cc49365"),
+                            Id = new Guid("09ea0159-0ba9-41be-a4eb-908834237b5f"),
                             Count = 3,
-                            HotelId = new Guid("18519dfd-80db-41c4-aa75-f61803f90477"),
+                            HotelId = new Guid("e742c5b7-6cfd-4e8b-b50f-2df1ce562ab3"),
                             Price = 71m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("2749ae1f-ccfe-4d91-9eda-6dade48a8c3e"),
+                            Id = new Guid("1674db33-b5e7-411d-ac84-91402146a708"),
                             Count = 2,
-                            HotelId = new Guid("b729250c-f872-478b-a297-643840368782"),
+                            HotelId = new Guid("a34b791f-8993-4377-9177-0cd9a93330b9"),
                             Price = 179m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("262b3c05-d7e1-4618-9486-0ab22c93a48a"),
+                            Id = new Guid("ee7cdeff-c704-4fd3-a770-33624add2651"),
                             Count = 3,
-                            HotelId = new Guid("b729250c-f872-478b-a297-643840368782"),
+                            HotelId = new Guid("a34b791f-8993-4377-9177-0cd9a93330b9"),
                             Price = 155m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("18890b13-ffb7-4890-a554-751153d38013"),
+                            Id = new Guid("bc86d357-1f1c-4234-a3cf-d7cc6fa6efde"),
                             Count = 1,
-                            HotelId = new Guid("b729250c-f872-478b-a297-643840368782"),
+                            HotelId = new Guid("a34b791f-8993-4377-9177-0cd9a93330b9"),
                             Price = 177m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("587d726a-5017-415d-a354-f2069bcf2095"),
+                            Id = new Guid("95475da6-eaaf-4173-9ef0-6c23b7a9a6d5"),
                             Count = 1,
-                            HotelId = new Guid("b729250c-f872-478b-a297-643840368782"),
+                            HotelId = new Guid("a34b791f-8993-4377-9177-0cd9a93330b9"),
                             Price = 195m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("fa1a3a04-c1d4-49be-8fe2-82c7d816b154"),
+                            Id = new Guid("28c70d81-ee90-4114-92d1-8b7016156bff"),
                             Count = 2,
-                            HotelId = new Guid("94c25c53-975c-452c-b35f-9112134ed5b7"),
+                            HotelId = new Guid("f18ad2a3-87ab-4563-8a4e-62501a24ba63"),
                             Price = 76m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("48090581-34c4-43fe-ba64-cfddf741607e"),
+                            Id = new Guid("4ae2d702-665d-4347-92d3-5813984799df"),
                             Count = 3,
-                            HotelId = new Guid("94c25c53-975c-452c-b35f-9112134ed5b7"),
+                            HotelId = new Guid("f18ad2a3-87ab-4563-8a4e-62501a24ba63"),
                             Price = 195m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("52608c29-31fd-40f1-8ba9-0bc124666a14"),
+                            Id = new Guid("4d762bbc-315b-47d1-a10b-f1a3f5175c83"),
                             Count = 3,
-                            HotelId = new Guid("94c25c53-975c-452c-b35f-9112134ed5b7"),
+                            HotelId = new Guid("f18ad2a3-87ab-4563-8a4e-62501a24ba63"),
                             Price = 180m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("8b59680e-8ac6-4fb1-85a8-9ae192a6c8ab"),
+                            Id = new Guid("c5420e14-e7f9-4acb-98d2-6cadd0aedafa"),
                             Count = 3,
-                            HotelId = new Guid("94c25c53-975c-452c-b35f-9112134ed5b7"),
+                            HotelId = new Guid("f18ad2a3-87ab-4563-8a4e-62501a24ba63"),
                             Price = 210m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("7049255f-78cb-42dc-9142-b3077cc5535d"),
+                            Id = new Guid("360bdfbd-6a89-44d1-bd49-68e07ed9a627"),
                             Count = 2,
-                            HotelId = new Guid("c2b21d2c-9c87-4b3c-9898-76187afe18d1"),
+                            HotelId = new Guid("df518aaf-3e1e-40cb-b5e9-d40da5debb0a"),
                             Price = 153m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("d8643756-09d1-44d5-8d5c-6b0aab0d13ee"),
+                            Id = new Guid("507a9201-9f1b-44fd-9367-1b65dc680cf7"),
                             Count = 2,
-                            HotelId = new Guid("c2b21d2c-9c87-4b3c-9898-76187afe18d1"),
+                            HotelId = new Guid("df518aaf-3e1e-40cb-b5e9-d40da5debb0a"),
                             Price = 221m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("130c46ad-159c-4012-b8f3-ae5654f90ad2"),
+                            Id = new Guid("1ec727a7-c4f0-4ce8-a8fb-5af444436dfa"),
                             Count = 3,
-                            HotelId = new Guid("c2b21d2c-9c87-4b3c-9898-76187afe18d1"),
+                            HotelId = new Guid("df518aaf-3e1e-40cb-b5e9-d40da5debb0a"),
                             Price = 223m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("b3d865d0-e72f-43b1-aba4-590f19dcc29b"),
+                            Id = new Guid("d88630cd-6948-4dea-a29e-254a7414f8ce"),
                             Count = 3,
-                            HotelId = new Guid("c2b21d2c-9c87-4b3c-9898-76187afe18d1"),
+                            HotelId = new Guid("df518aaf-3e1e-40cb-b5e9-d40da5debb0a"),
                             Price = 135m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("c2bee144-ea6b-4d3c-b4bc-2d10f354a461"),
+                            Id = new Guid("f0c0a87a-718e-4790-970d-9c79b03f6dfa"),
                             Count = 2,
-                            HotelId = new Guid("8c10ea27-8d72-4d6b-ad47-98f7131e4baf"),
+                            HotelId = new Guid("8df68a40-c7a2-4d3b-9956-1a7c4fcf5be3"),
                             Price = 66m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("dcf195da-a585-42da-bd79-13e455ca9388"),
+                            Id = new Guid("23b9ba7e-4ba8-42c8-9257-03390125d5f5"),
                             Count = 2,
-                            HotelId = new Guid("8c10ea27-8d72-4d6b-ad47-98f7131e4baf"),
+                            HotelId = new Guid("8df68a40-c7a2-4d3b-9956-1a7c4fcf5be3"),
                             Price = 179m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("6e28b834-ce20-4254-bffc-085fa27e197c"),
+                            Id = new Guid("df75780f-5218-4226-9024-a281f25179bb"),
                             Count = 2,
-                            HotelId = new Guid("8c10ea27-8d72-4d6b-ad47-98f7131e4baf"),
+                            HotelId = new Guid("8df68a40-c7a2-4d3b-9956-1a7c4fcf5be3"),
                             Price = 125m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("ce1eeed5-a141-48fc-8618-aedef998412c"),
+                            Id = new Guid("1b54bbb0-be3b-456b-a1aa-aa6e84bdec0c"),
                             Count = 2,
-                            HotelId = new Guid("8c10ea27-8d72-4d6b-ad47-98f7131e4baf"),
+                            HotelId = new Guid("8df68a40-c7a2-4d3b-9956-1a7c4fcf5be3"),
                             Price = 147m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("9d7db273-ec5f-45af-a1c2-b55e71378ff8"),
+                            Id = new Guid("b5aabf04-e044-4d28-827d-2fd96ff9b965"),
                             Count = 2,
-                            HotelId = new Guid("e155db27-2552-4c02-8441-11626ef2bc01"),
+                            HotelId = new Guid("092ce8d5-6ec0-46ef-baa7-025b0c6a0808"),
                             Price = 176m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("7bcf531b-c980-4fcd-bfad-d24a73f2cb52"),
+                            Id = new Guid("1c91edd0-4e75-496e-9a1c-fb0f37a51ee8"),
                             Count = 3,
-                            HotelId = new Guid("e155db27-2552-4c02-8441-11626ef2bc01"),
+                            HotelId = new Guid("092ce8d5-6ec0-46ef-baa7-025b0c6a0808"),
                             Price = 95m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("74703dc7-f077-4d0d-85f1-10defa129717"),
+                            Id = new Guid("c503db92-c734-449c-9daa-277e4880fdc9"),
                             Count = 3,
-                            HotelId = new Guid("e155db27-2552-4c02-8441-11626ef2bc01"),
+                            HotelId = new Guid("092ce8d5-6ec0-46ef-baa7-025b0c6a0808"),
                             Price = 127m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("7f79f219-2e20-43a8-9e04-9975b2e48916"),
+                            Id = new Guid("b007c36c-60ec-4c10-a2cc-829fbe904b9e"),
                             Count = 3,
-                            HotelId = new Guid("e155db27-2552-4c02-8441-11626ef2bc01"),
+                            HotelId = new Guid("092ce8d5-6ec0-46ef-baa7-025b0c6a0808"),
                             Price = 88m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("80b460a3-0b74-4bcf-84c8-8f4fe3757795"),
+                            Id = new Guid("97d6633d-74a0-4d27-b2c2-1f5462df95b5"),
                             Count = 1,
-                            HotelId = new Guid("b49466bc-7701-4a23-9da8-4ea5b6bdec65"),
+                            HotelId = new Guid("145aa16e-eeac-45bd-a513-c1ee1423e2c8"),
                             Price = 158m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("e9f5e5d3-612b-46ad-a883-878fdae3d2bc"),
+                            Id = new Guid("55a6248b-f118-46c1-a127-9174b922553c"),
                             Count = 2,
-                            HotelId = new Guid("b49466bc-7701-4a23-9da8-4ea5b6bdec65"),
+                            HotelId = new Guid("145aa16e-eeac-45bd-a513-c1ee1423e2c8"),
                             Price = 133m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("a481e6ac-7bbd-47ce-bb64-81dc576b4059"),
+                            Id = new Guid("44cf9d74-8614-47fe-96b7-6104745b7500"),
                             Count = 3,
-                            HotelId = new Guid("b49466bc-7701-4a23-9da8-4ea5b6bdec65"),
+                            HotelId = new Guid("145aa16e-eeac-45bd-a513-c1ee1423e2c8"),
                             Price = 95m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("d1b0053a-e39c-4611-8a0d-87f0a72297b9"),
+                            Id = new Guid("9aa14caf-28ae-45bd-a64f-3dca2807ef54"),
                             Count = 3,
-                            HotelId = new Guid("b49466bc-7701-4a23-9da8-4ea5b6bdec65"),
+                            HotelId = new Guid("145aa16e-eeac-45bd-a513-c1ee1423e2c8"),
                             Price = 154m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("27d213e5-8a69-4099-bded-9e8fad5c1da0"),
+                            Id = new Guid("50b04750-9b0c-4950-8828-e9225a6255da"),
                             Count = 3,
-                            HotelId = new Guid("aade28ca-437f-48cb-aee9-99a510b740e6"),
+                            HotelId = new Guid("e057c1d0-789e-44ee-989c-8f393367970a"),
                             Price = 129m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("01b563b3-b5f0-4c2d-9393-279e7e1d0ce0"),
+                            Id = new Guid("5d876c25-83d2-48f9-a486-b0d4db7a23cb"),
                             Count = 2,
-                            HotelId = new Guid("aade28ca-437f-48cb-aee9-99a510b740e6"),
+                            HotelId = new Guid("e057c1d0-789e-44ee-989c-8f393367970a"),
                             Price = 62m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("590f4889-a519-489b-9927-b757916d360b"),
+                            Id = new Guid("663bf9a6-7fc7-45c4-9bb1-100cad5c4da0"),
                             Count = 2,
-                            HotelId = new Guid("aade28ca-437f-48cb-aee9-99a510b740e6"),
+                            HotelId = new Guid("e057c1d0-789e-44ee-989c-8f393367970a"),
                             Price = 162m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("9ae5045e-59e5-4677-9134-733f9e2b156e"),
+                            Id = new Guid("e51a92bc-2897-4541-947e-ec5ca22096ea"),
                             Count = 3,
-                            HotelId = new Guid("aade28ca-437f-48cb-aee9-99a510b740e6"),
+                            HotelId = new Guid("e057c1d0-789e-44ee-989c-8f393367970a"),
                             Price = 191m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("96295dec-3a0b-48e7-aab7-2068c5d5c7be"),
+                            Id = new Guid("54cabb07-968e-4943-83bd-c161853d0dc7"),
                             Count = 2,
-                            HotelId = new Guid("b90c2fe3-4d24-4bcd-aa95-9659c1b5857e"),
+                            HotelId = new Guid("8e7d534f-b5ef-45a0-aa20-f4955f296e6b"),
                             Price = 188m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("d7466e53-b7a2-45d5-bf69-07a646afb84e"),
+                            Id = new Guid("ec30bad8-83c9-400d-a3c2-c9a66dbbb194"),
                             Count = 2,
-                            HotelId = new Guid("b90c2fe3-4d24-4bcd-aa95-9659c1b5857e"),
+                            HotelId = new Guid("8e7d534f-b5ef-45a0-aa20-f4955f296e6b"),
                             Price = 90m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("f30a1940-3f84-472f-bee7-e8efba10650a"),
+                            Id = new Guid("04ab6720-56bd-4528-98c7-6ddacb4c44e5"),
                             Count = 2,
-                            HotelId = new Guid("b90c2fe3-4d24-4bcd-aa95-9659c1b5857e"),
+                            HotelId = new Guid("8e7d534f-b5ef-45a0-aa20-f4955f296e6b"),
                             Price = 166m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("d64e249e-d3bd-41d8-9586-e048164c1f3c"),
+                            Id = new Guid("e41e407e-7a7f-491f-90e4-6c670599f8a6"),
                             Count = 2,
-                            HotelId = new Guid("b90c2fe3-4d24-4bcd-aa95-9659c1b5857e"),
+                            HotelId = new Guid("8e7d534f-b5ef-45a0-aa20-f4955f296e6b"),
                             Price = 209m,
                             Size = 5
                         },
                         new
                         {
-                            Id = new Guid("78483eb7-6f0d-481b-be0c-bcce637ed81d"),
+                            Id = new Guid("7373d939-9956-4e00-94ef-ac500479612a"),
                             Count = 1,
-                            HotelId = new Guid("73b1ede0-a09e-42e5-8709-49982716aa64"),
+                            HotelId = new Guid("72398cd6-f009-48f7-b6c4-0d21cc667043"),
                             Price = 123m,
                             Size = 2
                         },
                         new
                         {
-                            Id = new Guid("4a3813e2-1b63-4666-ad67-decbbb4c2c7c"),
+                            Id = new Guid("f2246e5d-03df-42a2-909c-b370ce9c2bee"),
                             Count = 1,
-                            HotelId = new Guid("73b1ede0-a09e-42e5-8709-49982716aa64"),
+                            HotelId = new Guid("72398cd6-f009-48f7-b6c4-0d21cc667043"),
                             Price = 219m,
                             Size = 3
                         },
                         new
                         {
-                            Id = new Guid("609fbfed-b202-48bb-8081-db34fefd0780"),
+                            Id = new Guid("d52d51ea-a24d-488a-8b1a-71951b045c35"),
                             Count = 1,
-                            HotelId = new Guid("73b1ede0-a09e-42e5-8709-49982716aa64"),
+                            HotelId = new Guid("72398cd6-f009-48f7-b6c4-0d21cc667043"),
                             Price = 218m,
                             Size = 4
                         },
                         new
                         {
-                            Id = new Guid("87b28a08-64c9-48fc-8dc8-089b40879738"),
+                            Id = new Guid("06fc3ad2-040e-4346-b59a-6367ddfb74f8"),
                             Count = 1,
-                            HotelId = new Guid("73b1ede0-a09e-42e5-8709-49982716aa64"),
+                            HotelId = new Guid("72398cd6-f009-48f7-b6c4-0d21cc667043"),
                             Price = 235m,
                             Size = 5
                         });

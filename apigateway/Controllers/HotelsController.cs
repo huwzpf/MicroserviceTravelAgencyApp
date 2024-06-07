@@ -18,6 +18,7 @@ public class HotelsController : ControllerBase
     private readonly IRequestClient<GetAvailableRoomsRequest> _getAvailableRoomsClient;
     private readonly IRequestClient<AddHotelRequest> _addHotelClient;
     private readonly IRequestClient<HotelAddDiscountRequest> _addHotelDiscountClient;
+    private readonly IRequestClient<GetPopularHotelsRequest> _getPopularHotels;
 
     public HotelsController(
         ILogger<HotelsController> logger,
@@ -25,7 +26,8 @@ public class HotelsController : ControllerBase
         IRequestClient<ReservationGetHotelRequest> getHotelClient,
         IRequestClient<GetAvailableRoomsRequest> getAvailableRoomsClient,
         IRequestClient<AddHotelRequest> addHotelClient,
-        IRequestClient<HotelAddDiscountRequest> addHotelDiscountClient)
+        IRequestClient<HotelAddDiscountRequest> addHotelDiscountClient,
+        IRequestClient<GetPopularHotelsRequest> getPopularHotels)
     {
         _logger = logger;
         _getHotelsClient = getHotelsClient;
@@ -33,6 +35,7 @@ public class HotelsController : ControllerBase
         _getAvailableRoomsClient = getAvailableRoomsClient;
         _addHotelClient = addHotelClient;
         _addHotelDiscountClient = addHotelDiscountClient;
+        _getPopularHotels = getPopularHotels;
     }
 
     [HttpGet(Name = "GetHotels")]
@@ -68,7 +71,7 @@ public class HotelsController : ControllerBase
     }
 
     [HttpGet("{id}", Name = "GetHotel")]
-    public async Task<ActionResult<HotelDto>> Get(Guid id, DateTime? fromTimeStamp)
+    public async Task<ActionResult<HotelDto>> Get(Guid id)
     {
         var response =
             await _getHotelClient.GetResponse<ReservationGetHotelResponse>(new ReservationGetHotelRequest(id));
@@ -92,17 +95,19 @@ public class HotelsController : ControllerBase
 
     [Authorize("RequireAdmin")]
     [HttpPost("{id}/Discount", Name = "PostHotelDiscount")]
-    public async Task<IActionResult> PostHotelDiscount(Guid id, HotelDiscount hotelDiscount)
+    public async Task<IActionResult> PostHotelDiscount(Guid id,  decimal value)
     {
-        var discountDto = new DiscountDto
-        {
-            Value = hotelDiscount.Percentage,
-            Start = hotelDiscount.Start,
-            End = hotelDiscount.End
-        };
 
         await _addHotelDiscountClient.GetResponse<HotelAddDiscountResponse>(
-            new HotelAddDiscountRequest(id, discountDto));
+            new HotelAddDiscountRequest(id, value));
         return Ok();
+    }
+    
+    
+    [HttpGet("PopularHotels", Name = "GetPopularHotels")]
+    public async Task<ActionResult<List<Tuple<string, string, string>>>> GetPopularHotels()
+    {
+        var response = await _getPopularHotels.GetResponse<GetPopularHotelsResponse>(new GetPopularHotelsRequest());
+        return Ok(response.Message.Hotels);
     }
 }

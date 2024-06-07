@@ -14,6 +14,13 @@ public class Hotel
 
     private readonly List<Room> _rooms = new();
 
+    private decimal GetDiscount()
+    {
+        var applicableDiscount = Discounts
+            .Where(d => d.Start <= DateTime.Now).MaxBy(d => d.Start);
+        return applicableDiscount?.Value ?? 1;
+    }
+    
     public List<Room> Rooms
     {
         get => _rooms;
@@ -43,11 +50,12 @@ public class Hotel
 
     public HotelDto ToDto()
     {
+        var discount = GetDiscount();
         var RoomsCount = Rooms
             .GroupBy(r => new { r.Price, r.Size })
             .Select(g => new RoomsCount
             {
-                Price = g.Key.Price,
+                Price = g.Key.Price * discount,
                 Size = g.Key.Size,
                 Count = g.Sum(r => r.Count)
             }).ToList();
@@ -56,11 +64,12 @@ public class Hotel
         {
             Id = Id,
             Name = Name,
-            FoodPricePerPerson = FoodPricePerPerson,
+            FoodPricePerPerson = FoodPricePerPerson * discount,
             City = City,
             Country = Country,
             Street = Street,
-            Rooms = RoomsCount
+            Rooms = RoomsCount,
+            Discount = discount
         };
     }
 
@@ -172,7 +181,6 @@ public class Discount
     public Guid HotelId { get; set; } // Foreign key
     public decimal Value { get; set; }
     public DateTime Start { get; set; }
-    public DateTime End { get; set; }
 }
 
 public class Room

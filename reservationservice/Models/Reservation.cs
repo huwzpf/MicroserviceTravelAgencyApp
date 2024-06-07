@@ -54,6 +54,7 @@ public class Reservation
             HotelCity = ToCity,
             TypeOfTransport = TransportType,
             FromCity = FromCity,
+            HotelName = HotelName,
             CancellationDate = CancellationDate,
             ReservedUntil = ReservedUntil
         };

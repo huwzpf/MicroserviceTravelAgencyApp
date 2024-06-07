@@ -22,4 +22,6 @@ public class HotelDto
     public string Street { get; set; }
     [Required]
     public decimal FoodPricePerPerson { get; set; }
+    [Required]
+    public decimal Discount { get; set; }
 }

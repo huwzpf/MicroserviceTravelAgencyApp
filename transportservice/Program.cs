@@ -25,7 +25,7 @@ builder.ConfigureServices((hostContext, services) =>
     // Register event handlers
     services.AddScoped<TransportOptionAddedEventHandler>();
     services.AddScoped<SeatsChangedEventHandler>();
-    services.AddScoped<DiscountAddedEventHandler>();
+    services.AddScoped<TransportDiscountAddedEventHandler>();
     
     // Add MassTransit
     services.AddMassTransit(busConfigurator =>
@@ -40,8 +40,9 @@ builder.ConfigureServices((hostContext, services) =>
         busConfigurator.AddConsumer<TransportOptionAddSeatsRequestConsumer>();
         busConfigurator.AddConsumer<TransportOptionAddDiscountRequestConsumer>();
         busConfigurator.AddConsumer<TransportOptionSubtractSeatsRequestConsumer>();
-        busConfigurator.AddConsumer<GetPopularDestinationsRequestConsumer>();
-
+        busConfigurator.AddConsumer<GetPopularTransportDestinationsRequestConsumer>();
+        busConfigurator.AddConsumer<GetPopularTransportTypesRequestConsumer>();
+        
         // Get the connection string from configuration
         var rabbitMQHost = configuration.GetConnectionString("RabbitMQHost");
         var rabbitMQUser = configuration.GetConnectionString("RabbitMQUser");
@@ -80,8 +81,8 @@ using (var scope = app.Services.CreateScope())
     var seatsChangedHandler = scope.ServiceProvider.GetRequiredService<SeatsChangedEventHandler>();
     eventBus.Subscribe<SeatsChangedEvent>(seatsChangedHandler.Handle);
 
-    var discountAddedHandler = scope.ServiceProvider.GetRequiredService<DiscountAddedEventHandler>();
-    eventBus.Subscribe<DiscountAddedEvent>(discountAddedHandler.Handle);
+    var discountAddedHandler = scope.ServiceProvider.GetRequiredService<TransportDiscountAddedEventHandler>();
+    eventBus.Subscribe<TransportDiscountAddedEvent>(discountAddedHandler.Handle);
 }
 
 await app.RunAsync();

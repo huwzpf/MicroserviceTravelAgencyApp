@@ -13,13 +13,11 @@ public class DestinationsController : ControllerBase
 {
     private readonly ILogger<DestinationsController> _logger;
     private readonly IRequestClient<GetAvailableDestinationsRequest> _getDestinations;
-    private readonly IRequestClient<GetPopularOffersRequest> _getOffers;
 
-    public DestinationsController(ILogger<DestinationsController> logger, IRequestClient<GetAvailableDestinationsRequest> getDestinations, IRequestClient<GetPopularOffersRequest> getOffers)
+    public DestinationsController(ILogger<DestinationsController> logger, IRequestClient<GetAvailableDestinationsRequest> getDestinations)
     {
         _logger = logger;
         _getDestinations = getDestinations;
-        _getOffers = getOffers;
     }
 
     [HttpGet("AvailableDestinations", Name = "GetAvailableDestinations")]
@@ -36,34 +34,5 @@ public class DestinationsController : ControllerBase
             });
         }
         return Ok(destinations);
-    }
-    
-    [HttpGet("PopularOffers", Name = "GetPopularOffers")]
-    public async Task<ActionResult<IEnumerable<CountryOffer>>> GetPopularPlaces()
-    {
-        var response = await _getOffers.GetResponse<GetPopularOffersResponse>(new GetPopularOffersRequest());
-        var popularOffers = new List<CountryOffer>();
-        
-        foreach (var countryKvp in response.Message.HotelsInCities)
-        {
-            var offers = new List<Offer>();
-
-            foreach (var cityKvp in countryKvp.Value)
-            {
-                offers.Add(new Offer
-                {
-                    City = cityKvp.Key,
-                    Hotels = cityKvp.Value
-                });
-            }
-
-            popularOffers.Add(new CountryOffer
-            {
-                Country = countryKvp.Key,
-                Offers = offers
-            });
-        }
-
-        return Ok(popularOffers);
     }
 }

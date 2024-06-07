@@ -1,5 +1,8 @@
 // EventHandlers.cs
+
+using contracts;
 using contracts.Dtos;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using transportservice.Models;
 
@@ -17,12 +20,12 @@ public class SeatsChangedEvent
     }
 }
 
-public class DiscountAddedEvent
+public class TransportDiscountAddedEvent
 {
     public Guid TransportOptionId { get; }
     public decimal DiscountValue { get; }
 
-    public DiscountAddedEvent(Guid transportOptionId, decimal discountValue)
+    public TransportDiscountAddedEvent(Guid transportOptionId, decimal discountValue)
     {
         TransportOptionId = transportOptionId;
         DiscountValue = discountValue;
@@ -49,35 +52,33 @@ public class TransportOptionAddedEventHandler
         _dbContextFactory = dbContextFactory;
     }
 
-    public void Handle(TransportOptionAddedEvent @event)
+    public async void Handle(TransportOptionAddedEvent @event)
     {
-        using (var dbContext = _dbContextFactory.CreateDbContext())
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+        var queryTransportOption = new QueryTransportOption
         {
-            var queryTransportOption = new QueryTransportOption
-            {
-                Id = @event.Dto.Id,
-                Start = @event.Dto.Start,
-                End = @event.Dto.End,
-                PriceAdult = @event.Dto.PriceAdult,
-                PriceUnder3 = @event.Dto.PriceUnder3,
-                PriceUnder10 = @event.Dto.PriceUnder10,
-                PriceUnder18 = @event.Dto.PriceUnder18,
-                Type = @event.Dto.Type,
-                Seats = @event.Dto.SeatsAvailable,
-                FromCity = @event.Dto.FromCity,
-                FromCountry = @event.Dto.FromCountry,
-                FromStreet = @event.Dto.FromStreet,
-                FromShowName = @event.Dto.FromShowName,
-                ToCity = @event.Dto.ToCity,
-                ToCountry = @event.Dto.ToCountry,
-                ToStreet = @event.Dto.ToStreet,
-                ToShowName = @event.Dto.ToShowName,
-                Discount = null
-            };
+            Id = @event.Dto.Id,
+            Start = @event.Dto.Start,
+            End = @event.Dto.End,
+            PriceAdult = @event.Dto.PriceAdult,
+            PriceUnder3 = @event.Dto.PriceUnder3,
+            PriceUnder10 = @event.Dto.PriceUnder10,
+            PriceUnder18 = @event.Dto.PriceUnder18,
+            Type = @event.Dto.Type,
+            Seats = @event.Dto.SeatsAvailable,
+            FromCity = @event.Dto.FromCity,
+            FromCountry = @event.Dto.FromCountry,
+            FromStreet = @event.Dto.FromStreet,
+            FromShowName = @event.Dto.FromShowName,
+            ToCity = @event.Dto.ToCity,
+            ToCountry = @event.Dto.ToCountry,
+            ToStreet = @event.Dto.ToStreet,
+            ToShowName = @event.Dto.ToShowName,
+            Discount = null
+        };
 
-            dbContext.QueryTransportOptions.Add(queryTransportOption);
-            dbContext.SaveChanges();
-        }
+        dbContext.QueryTransportOptions.Add(queryTransportOption);
+        await dbContext.SaveChangesAsync();
     }
 }
 
@@ -90,43 +91,44 @@ public class SeatsChangedEventHandler
         _dbContextFactory = dbContextFactory;
     }
 
-    public void Handle(SeatsChangedEvent @event)
+    public async void Handle(SeatsChangedEvent @event)
     {
-        using (var dbContext = _dbContextFactory.CreateDbContext())
-        {
-            var queryTransportOption = dbContext.QueryTransportOptions
-                .FirstOrDefault(to => to.Id == @event.TransportOptionId);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+        var queryTransportOption = dbContext.QueryTransportOptions
+            .FirstOrDefault(to => to.Id == @event.TransportOptionId);
 
-            if (queryTransportOption != null)
-            {
-                queryTransportOption.Seats += @event.ChangeBy;
-                dbContext.SaveChanges();
-            }
+        if (queryTransportOption != null)
+        {
+            queryTransportOption.Seats += @event.ChangeBy;
+            await dbContext.SaveChangesAsync();
         }
     }
 }
 
-public class DiscountAddedEventHandler
+public class TransportDiscountAddedEventHandler
 {
     private readonly IDbContextFactory<TransportDbContext> _dbContextFactory;
+    private readonly IPublishEndpoint _publishEndpoint;
 
-    public DiscountAddedEventHandler(IDbContextFactory<TransportDbContext> dbContextFactory)
+    public TransportDiscountAddedEventHandler(IDbContextFactory<TransportDbContext> dbContextFactory, IPublishEndpoint  publishEndpoint)
     {
         _dbContextFactory = dbContextFactory;
+        _publishEndpoint = publishEndpoint;
     }
 
-    public void Handle(DiscountAddedEvent @event)
+    public async void Handle(TransportDiscountAddedEvent @event)
     {
-        using (var dbContext = _dbContextFactory.CreateDbContext())
-        {
-            var queryTransportOption = dbContext.QueryTransportOptions
-                .FirstOrDefault(to => to.Id == @event.TransportOptionId);
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+        var queryTransportOption = dbContext.QueryTransportOptions
+            .FirstOrDefault(to => to.Id == @event.TransportOptionId);
 
-            if (queryTransportOption != null)
-            {
-                queryTransportOption.Discount = @event.DiscountValue;
-                dbContext.SaveChanges();
-            }
+        if (queryTransportOption != null)
+        {
+            queryTransportOption.Discount = @event.DiscountValue;
+            await dbContext.SaveChangesAsync();
+            
+            // Publish event about discount being added
+            await _publishEndpoint.Publish(new DiscountAddedEvent(queryTransportOption.Id));
         }
     }
 }
