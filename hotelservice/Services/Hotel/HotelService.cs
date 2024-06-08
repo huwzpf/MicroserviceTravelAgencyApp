@@ -147,14 +147,13 @@ public class HotelService
             {
                 StartDate = request.Start,
                 EndDate = request.End,
-                Rooms = Enumerable.Empty<RoomsCount>()
+                Rooms = Enumerable.Empty<AvailableRoomsCount>()
             });
 
         var roomCounts = hotel.Rooms
-            .Select(room => new RoomsCount
+            .Select(room => new AvailableRoomsCount
             {
                 Count = room.GetFreeRooms(request.Start, request.End).Min(),
-                Price = room.Price,
                 Size = room.Size
             })
             .ToList();

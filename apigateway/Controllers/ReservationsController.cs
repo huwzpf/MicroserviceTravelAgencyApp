@@ -55,7 +55,7 @@ public class ReservationsController : ControllerBase
             ToDestinationTransport = reservationCreate.ToHotelTransportOptionId.GetValueOrDefault(),
             Hotel = reservationCreate.HotelId,
             Rooms = new Dictionary<int, int>(
-                reservationCreate.Rooms.Select(r => new KeyValuePair<int, int>(r.Size, r.Number))),
+                reservationCreate.Rooms.Select(r => new KeyValuePair<int, int>(r.Size, r.Count))),
             FromDestinationTransport = reservationCreate.FromHotelTransportOptionId.GetValueOrDefault(),
             WithFood = reservationCreate.FoodIncluded
         };

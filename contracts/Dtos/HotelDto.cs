@@ -1,11 +1,6 @@
 namespace contracts.Dtos;
 using System.ComponentModel.DataAnnotations;
-public class RoomsCount
-{
-    public decimal Price { get; set; }
-    public int Size { get; set; }
-    public int Count { get; set; }
-}
+
 public class HotelDto
 {
     [Required]

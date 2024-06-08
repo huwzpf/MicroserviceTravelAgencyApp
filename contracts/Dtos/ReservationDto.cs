@@ -1,12 +1,6 @@
 namespace contracts.Dtos;
 using System.ComponentModel.DataAnnotations;
 
-
-public class ReservationHotelRoom
-{
-    public int Size { get; set; }
-    public int Number { get; set; }
-}
 public class ReservationDto
 {
     [Required]
@@ -30,9 +24,15 @@ public class ReservationDto
     [Required]
     public bool FoodIncluded { get; set; }
     [Required]
-    public IEnumerable<ReservationHotelRoom> Rooms { get; set; }
+    public IEnumerable<RoomsCount> Rooms { get; set; }
     [Required]
     public decimal Price { get; set; }
+    [Required]
+    public decimal FoodPricePerNight { get; set; }
+    [Required]
+    public decimal ToTransportOptionPrice { get; set; }
+    [Required]
+    public decimal FromTransportOptionPrice { get; set; }
     [Required]
     public string HotelName { get; set; }
     [Required]

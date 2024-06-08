@@ -78,7 +78,7 @@ public class HotelsController : ControllerBase
         return response.Message.Hotel == null
             ? BadRequest(new ProblemDetails
             {
-                Title = "Buy failed",
+                Title = "Get Hotel failed",
                 Status = 400
             })
             : Ok(response.Message.Hotel);

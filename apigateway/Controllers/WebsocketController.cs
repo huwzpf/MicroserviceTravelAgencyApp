@@ -17,13 +17,13 @@ public interface ISubscription<T>
     bool Matches(T @event);
 }
 
-public class TourReservedEventSubscription : ISubscription<TourReservedEvent>
+public class BaseTourEventSubscription<T> : ISubscription<T> where T : ITourEvent
 {
     public Guid? HotelId { get; set; }
     public Guid? ToTransportOptionId { get; set; }
     public Guid? FromTransportOptionId { get; set; }
 
-    public bool Matches(TourReservedEvent @event)
+    public bool Matches(T @event)
     {
         return !HotelId.HasValue || (@event.HotelId == HotelId &&
                (!ToTransportOptionId.HasValue || @event.ToTransportOptionId == ToTransportOptionId) &&
@@ -46,21 +46,23 @@ public class WebSocketController : ControllerBase
 {
     private readonly Channel<TourReservedEvent> _tourChannel;
     private readonly Channel<DiscountAddedEvent> _discountChannel;
+    private readonly Channel<TourBoughtEvent> _boughtChannel;
     private readonly ILogger<WebSocketController> _logger;
 
-    public WebSocketController(Channel<TourReservedEvent> tourChannel, Channel<DiscountAddedEvent> discountChannel, ILogger<WebSocketController> logger)
+    public WebSocketController(Channel<TourReservedEvent> tourChannel, Channel<DiscountAddedEvent> discountChannel, Channel<TourBoughtEvent> boughtChannel, ILogger<WebSocketController> logger)
     {
         _tourChannel = tourChannel;
         _discountChannel = discountChannel;
+        _boughtChannel = boughtChannel;
         _logger = logger;
     }
 
-    [Route("/ws/tours")]
-    public async Task GetTourWs(CancellationToken cancellationToken)
+    [Route("/ws/tours/reserved")]
+    public async Task GetTourReservedWs(CancellationToken cancellationToken)
     {
         if (HttpContext.WebSockets.IsWebSocketRequest)
         {
-            var subscription = ExtractTourSubscriptionFromQuery(HttpContext.Request.Query);
+            var subscription = ExtractTourSubscriptionFromQuery<TourReservedEvent>(HttpContext.Request.Query);
 
             await HandleWebSocketConnection(subscription, cancellationToken);
         }
@@ -69,6 +71,22 @@ public class WebSocketController : ControllerBase
             HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
         }
     }
+    
+    [Route("/ws/tours/bought")]
+    public async Task GetTourBoughtWs(CancellationToken cancellationToken)
+    {
+        if (HttpContext.WebSockets.IsWebSocketRequest)
+        {
+            var subscription = ExtractTourSubscriptionFromQuery<TourBoughtEvent>(HttpContext.Request.Query);
+
+            await HandleWebSocketConnection(subscription, cancellationToken);
+        }
+        else
+        {
+            HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+        }
+    }
+
 
     [Route("/ws/discounts")]
     public async Task GetDiscountWs(CancellationToken cancellationToken)
@@ -85,9 +103,9 @@ public class WebSocketController : ControllerBase
         }
     }
 
-    private TourReservedEventSubscription ExtractTourSubscriptionFromQuery(IQueryCollection query)
+    private BaseTourEventSubscription<T> ExtractTourSubscriptionFromQuery<T>(IQueryCollection query) where T : ITourEvent
     {
-        return new TourReservedEventSubscription
+        return new BaseTourEventSubscription<T>
         {
             HotelId = query.ContainsKey("hotelId") ? Guid.Parse(query["hotelId"]) : (Guid?)null,
             ToTransportOptionId = query.ContainsKey("toTransportOptionId") ? Guid.Parse(query["toTransportOptionId"]) : (Guid?)null,
@@ -191,4 +209,3 @@ public class WebSocketController : ControllerBase
         }
     }
 }
-

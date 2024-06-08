@@ -42,6 +42,7 @@ builder.Services.AddMassTransit(busConfigurator =>
     busConfigurator.SetKebabCaseEndpointNameFormatter();
     
     busConfigurator.AddConsumer<TourReservedConsumer>();
+    busConfigurator.AddConsumer<TourBoughtConsumer>();
     busConfigurator.AddConsumer<DiscountAddedConsumer>();
     
     busConfigurator.UsingRabbitMq((context, cfg) =>
@@ -60,10 +61,13 @@ builder.Services.AddMassTransit(busConfigurator =>
 
 // Register the channels and background services as singletons
 builder.Services.AddSingleton(Channel.CreateUnbounded<TourReservedEvent>());
+builder.Services.AddSingleton(Channel.CreateUnbounded<TourBoughtEvent>());
 builder.Services.AddSingleton(Channel.CreateUnbounded<DiscountAddedEvent>());
 builder.Services.AddSingleton<WebSocketController.BroadcastService<TourReservedEvent>>();
+builder.Services.AddSingleton<WebSocketController.BroadcastService<TourBoughtEvent>>();
 builder.Services.AddSingleton<WebSocketController.BroadcastService<DiscountAddedEvent>>();
 builder.Services.AddHostedService(provider => provider.GetService<WebSocketController.BroadcastService<TourReservedEvent>>());
+builder.Services.AddHostedService(provider => provider.GetService<WebSocketController.BroadcastService<TourBoughtEvent>>());
 builder.Services.AddHostedService(provider => provider.GetService<WebSocketController.BroadcastService<DiscountAddedEvent>>());
 
 builder.Services.AddAuthentication("Token")

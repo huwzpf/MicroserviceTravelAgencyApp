@@ -83,7 +83,7 @@ public class TransportOptionsController : ControllerBase
             await _getTransportOptionClient.GetResponse<ReservationGetTransportOptionResponse>(
                 new ReservationGetTransportOptionRequest(id));
         return response.Message.TransportOption == null
-            ? BadRequest(new ProblemDetails { Title = "Buy failed", Status = 400 })
+            ? BadRequest(new ProblemDetails { Title = "Get Transport Option failed", Status = 400 })
             : Ok(response.Message.TransportOption);
         ;
     }

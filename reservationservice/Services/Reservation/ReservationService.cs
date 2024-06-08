@@ -133,6 +133,10 @@ public class ReservationService
         var newReservationGuid = Guid.NewGuid();
         var nights = GetStayDuration(toTransportOptionResponse.Message.TransportOption.Start,
                                         fromTransportOptionResponse.Message.TransportOption.End);
+        var toTransportOptionPrice = CalculateTransportPrice(createReservationRequest.Reservation,
+            toTransportOptionResponse.Message.TransportOption);
+        var fromTransportOptionPrice = CalculateTransportPrice(createReservationRequest.Reservation,
+            fromTransportOptionResponse.Message.TransportOption);
         var reservation = new Models.Reservation
         {
             Id = newReservationGuid,
@@ -151,7 +155,9 @@ public class ReservationService
                     Size = rr.Size,
                     Id = Guid.NewGuid(),
                     HotelRoomReservationObjectId = rr.Id,
-                    ReservationId = newReservationGuid
+                    ReservationId = newReservationGuid,
+                    PricePerRoomPerNight = hotelResponse.Message.Hotel.Rooms.FirstOrDefault(r => r.Size == rr.Size)?.Price ?? 0
+                    
                 }).ToList(),
             FromDestinationTransport = createReservationRequest.Reservation.FromDestinationTransport,
             Finalized = false,
@@ -160,10 +166,13 @@ public class ReservationService
             Price = CalculatePrice(
                 createReservationRequest.Reservation,
                 hotelResponse.Message.Hotel,
-                toTransportOptionResponse.Message.TransportOption,
-                fromTransportOptionResponse.Message.TransportOption,
+                toTransportOptionPrice,
+                fromTransportOptionPrice,
                 nights
             ),
+            ToTransportOptionPrice = toTransportOptionPrice,
+            FromTransportOptionPrice = fromTransportOptionPrice,
+            FoodPricePerNight = hotelResponse.Message.Hotel.FoodPricePerPerson,
             FromCity = toTransportOptionResponse.Message.TransportOption.FromCity,
             ToCity = toTransportOptionResponse.Message.TransportOption.ToCity,
             FoodIncluded = createReservationRequest.Reservation.WithFood,
@@ -199,7 +208,7 @@ public class ReservationService
     }
 
     private static decimal CalculatePrice(CreateReservationDto reservation, HotelDto hotel,
-        TransportOptionDto toTransport, TransportOptionDto fromTransport, int numberOfNights)
+        decimal toTransportPrice, decimal fromTransportPrice, int numberOfNights)
     {
         decimal totalPrice = 0;
 
@@ -208,8 +217,8 @@ public class ReservationService
         {
             totalPrice += numberOfNights * hotel.FoodPricePerPerson * GetTotalNumberOfPeople(reservation);
         }
-        totalPrice += CalculateTransportPrice(reservation, toTransport);
-        totalPrice += CalculateTransportPrice(reservation, fromTransport);
+        totalPrice += toTransportPrice;
+        totalPrice += fromTransportPrice;
 
         return totalPrice;
     }
@@ -348,6 +357,11 @@ public class ReservationService
                 // If payment service returned True, mark as finalized
                 reservation.Finalized = true;
                 await dbContext.SaveChangesAsync();
+                
+                // Publish event about tour being bought
+                await _publishEndpoint.Publish(new TourBoughtEvent(reservation.HotelId,
+                    reservation.Id, reservation.ToDestinationTransport, reservation.FromDestinationTransport));
+
                 return new BuyResponse(true);
             }
 

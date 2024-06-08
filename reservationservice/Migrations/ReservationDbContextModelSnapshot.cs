@@ -50,6 +50,9 @@ namespace reservationservice.Migrations
                     b.Property<Guid>("HotelRoomReservationObjectId")
                         .HasColumnType("uuid");
 
+                    b.Property<decimal>("PricePerRoomPerNight")
+                        .HasColumnType("numeric");
+
                     b.Property<Guid>("ReservationId")
                         .HasColumnType("uuid");
 
@@ -81,11 +84,17 @@ namespace reservationservice.Migrations
                     b.Property<bool>("FoodIncluded")
                         .HasColumnType("boolean");
 
+                    b.Property<decimal>("FoodPricePerNight")
+                        .HasColumnType("numeric");
+
                     b.Property<string>("FromCity")
                         .HasColumnType("text");
 
                     b.Property<Guid>("FromDestinationTransport")
                         .HasColumnType("uuid");
+
+                    b.Property<decimal>("FromTransportOptionPrice")
+                        .HasColumnType("numeric");
 
                     b.Property<Guid>("HotelId")
                         .HasColumnType("uuid");
@@ -124,6 +133,9 @@ namespace reservationservice.Migrations
 
                     b.Property<Guid>("ToDestinationTransport")
                         .HasColumnType("uuid");
+
+                    b.Property<decimal>("ToTransportOptionPrice")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("TransportType")
                         .IsRequired()

@@ -3,6 +3,12 @@
 
 namespace apigateway.Dtos.Reservations;
 
+public class RoomInfo
+{
+    public int Size { get; set; }
+    public int Count { get; set; }
+}
+
 public class ReservationCreate
 {
     public Guid? ToHotelTransportOptionId { get; set; }
@@ -22,5 +28,5 @@ public class ReservationCreate
     public bool FoodIncluded { get; set; }
     
     [Required]
-    public IEnumerable<contracts.Dtos.ReservationHotelRoom> Rooms { get; set; }
+    public IEnumerable<RoomInfo> Rooms { get; set; }
 }

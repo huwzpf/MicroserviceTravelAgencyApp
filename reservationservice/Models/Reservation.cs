@@ -18,6 +18,9 @@ public class Reservation
     public DateTime StartDate { get; init; }
     public int NumberOfNights { get; init; }
     public decimal Price { get; init; }
+    public decimal FoodPricePerNight { get; init; }
+    public decimal ToTransportOptionPrice { get; init; }
+    public decimal FromTransportOptionPrice { get; init; }
     public string ToCity { get; init; }
     public string? FromCity { get; init; }
     public string TransportType { get; init; }
@@ -39,10 +42,11 @@ public class Reservation
             NumberOfUnder18 = NumUnder18,
             ToHotelTransportOptionId = ToDestinationTransport,
             HotelId = HotelId,
-            Rooms = HotelRoomReservations.Select(r => new ReservationHotelRoom
+            Rooms = HotelRoomReservations.Select(r => new RoomsCount
                 {
                     Size = r.Size,
-                    Number = r.nRooms
+                    Count = r.nRooms,
+                    Price = r.PricePerRoomPerNight
                 })
                 .ToList(),
             FromHotelTransportOptionId = FromDestinationTransport,
@@ -51,6 +55,9 @@ public class Reservation
             NumberOfNights = NumberOfNights,
             FoodIncluded = FoodIncluded,
             Price = Price,
+            FoodPricePerNight = FoodPricePerNight,
+            ToTransportOptionPrice = ToTransportOptionPrice,
+            FromTransportOptionPrice = FromTransportOptionPrice,
             HotelCity = ToCity,
             TypeOfTransport = TransportType,
             FromCity = FromCity,
@@ -65,6 +72,7 @@ public class HotelRoomReservation
 {
     public int Size { get; set; }
     public int nRooms { get; set; }
+    public decimal PricePerRoomPerNight { get; set; }
     public Guid Id { get; init; }
     public Guid ReservationId { get; init; } // Foreign key property
     public Guid HotelRoomReservationObjectId { get; init; }
