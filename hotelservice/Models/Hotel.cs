@@ -264,3 +264,12 @@ public class Room
         return freeRooms;
     }
 }
+
+    public class PopularHotel
+    {
+        public Guid Id { get; set; }
+        public string Name { get; init; }
+        public string City { get; init; }
+        public string Country { get; init; }
+        public int Counter { get; set; }
+    }

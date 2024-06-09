@@ -123,3 +123,28 @@ public class QueryTransportOption
         };
     }
 }
+public class PopularDestination
+{
+    public Guid Id { get; set; }
+    public string Country { get; set; }
+    public string City { get; set; }
+    public int Counter { get; set; }
+
+    public PopularDestinationDto ToDto()
+    {
+        return new PopularDestinationDto
+        {
+            Id = this.Id,
+            Country = this.Country,
+            City = this.City,
+            Counter = this.Counter
+        };
+    }
+}
+
+public class PopularTransportType
+{
+    public Guid Id { get ; set; }
+    public string Type { get; set; }
+    public int Counter { get; set; }
+}

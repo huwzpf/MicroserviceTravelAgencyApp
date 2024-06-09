@@ -10,6 +10,8 @@ namespace transportservice.Models
         public DbSet<SeatsChange> SeatsChanges { get; set; }
         
         public DbSet<QueryTransportOption> QueryTransportOptions { get; set; }
+        public DbSet<PopularDestination> PopularDestinations { get; set; }
+        public DbSet<PopularTransportType> PopularTransportTypes { get; set; }
 
         public TransportDbContext(DbContextOptions<TransportDbContext> options)
             : base(options)
@@ -41,6 +43,12 @@ namespace transportservice.Models
                 .HasOne<CommandTransportOption>()
                 .WithMany(to => to.SeatsChanges)
                 .HasForeignKey(sc => sc.TransportOptionId);
+
+            modelBuilder.Entity<PopularDestination>()
+                .HasKey(to => to.Id);
+
+            modelBuilder.Entity<PopularTransportType>()
+                .HasKey(to => to.Id);
             
             var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
                 v => v.Kind == DateTimeKind.Local ? v.ToUniversalTime() : v,

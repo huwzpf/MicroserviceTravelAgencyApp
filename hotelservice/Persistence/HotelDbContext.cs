@@ -9,6 +9,7 @@ namespace hotelservice.Models
         public DbSet<RoomReservation> RoomReservations { get; set; }
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<PopularHotel> PopularHotels { get; set; }
 
         public HotelDbContext(DbContextOptions<HotelDbContext> options) : base(options)
         {
@@ -43,8 +44,10 @@ namespace hotelservice.Models
 
             modelBuilder.Entity<Room>()
                 .HasKey(r => r.Id);
-
-
+            
+            modelBuilder.Entity<PopularHotel>()
+                .HasKey(ph => ph.Id);
+            
             var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
                 v => v.Kind == DateTimeKind.Local ? v.ToUniversalTime() : v,
                 v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
