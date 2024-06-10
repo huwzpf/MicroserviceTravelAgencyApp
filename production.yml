@@ -1,72 +1,83 @@
 version: "3.9"
-volumes:
-  postgres_data:
 
-name: hpds-production
 services:
   front:
-    image: kepins/hpds:front
+    image: kepins/rsww_184297_front:v4.0.0
     ports:
-      - ${EXPOSE_PORT}:80
+      - 18460:80
     depends_on:
       - apigateway
-
   apigateway:
-    image: kepins/hpds:apigateway
+    image: kepins/rsww_184297_apigateway:v4.0.0
+    env_file:
+      - .envs.production/apigateway/.env
     depends_on:
       rabbitmq:
         condition: service_healthy
-
   userservice:
-    image: kepins/hpds:userservice
+    image: kepins/rsww_184297_userservice:v4.0.0
+    env_file:
+      - .envs.production/userservice/.env
     depends_on:
       rabbitmq:
         condition: service_healthy
       postgres:
         condition: service_healthy
-
   reservationservice:
-    image: kepins/hpds:reservationservice
+    image: kepins/rsww_184297_reservationservice:v4.0.0
+    env_file:
+      - .envs.production/reservationservice/.env
     depends_on:
       rabbitmq:
         condition: service_healthy
       postgres:
         condition: service_healthy
-
   hotelservice:
-    image: kepins/hpds:hotelservice
+    image: kepins/rsww_184297_hotelservice:v4.0.0
+    env_file:
+      - .envs.production/hotelservice/.env
     depends_on:
       rabbitmq:
         condition: service_healthy
       postgres:
         condition: service_healthy
-
   transportservice:
-    image: kepins/hpds:transportservice
+    image: kepins/rsww_184297_transportservice:v4.0.0
+    env_file:
+      - .envs.production/transportservice/.env
     depends_on:
       rabbitmq:
         condition: service_healthy
       postgres:
         condition: service_healthy
-
+  paymentservice:
+    image: kepins/rsww_184297_paymentservice:v4.0.0
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
   postgres:
-    image: kepins/hpds:postgres
+    build:
+      context: .
+      dockerfile: postgres/Dockerfile
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - .envs/postgres/.env
+      - .envs.production/postgres/.env
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d userservice_db"]
+      test: ['CMD-SHELL', 'pg_isready -d userservice_db']
       interval: 2s
       timeout: 10s
       retries: 5
-
   rabbitmq:
     image: rabbitmq:3.12
     env_file:
-      - .envs/rabbitmq/.env
+      - .envs.production/rabbitmq/.env
     healthcheck:
       test: rabbitmq-diagnostics check_port_connectivity
       interval: 2s
       timeout: 10s
       retries: 5
+volumes:
+  postgres_data:
