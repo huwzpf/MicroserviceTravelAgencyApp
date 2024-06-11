@@ -1,0 +1,59 @@
+{
+    "albania": [
+        "Pinea Resort & Spa#Durres#Rruga e Dibres",
+        "Diamma Resort#Durres#Rruga Abdyl Frasheri",
+        "Bonita Luxury Hotel#Durres#Rruga Abdyl Frasheri",
+        "Monte Carlo Vlora#Vlora#Rruga 28 Nentori",
+        "MonteCarlo Lungomare#Vlora#Rruga e Kavajes",
+        "Mel Holidays#Durres#Bulevardi Bajram Curri",
+        "Casa Durres#Durres#Rruga e Dibres"
+    ],
+    "grecja": [
+        "Rethymno Mare Water Park#Chania#Leoforos Vasilissis Sofias",
+        "Aldemar Olympian Village#Peloponez#Leoforos Alexandras",
+        "Studia Katerina#Nero#Leoforos Vasilissis Sofias",
+        "Irini Studios#Heraklion#Plateia Syntagmatos",
+        "Studia Maria#Nero#Leoforos Alexandras",
+        "Dias Apartments#Olimpijska#Plateia Syntagmatos"
+    ],
+    "turcja": [
+        "Turunc Resort#Marmaris#Bağdat Caddesi",
+        "Andriake Beach Club Hotel#Turecka#Atatürk Caddesi",
+        "Kimeros Park Holiday Village#Turecka#Bağdat Caddesi",
+        "Kleopatra Micador#Turecka#Atatürk Caddesi",
+        "Melissa#Turecka#Halaskargazi Caddesi",
+        "Kolibri Hotel#Turecka#Atatürk Caddesi"
+    ],
+    "hiszpania": [
+        "Evenia Zoraida Beach Resort#Almeria#Paseo del Prado",
+        "Evenia Olympic Park#Brava#Calle Mayor",
+        "Estival Islantilla#Luz#Calle Mayor",
+        "Cartago Nova by Alegria#Brava#Paseo del Prado",
+        "Catalonia#Brava#Calle de Alcalá",
+        "Reymar Playa#Maresme#Paseo del Prado",
+        "GHT Oasis Park & Spa#Brava#Gran Vía"
+    ],
+    "wlochy": [
+        "San Domenico#Kalabria#Via del Corso",
+        "Baia di Zambrone#Kalabria#Via Veneto",
+        "Rada Siri#Kalabria#Via Veneto",
+        "Hotel Orizzonte Blu#Kalabria#Via Nazionale"
+    ],
+    "chorwacja": [
+        "Gradac#Riwiera#Kapucinska ulica",
+        "Villa Penava#Riwiera#Trg bana Josipa Jelačića",
+        "Apartamenty Omiś#Riwiera#Vukovarska ulica",
+        "Nano#Riwiera#Maksimirska ulica",
+        "Apartamenty Makarska#Riwiera#Maksimirska ulica"
+    ],
+    "egipt": [
+        "Marina Resort Port Ghalib#Alam#Sharia Tahrir",
+        "Barcelo Tiran Sharm Resort#Sheikh#Sharia Tahrir",
+        "Old Vic Resort Sharm#Sheikh#Sharia Ramsis",
+        "Marina Lodge Port Ghalib#Alam#Sharia Ramsis",
+        "Falcon Naama Star#Sheikh#Sharia Salah Salem",
+        "Protels Crystal Beach Resort#Alam#Sharia Tahrir",
+        "MG Alexander The Great#Alam#Sharia Gamal Abdel Nasser",
+        "Bliss Nada Beach Resort#Alam#Sharia Tahrir"
+    ]
+}
